@@ -1,0 +1,77 @@
+# LaTeX 编译生成的文件
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.dvi
+*.ps
+*.xdv
+*.pdf
+*.pdfsync
+
+# 特定构建系统生成的文件
+*.run.xml
+*.bcf
+
+# 索引文件
+*.idx
+*.ilg
+*.ind
+
+# 临时文件
+*.tmp
+*~
+
+# 编辑器备份文件
+*.backup
+*.bak
+*.swp
+*.swo
+
+# 特定包生成的文件
+*.nav
+*.snm
+*.vrb
+
+# 注释和笔记文件
+*.comment
+*.todo
+
+# 临时目录
+_tmp*/
+tmp*/
+
+# 构建输出目录（如果使用单独的构建目录）
+build/
+_output/
+
+# PDF 文件（可选 - 如果不希望跟踪生成的PDF）
+# 注释：通常不忽略PDF，但根据项目需求决定
+# *.pdf
+
+# 图片转换的中间文件
+*-converted-to.*
+
+# 版本控制系统目录
+.git/
+.svn/
+.hg/
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# IDE/编辑器特定文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

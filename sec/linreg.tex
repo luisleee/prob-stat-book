@@ -1,0 +1,326 @@
+\section{线性回归分析}
+
+回归分析是一种统计方法，用于研究因变量（被解释变量）与一个或多个自变量（解释变量）之间的关系。它旨在建立一个数学模型，描述变量间的依赖关系，并用于预测、解释或控制。这里的关系不完全是确定性的，还会加上一定的随机误差。一般的回归模型可以表示为
+
+\[
+Y=f(x_1,\ldots,x_n) + \epsilon
+\]
+
+$Y$是因变量，$f$是我们的回归函数模型，$x_i$是自变量，$\epsilon$是随机误差项（它的均值应该是$0$，并且它常常是正态的）。这里注意一种本性上的区分，我们的自变量是普通的变量，而因变量是随机变量。对于自变量每个确定的取值，都有一个因变量的分布与之对应。
+
+先看回单变量的形式。对于自变量的一组不完全相同的取值$x_1,\ldots,x_n$，设$Y_1,\ldots,Y_n$是在这些取值处对$Y$的独立观察结果。那么我们称
+\[
+(x_1,Y_1),\ldots,(x_n,Y_n)
+\]
+为一个\textbf{样本}。注意它们独立但不一定同分布，这就是回归分析的不同之处。
+
+对应的样本值就记为
+\[
+(x_1,y_1),\ldots,(x_n,y_n)
+\]
+
+我们先从最简单的回归模型入手，即
+\[
+Y=a+bx+\epsilon
+\]
+这种一元线性函数。
+
+\subsection{一元线性回归}
+
+在给定的线性模型和假设下，我们要怎么估计参数$a$与$b$的值？我们会采取最大似然估计。
+
+按我们的模型：
+\[
+Y_i\sim a +bx_i +\epsilon_i, \quad \epsilon_i \sim N(0,\sigma^2),\quad \epsilon_i \text{相互独立}
+\]
+或者说
+\[
+Y_i\sim N(a+bx_i,\sigma^2),\quad Y_i \text{相互独立}
+\]
+
+那么我们就有似然函数：
+\begin{align*}
+L(a,b) &= \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y_i-a-bx_i)^2}{2\sigma^2}\right)\\
+&= \left(\frac{1}{\sqrt{2\pi}\sigma}\right)^n \exp \left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-a-bx_i)^2 \right)
+\end{align*}
+
+取个对数就知道最大化似然函数$L(a,b)$等价于最小化
+\[
+Q(a,b)=\sum_{i=1}^n(y_i-a-bx_i)^2
+\]
+
+下面就是最小二乘法的推导！
+
+最小化就需要我们对其取个偏导：
+\begin{align*}
+\frac{\partial Q}{\partial a} &= -2\sum_{i=1}^n(y_i-a-bx_i) = 0\\
+\frac{\partial Q}{\partial b} &= -2\sum_{i=1}^n(y_i-a-bx_i)x_i = 0\\
+\end{align*}
+
+整理一下就是
+\begin{align*}
+na+\left(\sum_{i=1}^nx_i\right)b &= \sum_{i=1}^ny_i\\
+\left(\sum_{i=1}^nx_i\right)a+\left(\sum_{i=1}^nx_i^2\right)b &= \sum_{i=1}^nx_iy_i\\
+\end{align*}
+这被称为\textbf{正则方程}。
+
+我们用矩阵给出更紧凑的表示：
+\[
+\mathbf{y} = 
+\begin{bmatrix}
+y_1 \\ y_2 \\ \vdots \\ y_n
+\end{bmatrix},
+\quad
+\mathbf{X} = 
+\begin{bmatrix}
+1 & x_1 \\
+1 & x_2\\
+\vdots & \vdots \\
+1 & x_n
+\end{bmatrix},
+\quad
+\boldsymbol{\beta} = 
+\begin{bmatrix}
+a \\ b
+\end{bmatrix}
+\]
+
+我们线性模型的估计值是：
+\[
+\hat{\mathbf{y}} =\mathbf{X} \boldsymbol{\beta}
+\]
+我们的目标是最小化平方和：
+\[
+Q(\boldsymbol{\beta}) = (\hat{\mathbf{y}}-\mathbf{y})^T (\hat{\mathbf{y}}-\mathbf{y})
+\]
+
+用这种形式重述正则方程就是
+\[
+\frac{\partial S}{\partial \boldsymbol{\beta}} = 2\mathbf{X}^T (\mathbf{X}\boldsymbol{\beta} -\mathbf{y}) = \mathbf{0}
+\]
+也就是：
+\[
+\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{y}
+\]
+
+问题的关键就在$\mathbf{X}^T \mathbf{X}$的可逆性上。事实上，如果$x_i$不全相同，它肯定可逆。这个方阵是：
+\[
+\mathbf{X}^T \mathbf{X} = 
+\begin{bmatrix}
+n & \sum x_i \\
+\sum x_i & \sum x_i^2 
+\end{bmatrix},
+\quad
+\mathbf{X}^T \mathbf{y} = 
+\begin{bmatrix}
+\sum y_i\\
+\sum x_i y_i
+\end{bmatrix}
+\]
+（本节求和号过多，有时我会在不造成歧义的情况下省略上下限。）
+
+令人震惊的事实是：
+\[
+\det (\mathbf{X}^T \mathbf{X}) = n\sum_{i=1}^n x_i^2 -\left(\sum_{i=1}^n x_i \right)^2 = n\sum_{i=1}^n (x_i-\overline{x})^2
+\]
+
+于是求个逆就是：
+\[
+(\mathbf{X}^T \mathbf{X})^{-1} = \frac{adj(\mathbf{X}^T \mathbf{X})}{\det(\mathbf{X}^T \mathbf{X})}
+= 
+\begin{bmatrix}
+\frac{\frac{1}{n}\sum x_i^2}{\sum (x_i-\overline{x})^2} & -\frac{\overline{x}}{\sum (x_i-\overline{x})^2} \\
+-\frac{\overline{x}}{\sum (x_i-\overline{x})^2} & \frac{1}{\sum (x_i-\overline{x})^2}
+\end{bmatrix}
+\]
+
+解出来就是：
+\[
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1}(\mathbf{X}^T \mathbf{y})=
+\begin{bmatrix}
+  \frac{\frac{1}{n}(\sum x_i^2)(\sum y_i)-\overline{x}\sum x_iy_i}{\sum(x_i-\overline{x})^2}  \\
+  \frac{\sum x_iy_i -\overline{x}\sum y_i}{\sum(x_i-\overline{x})^2}
+\end{bmatrix}
+\]
+
+这不是那种最方便记忆的版本。对分母没什么可说的了，不过我们还可以调整一下分子。
+
+\begin{align*}
+\hat{a} &= \frac{1}{n}\frac{(\sum x_i^2)(\sum y_i)-(\sum x_i)\left(\sum x_iy_i\right)}{\sum(x_i-\overline{x})^2} \\
+\hat{b} &= \frac{\sum x_iy_i -\overline{x}\sum y_i -\overline{y}\sum x_i + n\overline{x}\overline{y}}{\sum(x_i-\overline{x})^2} \\
+&= \frac{\sum (x_i-\overline{x})(y_i-\overline{y})}{\sum(x_i-\overline{x})^2}\\
+\overline{y} &= a+b\overline{x}
+\end{align*}
+
+于是我们就得到了$Y$关于$x$的\textbf{回归方程}：$\hat{y}=\hat{a}+\hat{b}x$。
+
+由于$\hat{b}$的式子更好记忆，另一种写法是$\hat{y} = \overline{y} - \hat{b}(x-\overline{x})$。
+
+我们引入点记号，让它们更好记一点。实际上这些式子等价形式很多。
+\begin{align*}
+S_{xx} &= \sum_{i=1}^n (x_i-\overline{x})^2 = \sum_{i=1}^n x_i^2 - \frac{1}{n}(\sum_{i=1}^n x_i)^2 \\
+S_{yy} &= \sum_{i=1}^n (y_i-\overline{y})^2 = \sum_{i=1}^n y_i^2 - \frac{1}{n}(\sum_{i=1}^n y_i)^2 \\
+S_{xy} &= \sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y}) = \sum_{i=1}^n x_iy_i - \frac{1}{n}(\sum_{i=1}^n y_i)(\sum_{i=1}^n y_i) \\
+\end{align*}
+它们叫\textbf{离差平方和}与\textbf{交叉离差平方和}。注意不要把这些量和样本方差和标准差搞混，它们差一个$n-1$因子。我们可以把$\hat{b}$写成$\frac{S_{xx}}{S_{xy}}$。
+
+以上就是\textbf{最小二乘法}，适用于用线性函数$a+bx$最小化残差平方和的所有情境。这里正态分布的最大似然估计正好与它不谋而合。
+
+接下来介绍几个平方和。\textbf{回归平方和}反映因变量变异中能被自变量线性解释的部分：
+\[
+SSR=\sum (\hat{y}-\overline{y})^2
+\]
+\textbf{残差平方和}反映模型无法解释的随机误差部分：
+\[
+SSE = \sum (\hat{y}-y)^2
+\]
+\textbf{总平方和}反映因变量的总变异程度：
+\[
+SST = \sum (y-\overline{y})^2
+\]
+
+我们可以得到这样的平方和分解：
+\[
+SST=SSR+SSE
+\]
+其证明仍然和前面的平方和分解一样，是直接的展开。
+
+为了衡量回归模型的拟合优度，定义\textbf{决定系数}$R^2$：
+\[
+R^2=\frac{SSR}{SST}=1-\frac{SSE}{SST}
+\]
+它表示因变量变异中被自变量线性解释的比例。
+
+在我们的线性回归中，可以得到：
+\begin{align*}
+SST&=S_{yy}\\
+SSE&=S_{yy} - \frac{S_{xy}^2}{S_{xx}}\\
+SSR&=\frac{S_{xy}^2}{S_{xx}}\\
+R^2&=\frac{S_{xy}^2}{S_{xx}S_{yy}}
+\end{align*}
+
+$R^2$正好和样本相关系数平方一致。
+
+刚才我们给出的都是估计值的计算，我们只要把小$y$换成大$Y$，就变成了估计量。
+
+我们最感兴趣的肯定是两个参数的估计量，不过让我们先从最基础的来吧。$\overline{Y}=\frac{1}{n}\sum Y_i$是一些独立正态分布的线性组合，所以它也是正态的。
+
+它的均值是：
+\begin{align*}
+E(\overline{Y})&=\frac{1}{n}\sum E(Y_i)\\
+&= \frac{1}{n}\sum (a+bx_i)=a+b\overline{x}
+\end{align*}
+方差是：
+\[
+D(\overline{Y}) = \frac{1}{n^2}\sum D(Y_i)= \frac{\sigma^2}{n}
+\]
+
+于是$\overline{Y}\sim N(a+b\overline{x},\frac{\sigma^2}{n})$。
+
+前面的离差平方和$S_{xy}$和$S_{yy}$作为统计量的形式是：
+\begin{align*}
+S_{xY} &= \sum (x_i-\overline{x})(Y_i-\overline{Y})\\
+&= \sum (x_i-\overline{x})Y_i-\overline{Y}\sum (x_i-\overline{x})\\
+&= \sum (x_i-\overline{x})Y_i\\
+S_{YY} &= \sum (Y_i-\overline{Y})^2\\
+&= \sum Y_i^2-n\overline{Y}^2
+\end{align*}
+
+能看出$S_{xY}$是正态的，而$S_{YY}$看起来有点像卡方但是没那么卡方。我们先来研究$S_{xY}$：
+
+\begin{align*}
+E(S_{xY}) &= \sum (x_i-\overline{x})E(Y_i)\\
+&= \sum (x_i-\overline{x})(a+bx_i)\\
+&= a\sum(x_i-\overline{x}) +b(\sum x_i^2-\overline{x}\sum x_i)\\
+&= b(\sum x_i^2-n\overline{x}^2)\\
+&= bS_{xx}
+\end{align*}
+
+\begin{align*}
+D(S_{xY}) &= \sum (x_i-\overline{x})^2D(Y_i)\\
+&=\sum (x_i-\overline{x})^2\sigma^2=\sigma^2S_{xx}
+\end{align*}
+
+于是$S_{xY}\sim N(bS_{xx},\sigma^2S_{xx})$。
+
+好！这下斜率的估计量$\hat{b}=\frac{S_{xY}}{S_{xx}}$也清楚了，$\hat{b}\sim N(b,\frac{\sigma^2}{S_{xx}})$。一个不错的无偏估计！
+
+于是截距的估计量就是
+\[
+\hat{a}=\overline{Y}-\hat{b}\overline{x}\sim N\left(a,\left(\frac{1}{n}+\frac{\overline{x}}{S_{xx}}\right)\sigma^2\right)
+\]
+
+顺带着，如果给我某个自变量的新$x_0$值，我也能给出因变量对应的新观察值$Y_0$的估计量：
+\[
+\hat{Y}_0=\hat{a} +\hat{b}x_0=\overline{Y}+\hat{b}(x_0-\overline{x}) \sim N\left(a+bx_0,\left(\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}\right)\sigma^2\right)
+\]
+与其说是估计，不如说是预测。我们把$\hat{Y}_0$叫做观察值$Y_0$的\textbf{点预测}。
+
+不过写了这么多，我们暂时还是没给出对方差$\sigma^2$的估计。我们有理由认为它就藏在残差平方和之中。
+
+事实上，这里又有一个重要的结论：
+\begin{theorem}
+对于样本均值响应$\overline{Y}$，斜率估计量$\hat{b}$，残差平方和$SSE$，有
+\begin{itemize}
+    \item $\overline{Y}$，$\hat{b}$，$SSE$相互独立
+    \item $\frac{SSE}{\sigma^2} \sim \chi^2(n-2)$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+我已经有点烦了。这种结论已经出现过三次了……感性地说，因为估计了两个参数，我们损失了两个自由度；理性地说，我还是可以构造一个正交变换，变换前是$\mathbf{Y}=(Y_1,\ldots,Y_n)^T$，变换后结果的第一个分量是$\overline{Y}$，第二个分量是$\hat{b}$，剩下分量的平方和是$SSE$。
+
+于是正交矩阵$Q$的第一行献给
+\[
+\left(\frac{1}{\sqrt{n}},\ldots,\frac{1}{\sqrt{n}}\right)
+\]
+
+第二行献给
+\[
+\left(\frac{x_1-\overline{x}}{\sqrt{S_{xx}}},\ldots,\frac{x_n-\overline{x}}{\sqrt{S_{xx}}}\right)
+\]
+
+剩下的随便Gram-Schimdt规范正交化出来。
+
+这样我们就把$Q\mathbf{Y}$的前两个分量变成$\sqrt{n}\overline{Y}$和$\hat{b}\sqrt{S_{xx}}$，剩下的$n-2$个分量变成独立同方差的正态了。
+\end{proof}
+
+这个结论还可以用到预测值上面。如果预测值和之前的观察值相互独立，那么预测值与上面三个量相互独立。证明只需要在上面多加一个分量，在此略过。
+
+对$\sigma^2$的估计这就有了，$\hat{\sigma^2}=\frac{SSE}{n-2}=\frac{1}{n-2}(S_{YY}-\hat{b}S_{xY})$是个无偏估计。
+
+有了方差的估计，我们就可以给出前面那些量的区间估计了，$t$分布再次出现。
+
+对于斜率$b$，我们有
+\begin{align*}
+\hat{b}&\sim N(b,\frac{\sigma^2}{S_{xx}})\\
+\frac{\hat{b}-b}{\sigma}\sqrt{S_{xx}} &\sim N(0,1)\\
+\frac{SSE}{\sigma^2} &\sim \chi^2(n-2)
+\end{align*}
+所以说
+\[
+\frac{\hat{b}-b}{\sqrt{\frac{SEE}{n-1}}}\sqrt{S_{xx}}\sim t(n-2)
+\]
+那么其估计和检验方法就很清楚了。
+
+对于我们的点预测$\hat{Y}_0$，我们有
+\[
+\hat{Y}_0 \sim N\left(a+bx_0,\left(\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}\right)\sigma^2\right)
+\]
+
+将其标准化得到：
+\[
+\frac{\hat{Y}_0-Y_0}{\sigma\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim N(0,1)
+\]
+
+配合上
+\[
+\frac{SSE}{\sigma^2} \sim \chi^2(n-2)
+\]
+
+就有
+\[
+\frac{\hat{Y}_0-Y_0}{\sqrt{\frac{SSE}{n-2}}\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim t(n-2)
+\]
+
+于是我们就可以给出区间预测了。

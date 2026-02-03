@@ -1,0 +1,415 @@
+
+\section{多元随机变量}
+
+所谓多元随机变量，就是多个随机变量组合在一起，像$(X,Y)$。我们为了便利，可以把它们排列成向量的形式，也叫\textbf{随机向量}。
+
+同样，我们也可以计算$n$元随机变量$\mathbf{X}$的取值落在$\mathbb{R}^n$中一个可测子集$S$内的概率$P(\mathbf{X}\in S)$。
+
+它的分布可以用\textbf{联合累积分布函数}来描述。连续型随机变量可以用\textbf{联合概率密度}描述，离散型随机变量可以用\textbf{联合分布律}描述。
+
+对于$n$元随机变量$\mathbf{X}=(X_1,X_2,\ldots,X_n)$和$n$元数对$\mathbf{x}=(x_1,x_2,\ldots,x_n)$，它的联合累积分布函数定义为
+
+\[
+F_{\mathbf{X}}(\mathbf{x})=P(X_1\leq x_1,X_2 \leq x_2, \cdots ,X_n \leq x_n)
+\]
+
+可以确定，它仍然具有非负性，归一性，而且对于任意一个维度右连续且不减。
+
+对于$n$元离散型随机变量，联合分布律也与一元有相同的形式，也就是$P(\mathbf{X}=\mathbf{x}_k)=p_k$这种形式。
+
+对于$n$元连续型随机变量，联合概率密度与一元有相同的形式，
+\[
+    f_{\mathbf{X}}(\mathbf{x}) = \frac{\partial^n}{\partial x_1 \partial x_2 \cdots \partial x_n} F_{\mathbf{X}}(\mathbf{x})
+\]
+即概率密度函数是累积分布函数的$n$重偏导数。当然这里前提是分布函数满足了某种光滑性，各阶偏导可交换。
+显然联合概率密度也有非负性和归一性。
+
+
+
+如果给出多元随机变量的联合概率密度，我也就可以通过$n$重积分解答刚才的问题：
+\[
+P(\mathbf{X}\in S)=\int_{S}f_{\mathbf{X}}(\mathbf{x})d\mathbf{x}
+\]
+
+用测度的语言描述，就是说：
+
+对于 $n$ 维随机向量 $\mathbf{X} = (X_1, \dots, X_n)^T$，其分布是 $\mathbb{R}^n$ 上的概率测度 $P_{\mathbf{X}}$，定义为：对任意可测集 $B \subseteq \mathbb{R}^n$，
+\[
+P_{\mathbf{X}}(B) = P(\mathbf{X} \in B).
+\]
+多元的情况的一元的情况是完全一样的，概率密度就是测度的Radon-Nikodym导数。
+
+\subsection{边缘分布}
+
+如果多元随机变量的联合分布$F_{\mathbf{X}}$已知，那它其实已经蕴含了单个随机变量的分布$F_{X_1}$。
+
+\[
+F_{X_1}(x) = P(X_1\leq x) = F_{\mathbf{X}} (x,\infty,\ldots,\infty)
+\]
+
+同样，给出联合分布律，我也能求出单个随机变量的分布律（其中$\pi_1:\mathbb{R}^n\to\mathbb{R}$指第一个分量上的投影）：
+
+\[
+P(X_1=x) = \sum_{\mathbf{x}\in\pi_1^{-1}(x)}P(\mathbf{X}=\mathbf{x})
+\]
+
+给出联合概率密度，可以求出单个随机变量的概率密度：
+
+\[
+f_{X_1}(x)=\int_{\pi_1(\mathbf{x})=x}f_{\mathbf{X}}(\mathbf{x})d\mathbf{x}
+\]
+
+以上这种单个变量的分布规律称为边缘分布规律，也就是\textbf{边缘累积分布函数}，\textbf{边缘分布律}，\textbf{边缘概率密度}。
+
+\subsection{条件分布}
+同样的，我们也可以给出一种条件分布，即已知某一（些）随机变量取特定值时，另一随机变量的分布规律。
+在离散情况下，这就是条件概率：因为对于任意$X_1$的取值，它的边缘概率质量都是不为$0$的。于是我们可以定义
+
+\[
+P(\mathbf{X}=\mathbf{x}|X_1=x_1)=\frac{P(\mathbf{X}=\mathbf{x})}{P(X_1=x_1)}
+\]
+
+分母的概率就是一个边缘的概率。
+
+连续情况下，则会遇到一个问题，因为连续随机变量取单点的概率为零，无法适用条件概率的公式。但我们仍然可以仿照离散的形式给出：
+
+\[
+f_{\mathbf{X}|X_1}(\mathbf{x}|x_1)=\frac{f_\mathbf{X}(\mathbf{x})}{f_{X_1}(x_1)}
+\]
+
+这一定义确实在$f_{X_1}(x_1)\neq 0$时是良好定义的，并且和我们的直觉是一致的。
+
+我们最好把条件概率密度理解为在固定某个（些）随机变量的条件下诱导出的子空间上的概率测度。
+
+写成累积分布函数的形式也是可以的，只需要一个积分。
+
+\subsection{独立性}
+同条件概率与事件独立性的关系一样，我们也可以通过条件分布研究随机变量独立性的关系。类比于事件的独立性，两个随机变量$X,Y$相互独立，当且仅当对于任意可测集$A,B\subset \mathbb{R}$，
+\[
+P(X\in A,Y\in B) = P(X\in A)P(Y\in B)
+\]
+
+当然为了便利，用累积分布函数定义的形式是等价的。
+
+\[
+\forall x,y\in \mathbb{R},\quad F_{XY}(x,y)=F_X(x)F_Y(y)
+\]
+
+对于离散随机变量，我们可以用：
+\[
+\forall x,y\in \mathbb{R},\quad P(X=x_,Y=y)=P(X=x)P(Y=y)
+\]
+
+对于连续随机变量，我们可以用：
+\[
+\forall x,y\in \mathbb{R},\quad f_{XY}(x,y)=f_X(x)f_Y(y)
+\]
+
+用条件分布的语言来说，就是条件分布$F_{Y|X}(y|x)$等于边缘分布$F_Y(y)$。
+
+多个随机变量 $X_1, X_2, \dots, X_n$ \textbf{相互独立} 是指：对于任意可测集 $A_1, A_2, \dots, A_n \subset \mathbb{R}$，
+\[
+P(X_1 \in A_1, X_2 \in A_2, \dots, X_n \in A_n) = P(X_1 \in A_1) P(X_2 \in A_2) \cdots P(X_n \in A_n).
+\]
+
+用累积分布函数的形式就是，对于其中\textbf{任取}的$n$个随机变量，都有：
+
+\[
+F_{\mathbf{X}}(\textbf{x})=\prod_{i=1}^{n}F_{X_i}(x_i)
+\]
+
+这比它们两两独立要强很多。
+
+这和张量积的表示是一致的。如果这些变量相互独立，那我就可以把这个联合分布写成诸边缘分布的张量积。
+
+\subsection{多元随机变量函数}
+
+类似于一元随机变量函数，我也可以定义多元随机变量函数。我可以用一个可测函数$\phi:\mathbb{R}^n\to\mathbb{R}^m$后复合于一个随机向量$\mathbf{X}$，又得到一个变换后的随机向量$\phi(\mathbf{X})$。不过这里为了方便分析，我们先讨论$\phi:\mathbb{R}^n\to\mathbb{R}$。讨论清楚之后，多维随机向量值变换也就可以分解成多个这样的函数来讨论了。
+
+我们目前熟知的这样的函数有诸投影函数$\pi_i$，它给出边缘分布。
+
+另一类经典的函数是加减法和乘除法。我们先处理两个随机变量的情况，多个随机变量的情况也就能轻松归纳出了。
+
+这是连续型随机变量的情况，在离散型的情况下只需要把积分换成求和，概率密度换成概率质量。我在这里姑且不写出了。
+
+\begin{align*}
+F_{X+Y}(z)&=P(X+Y\leq z)\\
+&= \iint_{x+y\leq z}f_{XY}(x,y)dxdy\\
+&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z-y}f_{XY}(x,y) dx\right]dy\\
+&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z}f_{XY}(u-y,y) du\right]dy&\text{u=z-y}\\
+&= \int_{-\infty}^{z}\left[\int_{-\infty}^{\infty}f_{XY}(u-y,y) dy\right]du &\text{Fubini定理}\\
+f_{X+Y}(z)&=\frac{dF_{X+Y}(z)}{dz} = \int_{-\infty}^{\infty}f_{XY}(z-t,t) dt &\text{微积分基本定理}
+\end{align*}
+
+这就是卷积公式。如果$X$和$Y$独立，那性质敢情更好了。里面的$f_{XY}(z-t,t)$就可以拆成$f_X(z-t)f_Y(t)$。顺带一提，虽然这个公式乍一看不对称，实际上是对称的，和加法的交换性是一致的。
+
+做乘除法也有类似的公式，令$Z=XY$：
+\begin{align*}
+F_{Z}(z) &= P(XY \leq z) \\
+&= \iint_{xy \leq z} f_{XY}(x,y) \,dx\,dy \\
+&= \int_{-\infty}^{0} \left[ \int_{z/x}^{\infty} f_{XY}(x,y) \,dy \right] dx 
+   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
+&= \int_{-\infty}^{0} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx 
+   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
+&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
+&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,du \right] dx & u = xy \\
+&= \int_{-\infty}^{z} \left[ \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,dx \right] du & \text{Fubini 定理} \\
+f_{Z}(z) &= \frac{dF_{XY}(z)}{dz} = \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{z}{x}\right) \frac{1}{|x|} \,dx & \text{微积分基本定理}
+\end{align*}
+
+除法是类似的，令$Z=Y/X$：
+\[
+f_Z(z)= \int_{-\infty}^{\infty} f_{XY}(x, zx) |x|dx
+\]
+
+不过这个公式就不对称了。
+
+我们上面处理的手法都是求一次$n$重积分得到累积分布函数，然后求一次导数得到概率密度。在$n$大起来之后这种处理可能略微繁琐，不过大部分情况下我们都只能这么做。不过小部分情况下，我猜想我们可以只用做一个$n-1$重的积分就可以了。这一想法最初始于从离散型随机变量的类比。
+
+\subsubsection{多维离散型随机变量的函数的概率密度}
+离散型随机变量通过其分布律被刻画。
+
+设随机变量 $\mathbf{X} = (X_1, X_2, \ldots, X_n)$，其可能取值为 $\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \ldots, \mathbf{x}^{(m)},\ldots$（这里的$\mathbf{x}^{(i)}\in \mathbb{R}^n$）。则其分布律可表示为：
+\[
+P\{\mathbf{X} = \mathbf{x}^{(i)}\} = p_i, \qquad i = 1,2,\ldots,m,\ldots
+\]
+
+其分布函数则无需积分，只需要进行离散求和：
+
+\[
+F_{\mathbf{X}}(\mathbf{x}) = P\left\{X_1 \leq x_1,\, X_2 \leq x_2,\, \ldots,\, X_n \leq x_n\, \right\}
+\]
+即
+\[
+F_{\mathbf{X}}(x_1, x_2, \ldots, x_n)
+= \sum_{\mathbf{x}^{(i)} \leq \mathbf{x}} P\{\mathbf{X} = \mathbf{x}^{(i)}\}
+\]
+其中，
+\[
+\mathbf{x}^{(i)} \leq \mathbf{x} \iff x_1^{(i)} \leq x_1,\, x_2^{(i)} \leq x_2,\, \ldots,\, x_n^{(i)} \leq x_n
+\]
+
+对于多维离散型随机变量，其函数$Y = g(\mathbf{X})$的分布律有更简单的表示。
+
+设 $Y = g(\mathbf{X})$，那么 $Y$ 的可能取值为 $y_1,y_2,\ldots,y_m,\ldots$，其分布律由下式给出：
+\[
+P\{Y = y_j\} = \sum_{\mathbf{x} \in g^{-1}(y_j)} P\{\mathbf{X} = \mathbf{x}\},\qquad j=1,2,\ldots, m, \ldots
+\]
+其中$g^{-1}(y_j)$是$y_j$的纤维。
+
+同样也可以定义其分布函数，设随机变量 $Y = g(\mathbf{X})$，则其分布函数定义为：
+\[
+F_Y(y) = P\{Y \leq y\}
+\]
+由于 $Y$ 是离散型随机变量，其分布函数可以写为：
+\[
+F_Y(y) = \sum_{y_j \leq y} P\{Y = y_j\}
+\]
+
+类比于连续型随机变量的函数概率密度计算方法，在离散型情形下，可以通过联合分布律先计算分布函数，然后差分得到函数的分布律。具体表达式如下：
+
+\[
+F_Y(y) = P\{ Y \leq y \} = \sum_{g(\mathbf{x}) \leq y} P\{ \mathbf{X} = \mathbf{x} \}
+\]
+
+\[
+P\{ Y = y \} = F_Y(y) - F_Y(y^-) = \sum_{g(\mathbf{x}) = y} P\{ \mathbf{X} = \mathbf{x} \}
+\]
+
+当然，如果我们只想求得它的分布律，计算分布函数是个多余的步骤，我们只需要对$y$对应的纤维$g^{-1}(y)$进行其求和即可。接下来我将把这种直觉类比到连续性随机变量函数的计算中。
+
+\subsubsection{多维连续随机变量一阶连续可微无临界点函数的概率密度}
+
+这个名字很长，不过足够保证我们安全地得到很好的结论，不过你也可以不看。离散情况下的处理是直接对函数纤维的分布律进行求和。能想到的最自然的一种类比就是直接将纤维的概率密度进行积分。直接进行 $n$ 重积分是有问题的，因为纤维很有可能在$\mathbb{R}^n$中零测。合理的做法是将积分限制在纤维这一低维结构上，也就是做一个第一类面（线）积分。
+
+但是直接计算这一积分是不正确的，因为对于连续型随机变量，概率密度不只取决于纤维上的概率分布，还与每一点的局部性质密切相关。更准确地说，与离散随机变量不同，概率质量在从原始变量空间射到像空间时，会被变换函数$g$在每一点上的伸缩所影响。不过，这一效应可以用该函数在纤维方向正交方向上的雅可比行列式来刻画。因此，在进行积分时，必须引入恰当的权重项（即一个雅可比因子）以正确反映概率密度在变量变换下的变化情况。忽略这些因素的式子只能在某些特殊情况下成立（如仿射变换），而对于一般的函数，只有严格考虑这些因素，才能得到准确的新概率密度函数。
+
+为了简洁性，我们在此限制$g$为 $\mathbb{R}^n \rightarrow \mathbb{R}$的一阶连续可微函数。由于它是一个$C^1$函数，对于几乎所有$z$，它对应的纤维$g^{-1}(z)$一定是一个低一维的子流形，也就是一条等值线（面）；只有在某些特殊的$z$值处，纤维会退化成$n$维结构或者离散点。更进一步，为了避免这些奇点带来的技术问题，我们可以假定对于每个$z$，$\forall (x, y) \in g^{-1}(z), \nabla g(x, y) \neq 0$。这样一来，纤维在邻域内的结构就更加良好了：等值线将会是一条一阶连续可微的曲线（面）。于是使用余面积公式进行处理也就呼之欲出了。
+
+\begin{theorem}[n维余面积公式]
+设 $g: \mathbb{R}^n \to \mathbb{R}$ 是$C^1$函数（$n\geq 2$），且其梯度$\nabla g(\mathbf{x})$在$g^{-1}([a,b])$上处处非零；$f(\mathbf{x})$是$g^{-1}([a,b])$上的连续函数。则有：
+\[
+\int_{g^{-1}([a,b])} f(\mathbf{x})\,d\mathbf{x}
+=
+\int_{t=a}^{b}
+\left[
+  \int_{g^{-1}(t)} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\,d\sigma(\mathbf{x})
+\right]
+dt
+\]
+其中$d\sigma(\mathbf{x})$表示在纤维（超曲面）$g(\mathbf{x}) = t$上的$(n-1)$维面积微元。
+\end{theorem}
+
+\begin{proof}
+考虑积分区域$\Omega := g^{-1}([a, b])$。对积分进行分层处理：
+每个$t \in [a, b]$对应的纤维$M_t := \{x \in \mathbb{R}^n \mid g(x) = t\}$是一个$(n-1)$维一阶连续可微子流形。
+
+由隐函数存在性定理，$g(\mathbf{x})$在$\nabla g(\mathbf{x})\ne 0$处可作为新的变量替换的一部分坐标，其余$(n-1)$维由$M_t$上参数化给出。
+
+设局部参数化为
+\[
+x = \Phi(y_1, \ldots, y_{n-1}, t), \qquad (y_1, \ldots, y_{n-1}) \in D \subset \mathbb{R}^{n-1},\ t \in [a, b]
+\]
+
+换元公式下，整体$n$维体积微元可拆解为：
+\[
+dx = J_\Phi(y_1,\ldots,y_{n-1}, t)\, dy_1 \cdots dy_{n-1} dt
+\]
+按照隐函数定理，Jacobi因子正好为$|\nabla g(\mathbf{x})|$，即
+
+\[
+d\mathbf{x} = \frac{1}{|\nabla g(\mathbf{x})|} d\sigma(\mathbf{x}) dt
+\]
+
+于是有
+\[
+\int_{\Omega} f(x)\,d\mathbf{x}
+= \int_{t = a}^{b}
+  \left[ \int_{M_t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] dt
+\]
+其中$d\sigma(\mathbf{x})$为$M_t$上的$(n-1)$维面积微元。即为所证。
+\end{proof}
+
+那么 $n$ 维连续型随机变量函数的概率密度就可以计算了。
+
+设$\mathbf{X} = (X_1, X_2, \ldots, X_n)^T$是定义在概率空间$(\Omega, \mathcal{F}, P)$上的$n$维连续型随机向量，其概率密度函数为$f_{\mathbf{X}}(\mathbf{x})$。设$Y = g(\mathbf{X})$的概率密度函数为$f_Y(y)$，其中$g$是一阶连续可微函数，且$\nabla g$在每个纤维$g^{-1}(y)$上都不为$0$。
+
+由n维余面积公式，
+
+\[
+    F_Y(y) = \int_{\Omega} f(x)\,d\mathbf{x}
+= \int_{-\infty}^{y}
+  \left[ \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] dt
+\]
+
+其中，$\Omega = g^{-1}((-\infty,y]) = \{\mathbf{x} \in \mathbb{R}^n :g(\mathbf{x}) \leq y\}$，$d\sigma(\mathbf{x})$为$g^{-1}(t)$上的$(n-1)$维面积微元。
+
+求导，应用微积分基本定理，得到：
+
+$f_Y(y) = \frac{dF_Y(y)}{dy} = \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x})$
+
+一个简单的公式至此形成。它甚至覆盖了一元的情况：
+
+$n=1$的情况下，函数$g$的纤维基本都退化为了离散点。这种情况下纤维上积分的处理和高维有所不同。
+
+不过幸运的是，我们仍然可以在这些离散点上定义合适的测度——即离散测度（或Dirac测度）。在这样的测度下，对这些点的积分自然就变成了单纯的加和：
+\[
+\int_{g^{-1}(t)} f(x)\,d\mu(x) = \sum_{x \in g^{-1}(t)} f(x)
+\]
+其中$\mu$表示对点集的离散测度。这样，虽然在Lebesgue测度下单个点集为零测，但在离散测度下依然可以有意义地积分，因此仍然能够推广高维余面积公式到一维的情形。
+
+若$g:\mathbb{R}\to \mathbb{R}$为一阶可微函数，对于$t\in[g(a), g(b)]$，
+其纤维$g^{-1}(t)=\{x\in \mathbb{R}: g(x)=t\}$是离散点集（假设$g$可微且$g\prime(x)\neq0$）。在此情况下，余面积公式也可以得到一维积分的推广：
+
+\[
+\int_{g^{-1}([a,b])} f(x)\, dx = \int_{t = a}^{b} \left( \sum_{x \in g^{-1}(t)} \frac{h(x)}{|g'(x)|} \right) dt
+\]
+
+其中，$g^{-1}(t)$为所有满足$g(x)=t$的点集，$f(x)$为待积分函数。
+
+设$X$是一个随机变量，令$Y=g(X)$，那么新变量$Y$的概率密度满足
+
+\[
+f_Y(y) = \sum_{x \in g^{-1}(y)} \frac{f_X(x)}{|g'(x)|}
+\]
+
+更进一步，由于$g$一阶连续可导，且$g'(x) \neq 0$，我们可以得到$g'(x)$始终是同号的，也就是说$g$是严格单调的。这时$g^{-1}(y)$实际上只可能是单点集或者空集。
+
+于是我们的式子就变成了：
+
+\[
+f_Y(y) = 
+\begin{cases}
+\frac{f_X(x)}{|g'(x)|} \bigg|_{x = g^{-1}(y)} = \frac{f_X(g^{-1}(y))}{|g'(g^{-1}(y))|}, & y \in Im(g) \\
+0, & \text{其他}
+\end{cases}
+\]
+
+其中$Im(g)$是$g$的值域，也就是$Y$的取值范围；$g^{-1}(y):Im(g)\to \mathbb{R}$在此表示严格意义的反函数。
+
+这就是前面没有证明的一维随机变量函数的变换公式，与高维的公式具有一致的结构，只是此时纤维退化为点。
+
+用这个公式重新阐释加法和乘法公式也会是更简单的，不过我们就不在这里写出了。后面我们还会在$\chi^2$分布重新利用这个公式。
+
+\subsubsection{min,max}
+
+最大值与最小值也是经典的随机变量函数，但它也确实是我们刚才的公式所无法处理的。
+
+设 \(X_1, X_2, \dots, X_n\) 为 \(n\) 个随机变量，联合分布函数为 \(F(x_1, x_2, \dots, x_n)\)。定义：
+\[
+M = \max(X_1, X_2, \dots, X_n), \quad m = \min(X_1, X_2, \dots, X_n).
+\]
+
+$M \le z$ 等价于$\forall 1\leq i\leq n,X_i\leq z$，因此最大值的累积分布函数为：
+\[
+F_M(z) = P(M \le z) = P(X_1 \le z, X_2 \le z, \dots, X_n \le z) = F(z, z, \dots, z).
+\]
+若 \(X_1, X_2, \dots, X_n\) 相互独立，且各自分布函数为 \(F_i(x)\)，则
+\[
+F_M(z) = \prod_{i=1}^n F_i(z).
+\]
+
+$m > z$ 等价于$\forall 1\leq i\leq n,X_i> z$，
+于是最小值的累积分布函数为：
+\[
+F_m(z) = P(m \le z) = 1 - P(m > z) = 1 - P(X_1 > z, X_2 > z, \dots, X_n > z).
+\]
+在独立情形下，则有
+\[
+1-F_m(z) = \prod_{i=1}^n \bigl(1 - F_i(z)\bigr).
+\]
+
+\subsubsection{对独立变量分别变换保持独立性}
+
+如果说 \(X_1, X_2, \dots, X_n, Y_1, Y_2, \dots, Y_m\) 相互独立，那么由它们构成的随机向量
+\[
+\mathbf{X} = (X_1, X_2, \dots, X_n), \quad \mathbf{Y} = (Y_1, Y_2, \dots, Y_m)
+\]
+也是相互独立的。这意味着对任意可测集合 \(A \subseteq \mathbb{R}^n\) 和 \(B \subseteq \mathbb{R}^m\)，都有
+\[
+P(\mathbf{X} \in A, \mathbf{Y} \in B) = P(\mathbf{X} \in A) P(\mathbf{Y} \in B).
+\]
+
+更一般地，若 \(\{X_{ij} : i = 1, \dots, k; j = 1, \dots, n_i\}\) 是一族相互独立的随机变量，那么对任意 \(k\) 个（由不相交指标集构成的）随机向量
+\[
+\mathbf{X}_1 = (X_{11}, \dots, X_{1n_1}), \ \dots, \ \mathbf{X}_k = (X_{k1}, \dots, X_{kn_k}),
+\]
+这些随机向量之间也是相互独立的。换句话说，若原始随机变量全体相互独立，则任意将它们分组后得到的随机向量组仍然相互独立。
+
+\paragraph{可测变换下的保持性}
+进一步地，如果对每个 \(i = 1, \dots, k\)，\(g_i: \mathbb{R}^{n_i} \to \mathbb{R}^{d_i}\) 是一个可测函数，则变换后的随机向量
+\[
+g_1(\mathbf{X}_1), g_2(\mathbf{X}_2), \dots, g_k(\mathbf{X}_k)
+\]
+仍然是相互独立的。换句话说，对相互独立的随机向量分别施加可测变换，不会破坏它们的独立性。
+
+\begin{proof}
+由于 \(g_i\) 可测，\(g_i^{-1}(B_i) \subseteq \mathbb{R}^{n_i}\) 可测。由 \(\mathbf{X}_1,\dots,\mathbf{X}_k\) 的独立性，
+\begin{align*}
+P\left( \bigcap_{i=1}^k \{ g_i(\mathbf{X}_i) \in B_i \} \right)
+&=P\left( \bigcap_{i=1}^k \{ \mathbf{X}_i \in g_i^{-1}(B_i) \} \right) \\
+&= \prod_{i=1}^k P(\mathbf{X}_i \in g_i^{-1}(B_i)) \\
+&= \prod_{i=1}^k P(g_i(\mathbf{X}_i) \in B_i).
+\end{align*}
+故变换后的向量仍保持独立。
+\end{proof}
+
+\subsubsection{一阶连续可微可逆无临界点变换的概率密度}
+如果我们不仅仅讨论$\mathbb{R}^n\to\mathbb{R}$的多元随机变量函数，入手更多元的情况，我们一般没有特别好的结论，除了在满足条件的情况下对各分量应用余面积公式的推论。不过有一个比那个结论更弱一点，但是简单一些的结论：
+
+\begin{theorem}
+设 $\mathbf{X} = (X_1, X_2, \dots, X_n)^T$ 是 $n$ 维随机向量，具有联合概率密度函数 $f_{\mathbf{X}}(\mathbf{x})$。  
+设 $\mathbf{g} : \mathbb{R}^n \to \mathbb{R}^n$ 为可逆变换，满足：
+\begin{enumerate}
+    \item $\mathbf{g}$ 是连续可微的（$C^1$ 函数）；
+    \item $\mathbf{g}$ 是可逆；
+    \item Jacobi 矩阵 $J_{\mathbf{g}}(\mathbf{x}) = \left[ \frac{\partial g_i}{\partial x_j}(\mathbf{x}) \right]_{i,j=1}^n$ 的行列式 $\det J_{\mathbf{g}}(\mathbf{x}) \neq 0$（几乎处处成立）。
+\end{enumerate}
+则$\mathbf{Y}$ 的概率密度函数为
+\[
+f_{\mathbf{Y}}(\mathbf{y}) = \frac{ f_{\mathbf{X}}\bigl( \mathbf{g}^{-1}(\mathbf{y}) \bigr) }{\left| \det J_{\mathbf{g}}(\mathbf{g}^{-1}(\mathbf{y})) \right|} ,
+\quad \mathbf{y} \in \mathbf{g}(\mathbb{R}^n).
+\]
+\end{theorem}
+
+我们后面在随机变量的数值特征这一部分应用并扩展这里的结论。

@@ -1,0 +1,891 @@
+\section{经典随机分布}
+
+我把这一部分放到很后面是为了在这里把它们的性质一起整合了。
+
+\subsection{离散分布}
+
+掌握一些组合恒等式和级数恒等式对处理离散分布非常有益。
+
+\subsubsection{两点分布}
+
+这是最简单的离散分布了。为了方便，我们常让变量只可能取值$0,1$。它有一个参数$0\leq p\leq 1$，它的分布律是
+
+\begin{align*}
+P(X=0)&=1-p\\
+P(X=1)&=p\\
+P(X=k)&=0&k\notin \{0,1\}\\
+\end{align*}
+
+很简单地，$E(X)=p$，$D(X)=p(1-p)$。一个服从这个分布的随机试验叫做伯努利试验。
+
+\subsubsection{离散均匀分布}
+这是一种各个取值等概率的离散概率分布。设$A=\{a_1,\ldots,a_n\}$是一个有限集合，定义$X$服从离散均匀分布为
+
+\[
+P(X=a)=\begin{cases}
+    \frac1n & a\in A\\
+    0 & 其他
+\end{cases}
+\]
+
+可知$E(X)=\frac1n\sum_{i=1}^na_i=\overline{a}$，$D(X)=\frac1n\sum_{i=1}^n(a_i-\overline{a})^2$。
+
+\subsubsection{Bernoulli（二项）分布}
+若相互独立的随机变量$X_1,\ldots,X_n$均服从参数为定值$p$的两点分布，则称$X=\sum_{i=1}^nX_i$服从二项分布，记作$X\sim b(n,p)$。我们也把它理解为一个$n$重伯努利试验的成功次数。$n=1$的时候它也就退化成了两点分布。
+
+很显然，按照定义，如果$X\sim b(n_1,p),Y\sim b(n_2,p)$且它们相互独立，则有$X+Y\sim b(n_1+n_2,p)$。当然我们也可以按下面的分布律用卷积去验证。
+
+其分布律为：
+\[
+P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}
+\]
+
+这个表达式的关键在其二项式系数。我这里采取一种广义一些的定义，令$\binom{n}{k}$在$k>n$或$k<0$时为$0$。
+
+它的均值：
+\begin{align*}
+E(X)&=\sum_{k=0}^n k\binom{n}{k}p^k(1-p)^{n-k} \\
+&=\sum_{k=0}^n n\binom{n-1}{k-1}p^k(1-p)^{n-k} \\
+&=\sum_{k=1}^{n} n\binom{n-1}{k-1}p^k(1-p)^{n-k} \\
+&=\sum_{k=0}^{n-1} n\binom{n-1}{k}p^{k+1}(1-p)^{n-1-k} \\
+&=np\sum_{k=0}^{n-1} \binom{n-1}{k}p^{k}(1-p)^{n-1-k} \\
+&= np
+\end{align*}
+当然我们也可以用$n$个独立的两点分布之和来计算，结果就是立即的。
+方差：
+\begin{align*}
+D(X)&=E(X^2)-(E(X))^2\\
+&= \sum_{k=0}^n k^2\binom{n}{k}p^k(1-p)^{n-k} -n^2p^2\\
+&= n\sum_{k=0}^n k\binom{n-1}{k-1}p^k(1-p)^{n-k} -n^2p^2\\
+&= np\sum_{k=0}^{n-1} (k+1)\binom{n-1}{k}p^k(1-p)^{n-1-k} -n^2p^2\\
+&= np\sum_{k=0}^{n-1} k\binom{n-1}{k}p^k(1-p)^{n-1-k} +np\sum_{k=0}^{n-1} \binom{n-1}{k}p^k(1-p)^{n-1-k} -n^2p^2\\
+&= np(n-1)p + np -n^2p^2 = np(1-p)
+\end{align*}
+
+\subsubsection{多项分布}
+如其名字所说，这是一个和多项式系数密切相关的分布。它可以被视作一个有多种可能结果的试验独立重复$n$次后各结果出现的次数。
+
+记$k$元随机向量$\mathbf{X}$服从多项分布为$\mathbf{X}\sim Mult(n,k,p_1,\ldots,p_k)$，其中$\sum_{i=1}^kp_i=1$。
+
+它的分布律为
+\[
+P(\mathbf{X}=(x_1,\ldots,x_k))=\binom{n}{x_1\cdots x_k}\prod_{i=1}^k p_i^{x_i}
+\]
+
+我这里采取一种广义一些的定义，令$\binom{n}{x_1\cdots x_k}$在$\sum_{i=1}^kx_i\neq n$时为$0$。
+
+它的第$i$个分量的边缘分布显然符合二项分布$b(n,p_i)$，而且还不止，把它的每一个分量加在一起，我们会得到$\sum_{i=1}^nX_i=n$，做$n$次实验就会得到$n$次结果，不管结果是什么。
+
+随便拿出来两个分量$X_i$，$X_j$，有
+\[
+Cov(X_i,X_j)=\delta_{ij}p_i - p_ip_j
+\]
+证明就是组合恒等式，容我在此略过。
+
+\subsubsection{Poisson分布}
+
+泊松分布是服从这样分布律的分布：
+
+\[
+P(X=k) = \frac{\lambda^ke^{-\lambda}}{k!},\quad k\in \mathbb{N}
+\]
+
+我们记作$X\sim \pi(\lambda)$，其中$\lambda > 0$。它实际上是作为一族特殊的二项分布的极限而出现的。
+
+设 $X\sim b\left(n,p\right)$，且假设 $n \to \infty$ 时 $np \to \lambda$。我们有：
+
+\begin{align*}
+\lim_{n\to \infty}P(X=k) &= \lim_{n\to \infty} \binom{n}{k} p^k (1-p)^{n-k}\\
+&= \lim_{n\to \infty} \frac{\prod_{i=0}^{k-1}(n-i)}{k!} p^k (1-p)^{n-k}\\
+&= \lim_{n\to \infty} \frac{\prod_{i=0}^{k-1}(n-i)}{k!} p^k \left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&= \lim_{n\to \infty} \prod_{i=0}^{k-1}\left(1-\frac in\right) \cdot \frac{\lambda^k}{k!} \cdot \left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&= \frac{\lambda^k}{k!} \cdot \lim_{n\to \infty} \prod_{i=0}^{k-1}\left(1-\frac in\right) \cdot \lim_{n\to \infty} \left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&= \frac{\lambda^k}{k!} \cdot 1 \cdot e^{-\lambda}\\
+&= \frac{\lambda^k e^{-\lambda}}{k!}
+\end{align*}
+
+当然我们让$p\to0$的效果也是一样的。
+
+泊松分布常用于描述单位时间内随机事件发生的次数，$\lambda$表示该事件的平均发生率。上面这一事实可以理解为把时间无限细分，每段最多发生一次事件。同一件事情的另一面可以由指数分布描述。这一定理同时意味着当$n$足够大时，我们也可以用泊松分布当作二项分布的近似。
+
+泊松分布的均值：
+\begin{align*}
+E(X)&=\sum_{k=0}^{\infty}k\frac{\lambda^k e^{-\lambda}}{k!}\\
+&=\lambda\sum_{k=1}^{\infty}\frac{\lambda^{k-1} e^{-\lambda}}{(k-1)!}\\
+&=\lambda\sum_{k=0}^{\infty}\frac{\lambda^{k} e^{-\lambda}}{k!}\\
+&=\lambda
+\end{align*}
+方差：
+\begin{align*}
+D(X)&=E(X^2)-(E(X))^2 \\
+&= \sum_{k=0}^{\infty}k^2\frac{\lambda^k e^{-\lambda}}{k!}-\lambda^2\\
+&= \lambda\sum_{k=1}^{\infty}k\frac{\lambda^{k-1} e^{-\lambda}}{(k-1)!}-\lambda^2\\
+&= \lambda\sum_{k=0}^{\infty}(k+1)\frac{\lambda^{k} e^{-\lambda}}{k!}-\lambda^2\\
+&= \lambda\sum_{k=0}^{\infty}k\frac{\lambda^{k} e^{-\lambda}}{k!} + \lambda\sum_{k=0}^{\infty}\frac{\lambda^{k} e^{-\lambda}}{k!} -\lambda^2\\
+&= \lambda
+\end{align*}
+
+泊松分布具有可加性，即几个独立的服从泊松的随机变量之和仍然服从泊松分布。这里证明两个随机变量的情况，多个随机变量容易归纳。设$X\sim \pi(\lambda_1),Y\sim \pi(\lambda_2),Z=X+Y$，$X,Y$独立：
+\begin{align*}
+P(Z=m)&=\sum_{k=0}^mP(X=k,Y=m-k)\\
+&=\sum_{k=0}^mP(X=k)P(Y=m-k)\\
+&=\sum_{k=0}^m\frac{\lambda_1^ke^{-\lambda_1}}{k!}\frac{\lambda_2^{m-k}e^{-\lambda_2}}{(m-k)!}\\
+&=\frac{e^{-(\lambda_1+\lambda_2)}}{m!}\sum_{k=0}^m\binom{m}{k}\lambda_1^k\lambda_2^{m-k}\\
+&=\frac{(\lambda_1+\lambda_2)^ke^{-(\lambda_1+\lambda_2)}}{m!}
+\end{align*}
+
+于是$Z\sim \pi(\lambda_1+\lambda_2)$。它不光服从泊松分布，其参数还是二者的和。
+
+泊松分布还有这样的稀释性：
+令$X\sim\pi(\lambda)$，若条件分布$Y|X=n\sim b(n,p)$，则$Y\sim \pi(\lambda p)$。换句话说，就是每个事件以相同的独立的概率$p$导致另一事件发生，那么这一事件发生的次数$Y\sim \pi(\lambda p)$。证明如下
+
+\begin{align*}
+P(Y=k)&=\sum_{n=k}^{\infty}P(Y=k|X=n)P(X=n) \\
+&=\sum_{n=k}^{\infty}\binom{n}{k}p^k(1-p)^{n-k}\frac{\lambda^ne^{-\lambda}}{n!} \\
+&=\sum_{n=k}^{\infty}p^k(1-p)^{n-k}\frac{\lambda^k\lambda^{n-k}e^{-\lambda}}{k!(n-k)!} \\
+&=\frac{(\lambda p)^ke^{-\lambda}}{k!}\sum_{n=k}^{\infty}\frac{(\lambda(1-p))^{n-k}}{(n-k)!} \\
+&=\frac{(\lambda p)^ke^{-\lambda}}{k!}\sum_{n=0}^{\infty}\frac{(\lambda(1-p))^{n}}{n!} \\
+&=\frac{(\lambda p)^ke^{-\lambda}}{k!}e^{\lambda(1-p)} \\
+&=\frac{(\lambda p)^ke^{-\lambda p}}{k!} \\
+\end{align*}
+
+\subsubsection{几何分布}
+
+几何分布的常见定义有两种，在这里我们采用这种定义：一系列独立的伯努利试验中，首次成功所需的试验次数服从几何分布。另一种定义是成功首次前的失败次数，很显然这种定义要比前面的定义少$1$。我们记前面的总次数$X\sim G(p)$。
+
+很容易知道，
+\[
+P(X=k)=p(1-p)^{k-1},\quad k=1,2,\cdots
+\]
+
+几何分布因几何级数而得名。几何分布的均值：
+\begin{align*}
+E(X)&=\sum_{k=1}^{\infty}kp(1-p)^{k-1}\\
+&=p\sum_{k=0}^{\infty}(k+1)(1-p)^{k}\\
+&=p\frac{1}{(1-(1-p))^2}=\frac1p\\
+\end{align*}
+方差：
+\begin{align*}
+D(X)&=E(X^2)-(E(X))^2\\
+&= \sum_{k=1}^{\infty}k^2p(1-p)^{k-1} - \frac1{p^2}\\
+&= \sum_{k=0}^{\infty}(k+1)^2p(1-p)^{k} - \frac1{p^2}\\
+&= \sum_{k=0}^{\infty}k^2p(1-p)^{k} + 2\sum_{k=0}^{\infty}kp(1-p)^{k} +\sum_{k=0}^{\infty}p(1-p)^{k} - \frac1{p^2}\\
+&= \sum_{k=0}^{\infty}k^2p(1-p)^{k} + 2\sum_{k=1}^{\infty}(k-1)p(1-p)^{k-1} +\sum_{k=1}^{\infty}p(1-p)^{k-1} - \frac1{p^2}\\
+&= p\sum_{k=0}^{\infty}k^2(1-p)^{k} -\frac1{p^2}+ \frac2p -1\\
+&= p\frac{(1-p)(1+(1-p))}{p^3} + -\frac1{p^2}+ \frac2p -1\\
+&= \frac{1-p}{p^2}
+\end{align*}
+
+它和连续情况下的指数分布有很大的相似性。它是唯一在非负整数下具有无记忆性的离散分布。无记忆性是指：
+\[
+P(X>m+n|X>n) = P(X>m)
+\]
+已知前面$n$次没有成功，再进行$m$次还没成功的概率和从头开始做$m$次试验还没成功的概率相同。或者等价地，
+\[
+P(X=m+n|X>n) = P(X=m)
+\]
+简单计算一下$P(X>k)$就能知道：
+\begin{align*}
+P(X>k)&=\sum_{n=k+1}^{\infty}p(1-p)^{n-1}\\
+&=\sum_{n=0}^{\infty}p(1-p)^{n+k}\\
+&=p(1-p)^k\sum_{n=0}^{\infty}(1-p)^{n}=(1-p)^k\\
+\end{align*}
+
+\subsubsection{负二项分布}
+前面的几何分布是二项分布的一个特例。如果我们把刚才的问题扩展到试验恰好$r$次成功时的总次数，我们就的到了负二项分布。我们记次数$X\sim nb(r,p)$。由定义很明显，$G(p)=nb(1,p)$。当然，也有一种替代的定义，就是令变量为恰好成功$r$次之前的失败次数，这也很简单地比前面的定义要小一个$r$。
+
+那么它的分布律应该是：
+\[
+P(X=k)=\binom{k-1}{r-1}p^{r}(1-p)^{k-r},\quad k=r,r+1,\cdots
+\]
+
+负二项就得名于此。负二项分布可用于过度离散（方差大于均值）的计数数据建模，是泊松分布的一种推广。取极限之后，\textbf{失败次数}形式的负二项分布也会像二项分布一样趋近一个泊松分布。
+
+设 $Y + r \sim nb\left(r, 1 - p\right)$，且假设 \( r \to \infty \) 时\( r(1-p) \to \lambda \) 。则有：
+
+\begin{align*}
+\lim_{r\to\infty} P(Y=y) 
+&= \lim_{r\to\infty} \binom{r+y-1}{y} p^r (1-p)^y \\
+&= \lim_{r\to\infty} \frac{\prod_{i=0}^{y-1}(r+i)}{y!} 
+   \left(1-\frac{\lambda}{r}\right)^r \left(\frac{\lambda}{r}\right)^y  \\
+&= \lim_{r\to\infty} \frac{r^y}{y!} 
+   \prod_{i=0}^{y-1}\left(1+\frac{i}{r}\right)
+   \left(1-\frac{\lambda}{r}\right)^r \frac{\lambda^y}{r^y} \\
+&= \frac{\lambda^y}{y!} \lim_{r\to\infty} 
+   \prod_{i=0}^{y-1}\left(1+\frac{i}{r}\right)
+   \cdot \lim_{r\to\infty} \left(1-\frac{\lambda}{r}\right)^r \\
+&= \frac{\lambda^y e^{-\lambda}}{y!}.
+\end{align*}
+
+当然我们让$p\to 1$也有同样的结论。
+
+另一种看法是，由于几何分布的无记忆性，我们可以把它视为$r$个独立的服从$G(p)$的随机变量之和。它很清晰地就具有可加性了：若$X_1\sim nb(r_1,p), X_2\sim nb(r_2,p)$且相互独立，则$X_1+X_2 \sim nb(r_1+r_2,p)$。
+
+于是就不难得到$E(X)=\frac rp$，$D(X)=\frac{r(1-p)}{p^2}$。
+
+\subsubsection{超几何分布}
+超几何分布描述的是不放回抽样中抽到特定类别物品数量的概率分布。
+
+设有总数为 $N$ 的总体，其中包含 $M$ 个“成功”物品，其余 $N−M$ 个为“失败”物品。从中不放回地随机抽取 $n$ 个物品，$n\leq N$。令随机变量 $X$ 表示在这 $n$ 个物品中“成功”物品的数量，则 $X$ 服从超几何分布，记作$X\sim H(n,M,N)$。
+
+它的分布律就是：
+\[
+P(X=k)=\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}
+\]
+
+超几何分布因超几何级数得名。
+\[
+\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}=\frac{(-n)^{\overline{k}}(-M)^{\overline{k}}}{k!(N-M-n+1)^{\overline{k}}} \frac{\binom{N-M}{n}}{\binom{N}{n}}
+\]
+这里的$x^{\overline{k}}$指的是$k$次上升幂，也就是$x(x+1)\cdots(x+k-1)$。这就是超几何级数中的一项。
+
+从直觉上来说，当总体容量$N$很大时，无放回抽样可以近似为有放回抽样，事情也确实是这样的。设$X\sim H(n,M,N)$，当$N\to\infty$时，若$\frac MN \to p$，则有：
+\begin{align*}
+\lim_{N \to \infty} P(X = k) 
+&= \lim_{N \to \infty} \frac{\binom{M}{k} \binom{N-M}{n-k}}{\binom{N}{n}} \\
+&= \lim_{N \to \infty} \frac{ \frac{1}{k!}\prod_{i=0}^{k-1}(M-i) \cdot \frac{1}{(n-k)!}\prod_{j=0}^{n-k-1}(N-M-j) }{ \frac{1}{n!} \prod_{l=0}^{n-1}(N-l)} \\
+&= \binom{n}{k} \lim_{N \to \infty} \frac{ \prod_{i=0}^{k-1}(M-i) \cdot \prod_{j=0}^{n-k-1}(N-M-j) }{ \prod_{l=0}^{n-1}(N-l) } \\
+&= \binom{n}{k} \lim_{N \to \infty} \left[ \prod_{i=0}^{k-1} \frac{M-i}{N-i} \cdot \prod_{j=0}^{n-k-1} \frac{N-M-j}{N-k-j} \right] \\
+&= \binom{n}{k} \prod_{i=0}^{k-1} \lim_{N \to \infty} \frac{M-i}{N-i} \cdot \prod_{j=0}^{n-k-1} \lim_{N \to \infty} \frac{N-M-j}{N-k-j} \\
+&= \binom{n}{k} \prod_{i=0}^{k-1} \frac{M}{N} \cdot \prod_{j=0}^{n-k-1} \left(1 - \frac{M}{N}\right) \\
+&= \binom{n}{k} \left(\frac{M}{N}\right)^k \left(1 - \frac{M}{N}\right)^{n-k}.
+\end{align*}
+
+它确实逼近一个二项分布，当然我也可以进一步让其逼近泊松分布。类似二项分布和多项分布，我也可以将其推广为多项超几何分布，这里就不再展开了。
+
+它的均值与有放回的情况惊人地一致：
+\begin{align*}
+E(X)&=\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}\\
+&=M\sum_{k}\frac{\binom{M-1}{k-1}\binom{N-M}{n-k}}{\binom{N}{n}}\\
+&=M\frac{\binom{N-1}{n-1}}{\binom{N}{n}}\\
+&=n\frac{M}{N}
+\end{align*}
+
+而方差则相差一个因子：
+\begin{align*}
+D(X)&=E(X^2)-(E(X))^2\\
+&=\sum_{k}k^2\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}-\frac {n^2M^2}{N^2}\\
+&=\sum_{k}k(k-1)\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}+\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}-\frac {n^2M^2}{N^2}\\
+&=M(M-1)\sum_{k}\frac{\binom{M-2}{k-2}\binom{N-M}{n-k}}{\binom{N}{n}} + \frac{nM}{N} -\frac {n^2M^2}{N^2}\\
+&=M(M-1)\frac{\binom{N-2}{n-2}}{\binom{N}{n}} + \frac{nM}{N} -\frac {n^2M^2}{N^2}\\
+&=\frac{n(n-1)M(M-1)}{N(N-1)} + \frac{nM}{N} -\frac {n^2M^2}{N^2}\\
+&= n\frac{M}{N}(1-\frac MN)\frac{N-n}{N-1}
+\end{align*}
+
+这个因子$\frac{N-n}{N-1}$也被称为有限总体校正因子。
+
+\subsection{连续分布}
+
+和处理离散分布一样，掌握一些积分恒等式是有益的。善用$\Gamma$函数可以让生活大部分变得更美好。
+
+关于$\Gamma$函数，我们需要了解的基本就是下面这几件事：
+
+\textbf{定义}：
+\[
+\Gamma(s) = \int_0^{+\infty}t^{s-1}e^{-t}dt
+\]
+
+\textbf{递推性质}：
+\begin{align*}
+\Gamma(s+1) &= \int_0^{+\infty}t^{s}e^{-t}dt\\
+&= -\int_0^{+\infty}t^{s}d(e^{-t})\\
+&= -\left[t^se^{-t}\right]_{0}^{+\infty} +\int_0^{+\infty}e^{-t}d(t^{s})\\
+&= s\int_0^{+\infty}t^{s-1}e^{-t}dt = s\Gamma(s)\\
+\end{align*}
+
+\textbf{余割恒等式}
+\[
+\Gamma(s)\Gamma(1-s)=\frac{\pi}{\sin{\pi s}}
+\]
+
+\textbf{特殊值}
+\[
+\Gamma(1)=1,\quad \Gamma(\frac12)=\sqrt{\pi}
+\]
+进一步应用递推性质，就有：
+\[
+\Gamma(n+1)=n!,\quad \Gamma\left(n+\frac12\right)=\frac{(2n)!}{4^n n!}\sqrt{\pi},\quad n\in\mathbb{N}
+\]
+实际上最初$\Gamma$函数就是作为阶乘的解析延拓而出现的。
+
+作为补充，Beta函数也有大用。Beta函数定义为
+\[
+B(a,b)=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)} = \int_0^1 t^{a-1}(1-t)^{b-1}dt
+\]
+这里并不打算给出这两个定义等价的证明。
+
+\subsubsection{均匀分布}
+毫无疑问，连续分布中最简单的就是均匀分布了。均匀分布描述了一个随机变量在某个区间内取值的概率处处相等的分布。随机变量$X$服从区间$[a,b]$上的均匀分布记作$X\sim U(a,b)$。其概率密度函数为：
+\[
+f_X(x) = \begin{cases}
+    \frac1{b-a} & a\leq x\leq b,\\
+    0 & 其他
+\end{cases}
+\]
+
+几乎没有任何可说的，不过需要注意的是，一定不能忘记随机变量在区间$[a,b]$外取值为$0$这一事实。
+
+它的累积分布函数是
+\[
+F_X(x) = \begin{cases}
+    0 & x < a\\
+    \frac{x-a}{b-a} & a\leq x \leq b\\\
+    0 & x> b
+\end{cases}
+\]
+
+它的均值为$\frac{a+b}{2}$，方差为$\frac{(b-a)^2}{12}$。
+
+它值得称道的一点是，可以通过对$U(0,1)$进行变换来得到任意分布的随机变量。令$X$为随机变量，$F_X$为其累积分布函数。如果$F_X$严格单调递增（也就是连续且可逆），则$F_X(X)\sim U(0,1)$。反过来，若$U\sim U(0,1)$，$F_X^{-1}(U)$服从原分布$F_X$。其证明是浪费笔墨的。利用它可以通过均匀分布生成几乎任意分布的随机数。
+
+\subsubsection{指数分布}
+指数分布非常类似离散的几何分布，就像伯努利试验和泊松过程的类比。随机变量$X$服从指数分布记作$X\sim Exp(\theta)$。
+
+指数分布的概率密度函数是
+\[
+f_X(x) = \begin{cases}
+    \frac 1\theta e^{-\frac x\theta} & x \geq 0\\
+    0 & x < 0
+\end{cases}
+\]
+
+累积分布函数是
+
+\[
+F_X(x) = \begin{cases}
+    1-e^{-\frac x\theta} & x \geq 0\\
+    0 & x < 0
+\end{cases}
+\]
+注意，有另一种等价的定义是$\lambda e^{-\lambda x}$的形式，它和我们的定义只相差一个倒数关系，不过我们不在这里使用这种定义。
+
+同样，它也是唯一具有无记忆性的连续分布。对于$t_1,t_2 \geq 0$，
+\[
+P(X>t_1+t_2| X>t_1)=P(X>t_2)
+\]
+
+当然这也是因为
+\[
+P(X>t) = \int_t^{+\infty}\frac 1\theta e^{-\frac x\theta}dx=e^{-\frac t\theta},\quad t\geq0
+\]
+
+它的均值
+\begin{align*}
+E(X)&= \int_{-\infty}^{+\infty}xf_X(x)dx\\
+&= \int_{0}^{+\infty}\frac x\theta e^{-\frac x\theta}dx\\
+&= \theta\int_{0}^{+\infty}u e^{-u}du& u=\frac{x}{\theta}\\
+&= \theta\Gamma(2)=\theta\\
+\end{align*}
+
+方差
+\begin{align*}
+D(X) &= E(X^2) -(E(X))^2 \\
+&= \int_{-\infty}^{+\infty}x^2f_X(x)dx - \theta^2\\
+&= \int_{0}^{+\infty}\frac {x^2}{\theta} e^{-\frac x\theta}dx - \theta^2\\
+&= \theta^2\int_{0}^{+\infty}u^2 e^{-u}du  - \theta^2 & u=\frac{x}{\theta}\\
+&= \theta^2\Gamma(3) - \theta^2=\theta^2\\
+\end{align*}
+
+在前面关于的泊松分布的问题中，如果说事件发生的次数服从泊松分布，那么相邻两个事件的间隔服从指数分布，反过来也是一样的，这就是泊松过程。
+
+\subsubsection{Erlang分布}
+爱尔朗分布是和指数分布密切相关的一种分布。如果相互独立的随机变量$X_1,\ldots,X_n$都服从$Exp(\theta)$，那么我们称它们的和$X=\sum_{i=1}^nX_i$服从爱尔朗分布，记作$X\sim Erlang(n,\theta)$。
+
+它的概率密度函数是
+\[
+f_X(x) = \begin{cases}
+    \frac{x^{n-1}e^{-\frac{x}{\theta}}}{\theta^n(n-1)!} & x \geq 0\\
+    0 & x< 0
+\end{cases}
+\]
+你会发现这个式子和$s$取整数的$\Gamma$函数几乎相同。它确实是我们后面会提到的Gamma分布的特例。指数分布也就是$n=1$的特例。
+
+我们可以用卷积公式归纳验证它的正确性，不过这不是最简单的方法，因为用傅里叶变换做卷积才快。
+
+由定义可以看出它的可加性，这里姑且验证一下，顺带把上面的式子验证了。令$X\sim Erlang(n_1, \theta)$，$Y\sim Erlang(n_2,\theta)$，$X,Y$独立，$Z=X+Y$。那么有：
+
+\begin{align*}
+f_Z(z)&=\int_{-\infty}^{+\infty}f_X(t)f_Y(z-t)dt \\
+&=\int_{0}^{z}\frac{t^{n_1-1}e^{-\frac{t}{\theta}}}{\theta^{n_1}(n_1-1)!} \frac{(z-t)^{n_2-1}e^{-\frac{z-t}{\theta}}}{\theta^{n_2}(n_2-1)!}dt \\
+&= \frac{e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{z}t^{n_1-1}(z-t)^{n_2-1}dt\\
+&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{1}u^{n_1-1}(1-u)^{n_2-1}du& t=zu\\
+&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}B(n_1,n_2)\\
+&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\frac{(n_1-1)!(n_2-1)!}{(n_1+n_2-1)!}\\
+&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1+n_2-1)!}\\
+\end{align*}
+
+由定义，我们可以知道其均值$E(X)=n\theta$，方差$D(X)=n\theta^2$。
+
+它就是独立指数分布的叠加，在强度为 $\frac1\theta$ 的泊松过程中，第 $n$ 个事件发生的等待时间服从$Erlang(n,\theta)$。
+
+\subsubsection{正态分布}
+正态分布可谓是概率统计中最重要的分布了。它有非常多良好的性质，中心极限定理更是奠定了其无可动摇的地位。随机变量$X$服从正态分布记为$X\sim N(\mu,\sigma^2)$。这两个参数分别叫做正态分布的位置参数和尺度参数的平方。
+
+正态分布的概率密度函数是
+
+\[
+f_X(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+
+这是一个奇特的式子，它的核心是一个高斯积分。我们不难做一个变量代换$U=\frac{X-\mu}{\sigma}$，这样就有
+\[
+f_U(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}
+\]
+这就表明$U\sim N(0,1)$。这种正态分布被称为标准正态分布。由于这种变换的存在，我在下面基本只用讨论标准正态分布了。
+我们可以反过来根据这一事实得出正态分布的线性变换性质。若$X\sim N(\mu,\sigma^2)$，则$a+bX\sim N(a+b\mu, b^2\sigma^2)$。
+
+标准正态分布的图形是这样的：
+
+\begin{tikzpicture}
+    \begin{axis}[
+        domain=-4:4,
+        samples=200,
+        axis lines=middle,
+        xlabel={$x$},
+        ylabel={$y$},
+        title={标准正态分布},
+        ymin=0, ymax=0.5,
+        xtick={-4,-3,...,4},
+        ytick={0,0.1,...,0.5},
+        grid=major,
+        width=10cm, height=6cm,
+        every axis label/.append style={font=\small},
+    ]
+    \addplot[line width=0.5pt] {1/sqrt(2*pi) * exp(-x^2/2)};
+    \end{axis}
+\end{tikzpicture}
+
+
+正态分布的累积分布函数没有初等的解析式形式，不过姑且有一些不错的性质。我们记标准正态分布的累计分布函数为$\Phi(x)$，那么有：
+\begin{align*}
+\Phi(x)&= \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt\\
+&= \int_{-x}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du&u=-t\\
+&= \int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du -\int_{-\infty}^{-x}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du\\
+&=1-\Phi(-x)
+\end{align*}
+代入$x=0$，就有$\Phi(0)=\frac 12$。
+
+虽然没有初等形式，但是我们有一个级数表达式：
+\begin{align*}
+\Phi(x)&=\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt \\
+&=\int_{-\infty}^{0}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt + \int_{0}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt\\
+&= \frac 12 + \frac{1}{\sqrt{2\pi}}\int_{0}^{x}e^{-\frac{t^2}{2}}dt\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}du & u=\frac{t^2}{2}\\
+\end{align*}
+右边很像$\Gamma$函数，但是被不幸截断了！不过对$e^{-u}$做级数展开就好了：
+\begin{align*}
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}du\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}\sum_{n=0}^{+\infty}\frac{(-1)^nu^n}{n!}du\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^n}{n!}\int_{0}^{\frac{x^2}2}u^{n-\frac 12}du\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^n}{n!\left(n+\frac{1}{2}\right)}\left(\frac{x^2}{2}\right)^{n+\frac 12}\\
+&= \frac 12 + \frac{1}{\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^nx^{2n+1}}{n!(2n+1)(\sqrt{2})^{2n+1}}\\
+\end{align*}
+
+我们把后面这部分拿出来，定义为\textbf{误差函数}
+\[
+Erf(x)=\frac{2}{\sqrt{\pi}}\int_{0}^{x}e^{-t^2}dt
+\]
+注意，它和我们正态分布在指数上差一个$2$！不过古人就是这么定义的，重新定义一个只会造成混乱。其级数展开于是就是
+
+\[
+Erf(x) = \frac{2}{\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^nx^{2n+1}}{n!(2n+1)}
+\]
+
+有了$Erf$，刚才我们的式子就可以写成：
+\[
+\Phi(x)=\frac 12 \left(1+Erf\left(\frac{x}{\sqrt{2}}\right)\right)
+\]
+
+我们可以快乐地计算标准正态分布的均值，然后一般的正态分布就呼之欲出了：
+\begin{align*}
+E(X)&=\int_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&=\int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx- \int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&=\frac{\Gamma(1)}{\sqrt{2\pi}}-\frac{\Gamma(1)}{\sqrt{2\pi}}\\
+&=0
+\end{align*}
+我为什么不用奇函数对称区间积分得$0$？因为这是广义积分，两边的极限不是对称取得的。对称取得到的是柯西主值，它只在两边都收敛的情况下和广义积分相等。所幸它在这里确实是正确的，但是不加考虑地使用会在柯西分布被偷袭！
+
+标准正态分布的方差：
+\begin{align*}
+D(X)&=E(X^2)-(E(X))^2\\
+&= \int_{-\infty}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&= 2\int_{0}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&= \frac{2}{\sqrt{\pi}}\int_{0}^{+\infty}u^{\frac 12}e^{-u}du & u=\frac{x^2}{2}\\
+&= \frac{2}{\sqrt{\pi}}\Gamma\left(\frac 32\right)=1\\
+\end{align*}
+
+于是对于一般的正态分布，如果$Y\sim N(\mu,\sigma^2)$，也就是$\frac{Y-\mu}{\sigma}\sim N(0,1)$，那么$E(Y)=\mu$,$D(Y)\sim \sigma^2$。它们被称为位置参数和尺度参数的平方也就很合理了。
+
+我们可以把结论推广到标准正态分布任意阶原点矩。首先，它的任意阶矩都是存在的。
+
+它的奇数阶矩都可以用刚才处理均值的方法得到$0$。它的偶数阶矩就需要稍加计算了，让我们算下$2m$阶原点矩：
+\begin{align*}
+\mu_{2m} &= \int_{-\infty}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&= 2\int_{0}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+&= \frac{2^m}{\sqrt{\pi}}\int_{0}^{+\infty}u^{m-\frac 12}e^{-u}du& u=\frac{x^2}{2}\\
+&= \frac{2^m}{\sqrt{\pi}}\Gamma\left( m + \frac 12 \right)\\
+&= \frac{2^m}{\sqrt{\pi}}\frac{(2m)!}{4^m m!}\sqrt{\pi}\\
+&= \frac{(2m)!}{2^m m!}
+\end{align*}
+
+另一种写法是双阶乘$(2m-1)!!$，即$(2m-1)(2m-3)\cdots1$。
+
+正态分布是一种稳定的分布，或者说独立的正态分布具有可加性。令$X_1\sim N(\mu_1,\sigma_1^2), X_2 \sim N(\mu_2,\sigma_2^2)$，如果他们独立，则$Y=X_1+X_2 \sim N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$。注意是平方的和，不是和的平方。证明如下：
+\begin{align*}
+f_Y(y)&=\int_{-\infty}^{+\infty}f_{X_1}(t)f_{X_2}(y-t)dt\\
+&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}\sigma_1}e^{-\frac{(t-\mu_1)^2}{2\sigma_1^2}} \frac{1}{\sqrt{2\pi}\sigma_2}e^{-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}}dt\\
+&=\frac{1}{2\pi\sigma_1\sigma_2}\int_{-\infty}^{+\infty}Exp\left(-\frac{(t-\mu_1)^2}{2\sigma_1^2}-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}\right)dt\\
+\end{align*}
+
+看上去不是很简单，但是事实上这里没有什么困难，主要是配平方。为了方便，设$A=\frac{1}{2\sigma_1^2}$，$B=\frac{1}{2\sigma_2^2}$，则有
+\begin{align*}
+&\quad-A(t-\mu_1)^2-B(y-t-\mu_2)^2\\
+&=-(A+B)\left[t-\frac{A\mu_1+B(y-\mu_2)}{A+B} \right]^2 - \frac{(y-\mu_1-\mu_2)^2}{2(\sigma_1^2+\sigma_2^2)}\\
+&=-(\frac{\sigma_1^2+\sigma_2^2}{\sigma_1^2\sigma_2^2})\left[t-\frac{\sigma_2^2\mu_1+\sigma_1^2(y-\mu_2)}{\sigma_1^2+\sigma_2^2} \right]^2 - \frac{(y-\mu_1-\mu_2)^2}{2(\sigma_1^2+\sigma_2^2)}\\
+\end{align*}
+
+我们先把$\frac{\sigma_1^2+\sigma_2^2}{2\sigma_1^2\sigma_2^2}$称为$k$，$\left[t-\frac{\sigma_2^2\mu_1+\sigma_1^2(y-\mu_2)}{\sigma_1^2+\sigma_2^2} \right]^2$称为$d$。
+代回到原式，我们得到：
+\begin{align*}
+f_Y(y)&=\frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\int_{-\infty}^{+\infty}e^{-k(t-d)^2}dt\\
+&= \frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\sqrt{\frac{\pi}{k}}\\
+&= \frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\sqrt{\frac{\pi\sigma_1^2\sigma_2^2}{2(\sigma_1^2+\sigma_2^2)}}\\
+&= \frac{1}{\sqrt{2\pi}\sqrt{\sigma_1^2+\sigma_2^2}}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\\
+\end{align*}
+
+对任意有限多个独立的正态分布也有这样的性质。
+
+\subsubsection{多元正态分布}
+
+多个正态变量的联合概率分布是有点说法的，我们只需要掌握它们的均值向量和协方差矩阵，它们之间的关系就可以把握了。
+
+我们先给出多元正态分布的定义，再给出我们这样做的合理性。随机向量$\textbf{X}=(X_1,\ldots,X_n)^T$，服从多元正态分布记作$\mathbf{X} \sim N_n(\boldsymbol{\mu},\Sigma)$，其中$\Sigma$是一个正定对称矩阵。其概率密度为：
+
+\[
+f_{\mathbf{X}}(\mathbf{x})=\frac{1}{(2\pi)^{\frac n2}\sqrt{\det \Sigma}}e^{-\frac12(\mathbf{x}-\boldsymbol{\mu})^T\Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})}
+\]
+
+\paragraph{边缘分布正态性}
+这样定义自然是有内在的合理性的。首先它的每个边缘分布都是正态分布：
+
+将 $\mathbf{X}$ 分块为
+\[
+\mathbf{X} = \begin{pmatrix} X_1 \\ \mathbf{X}_{(2)} \end{pmatrix},\quad
+\boldsymbol{\mu} = \begin{pmatrix} \mu_1 \\ \boldsymbol{\mu}_{(2)} \end{pmatrix},\quad
+\Sigma = \begin{pmatrix} \sigma_{11} & \mathbf{r}^T \\[2pt] \mathbf{r} & \Sigma_{22} \end{pmatrix},
+\]
+其中 $\mathbf{r} = \operatorname{Cov}(X_1, \mathbf{X}_{(2)})$ 为 $ (n-1)\times 1 $ 向量。
+
+根据分块矩阵求逆公式，有
+\[
+(\mathbf{x} - \boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu})
+= \frac{(x_1 - \mu_1)^2}{\sigma_{11}}
++ \bigl(\mathbf{x}_{(2)} - \boldsymbol{\mu}_{(2)} - \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r}\bigr)^T
+\Sigma_{22\mid 1}^{-1}
+\bigl(\mathbf{x}_{(2)} - \boldsymbol{\mu}_{(2)} - \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r}\bigr),
+\]
+其中 $\Sigma_{22\mid 1} = \Sigma_{22} - \dfrac{1}{\sigma_{11}} \mathbf{r} \mathbf{r}^T$。
+
+$X_1$ 的边缘概率密度为
+\begin{align*}
+f_{X_1}(x_1) &= \int_{\mathbb{R}^{n-1}} f_{\mathbf{X}}(x_1, \mathbf{x}_{(2)}) \, d\mathbf{x}_{(2)} \\
+&= \frac{1}{(2\pi)^{n/2} \sqrt{\det \Sigma}}
+\exp\!\Bigl[ -\frac{(x_1 - \mu_1)^2}{2\sigma_{11}} \Bigr]
+\int_{\mathbb{R}^{n-1}}
+\exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] d\mathbf{x}_{(2)},
+\end{align*}
+其中
+\[
+Q(\mathbf{x}_{(2)}; x_1) =
+\bigl(\mathbf{x}_{(2)} - \boldsymbol{\mu}_{(2)} - \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r}\bigr)^T
+\Sigma_{22\mid 1}^{-1}
+\bigl(\mathbf{x}_{(2)} - \boldsymbol{\mu}_{(2)} - \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r}\bigr).
+\]
+这就是剥离第一行第一列成分后得到的二次型
+
+对 $\mathbf{x}_{(2)}$ 的积分是多元正态 $N\bigl(\boldsymbol{\mu}_{(2)} + \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r},\; \Sigma_{22\mid 1}\bigr)$ 的归一化积分：
+\[
+\int_{\mathbb{R}^{n-1}} \exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] d\mathbf{x}_{(2)}
+= (2\pi)^{(n-1)/2} \sqrt{\det \Sigma_{22\mid 1}}.
+\]
+
+代入并利用行列式公式 $\det \Sigma = \sigma_{11} \cdot \det \Sigma_{22\mid 1}$，得
+\begin{align*}
+f_{X_1}(x_1)
+&= \frac{1}{(2\pi)^{n/2} \sqrt{\sigma_{11} \det \Sigma_{22\mid 1}}}
+\exp\!\Bigl[ -\frac{(x_1 - \mu_1)^2}{2\sigma_{11}} \Bigr]
+\cdot (2\pi)^{(n-1)/2} \sqrt{\det \Sigma_{22\mid 1}} \\
+&= \frac{1}{\sqrt{2\pi\sigma_{11}}}
+\exp\!\Bigl[ -\frac{(x_1 - \mu_1)^2}{2\sigma_{11}} \Bigr].
+\end{align*}
+
+这正是 $N(\mu_1, \sigma_{11})$ 的概率密度函数。
+
+\paragraph{可逆线性变换不变性}
+多元正态分布还有一个很好的性质，即线性变换不变性。若$\mathbf{X}\sim N_n(\boldsymbol{\mu},\Sigma)$，线性变换$A:R^n\to R^m$为满射，$\mathbf{b}$为常向量，则$A\mathbf{X}+\mathbf{b}\sim N_m(A\boldsymbol{\mu}+\mathbf{b}, A\Sigma A^T)$。
+
+我们先证明一个弱一点的结论，即$n=m$的情况，也就是$A$是一个$\mathbb{R}^n$的线性自同构。不过这里我们仍然可以类比一元时的思路：我们可以把任意正态分布做线性变换变成标准正态分布，把标准正态分布变成任何正态分布。在多元的情况下，具有标准正态分布地位的这个分布是$N_n(\mathbf{0},I_n)$。由于$\Sigma$是一个正算子，所以我可以得出其唯一的正平方根分解$\sqrt{\Sigma}$。和一元的情况简直如出一辙，令$\mathbf{U}= (\sqrt{\Sigma})^{-1}(\mathbf{X}-\boldsymbol{\mu})$就有了！这是可逆的情况，所以用超棒的变量代换公式就可以验证。反过来，我刚才给出的变换也是可逆的，这可太棒了。
+
+\paragraph{协方差}
+插上一嘴，$\mathbf{U}\sim N_n(\mathbf{0},I_n)$这个分布的诸分量是相互独立的，证明也是直接的，因为$\mathbf{x}^TI_n^{-1}\mathbf{x}$就是$\sum_{i=1}^nx_i^2$，很容易被拆开。类似而更一般地，如果$\Sigma$是个对角矩阵，诸分量也是独立的。我们也就可以把$N_n(\mathbf{0},I_n)$叫做独立标准正态分布。
+
+甚至更进一步地，这告诉我们$\Sigma$恰好就是$Cov(\mathbf{X})$。
+按刚才的推导，$\mathbf{X} = \boldsymbol{\mu} + \sqrt{\Sigma} \mathbf{U}$，其中 $\mathbf{U} \sim N_n(\mathbf{0},I_n)$，于是乎
+
+\begin{align*}
+Cov(\mathbf{X})
+&= E((\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^T) \\
+&= E((\sqrt{\Sigma} \mathbf{U})(\sqrt{\Sigma} \mathbf{U})^T) \\
+&= \sqrt{\Sigma} E(\mathbf{U} \mathbf{U}^T) \sqrt{\Sigma}^T\\
+&= \sqrt{\Sigma} I_n \sqrt{\Sigma}^T\\
+&= \Sigma
+\end{align*}
+
+\paragraph{独立性的等价条件}
+关于多元正态分布，还有更好的性质：两个边缘分布不相关当且仅当两个边缘分布独立。这一结论推广到任意多个变量也是成立的。我们下面证明更困难的那个方向：
+
+设 $\mathbf{X} \sim N_n(\boldsymbol{\mu}, \Sigma)$。将 $\mathbf{X}$ 分成两个子向量 $\mathbf{X_1}, \mathbf{X_2}$。设 $\Sigma_{12} = \mathbf{0}$，我们来证明 $\mathbf{X}_1$ 与 $\mathbf{X}_2$ 独立。
+
+由于 $\Sigma_{12} = \mathbf{0}$，协方差矩阵为分块对角矩阵：
+\[
+\Sigma = \begin{pmatrix} \Sigma_{11} & \mathbf{0} \\ \mathbf{0} & \Sigma_{22} \end{pmatrix}.
+\]
+其逆矩阵为
+\[
+\Sigma^{-1} = \begin{pmatrix} \Sigma_{11}^{-1} & \mathbf{0} \\ \mathbf{0} & \Sigma_{22}^{-1} \end{pmatrix}.
+\]
+行列式为
+\[
+\det \Sigma = \det \Sigma_{11} \cdot \det \Sigma_{22}.
+\]
+
+$\mathbf{X}$ 的联合概率密度为
+\begin{align*}
+f_{\mathbf{X}}(\mathbf{x}) 
+&= \frac{1}{(2\pi)^{n/2} |\Sigma|^{1/2}} 
+\exp\Bigl[ -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^\top \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu}) \Bigr] \\
+&= \frac{1}{(2\pi)^{p/2} |\Sigma_{11}|^{1/2}} 
+\exp\Bigl[ -\frac{1}{2} (\mathbf{x}_1 - \boldsymbol{\mu}_1)^\top \Sigma_{11}^{-1} (\mathbf{x}_1 - \boldsymbol{\mu}_1) \Bigr] \\
+&\quad \cdot
+\frac{1}{(2\pi)^{q/2} |\Sigma_{22}|^{1/2}} 
+\exp\Bigl[ -\frac{1}{2} (\mathbf{x}_2 - \boldsymbol{\mu}_2)^\top \Sigma_{22}^{-1} (\mathbf{x}_2 - \boldsymbol{\mu}_2) \Bigr]\\
+& = f_{\mathbf{X}_1}(\mathbf{x}_1) \cdot f_{\mathbf{X}_2}(\mathbf{x}_2)
+\end{align*}
+这正是 $\mathbf{X}_1$ 的边缘概率密度 $f_{\mathbf{X}_1}(\mathbf{x}_1)$ 与 $\mathbf{X}_2$ 的边缘概率密度 $f_{\mathbf{X}_2}(\mathbf{x}_2)$ 的乘积！二者独立。
+
+\paragraph{更一般的情况：满线性映射不变性}
+现在考虑一般的满射线性映射 $A: \mathbb{R}^n \to \mathbb{R}^m$。我们可以将 $A\mathbf{X} + \mathbf{b}$ 分解为三个线性变换的复合：
+
+1. \textbf{标准化：} $\mathbf{X} \mapsto \mathbf{U} = (\sqrt{\Sigma})^{-1}(\mathbf{X} - \boldsymbol{\mu})$，得到 $N_n(\mathbf{0}, I_n)$。
+
+2. \textbf{投影：} 由于 $\mathbf{U}$ 的分量独立同分布 $N(0,1)$，取它的前 $m$ 个分量 $\mathbf{U}_m = (U_1,\dots,U_m)^T$ 即得到 $N_m(\mathbf{0}, I_m)$。  
+更一般地，满射 $A$ 作用在 $\mathbf{X}$ 上相当于作用在 $\mathbf{U}$ 上：  
+\[
+A\mathbf{X} + \mathbf{b} = A(\boldsymbol{\mu} + \sqrt{\Sigma}\,\mathbf{U}) + \mathbf{b}
+= (A\boldsymbol{\mu} + \mathbf{b}) + A\sqrt{\Sigma}\,\mathbf{U}.
+\]
+记 $\tilde{A} = A\sqrt{\Sigma} \in \mathbb{R}^{m \times n}$，则 $\tilde{A}\mathbf{U}$ 是独立标准正态变量的线性组合。
+
+3. \textbf{重新参数化：} $\tilde{A}\mathbf{U} \sim N_m(\mathbf{0}, \tilde{A}\tilde{A}^T)$，且  
+\[
+\tilde{A}\tilde{A}^T = A\sqrt{\Sigma} (A\sqrt{\Sigma})^T = A\Sigma A^T.
+\]
+于是
+\[
+A\mathbf{X} + \mathbf{b} \sim N_m(A\boldsymbol{\mu} + \mathbf{b}, A\Sigma A^T).
+\]
+
+这个分解展示了：任意多元正态分布的线性变换只是对独立标准正态变量做线性组合，从而结果仍是多元正态。
+
+\paragraph{标准独立正态的正交变换不变性}
+对标准独立正态分布应用正交变换$Q$，还有更好的结果。若$\mathbf{X}\sim N_n(\mathbf{0},I_n)$，则有$Q\mathbf{X} \sim N_n(Q\mathbf{0},QI_nQ^T)=N_n(\mathbf{0},I_n)$。也就是说正交变换保持标准独立正态分布不变。
+
+\paragraph{服从多元正态分布的等价条件}
+这一结论应用在$\mathbb{R}^n$上的线性泛函时有奇效。正向结论是成立的，反向结论也是成立的！就是说：$\mathbf{X}=(X_1,\ldots,X_n)^T$服从多元正态分布\textbf{当且仅当}对于任意线性泛函$\phi:\mathbb{R}^n\to \mathbb{R}$，随机变量$\phi(\mathbf{X})$服从一元正态分布。
+
+反方向的证明如下：
+\begin{proof}
+由Riesz表示定理，任意线性泛函$\phi$都可以表示成和某个向量$\mathbf{v}$的内积，即$\phi(\mathbf{X}) = \mathbf{c}^T\mathbf{X}$。
+
+按前面的结论，我们可以猜想它其实就服从$N_n(\boldsymbol{\mu},\Sigma)$，其中$\boldsymbol{\mu} = E(\mathbf{X}), \Sigma=Cov(\mathbf{X})$，但是要证明它还是需要一点技巧的。
+
+我们可以先尝试构造相互独立的正态变量，然后再达到它。因为我们知道：独立的正态分布的联合分布确实是多元独立正态分布（只需要做个简单的乘法）。
+
+它的线性代数表达就是对$\Sigma$做谱分解得到$Q\Lambda Q^T$，这里$Q$是正交的，$\Lambda$是对角的特征值矩阵。我们简单地令$\mathbf{Z}=Q^T(\mathbf{X}-\boldsymbol{\mu})$，那么它均值为$\mathbf{0}$，其协方差
+\[
+Cov(\mathbf{Z}) = Cov(Q^T(\mathbf{X}-\boldsymbol{\mu})) = Q^TCov(\mathbf{X})Q = Q^TQ\Lambda Q^TQ = \Lambda
+\]
+
+太好了，$\mathbf{Z}$各分量是彼此不相关的！我们只需要证明各分量是正态的，就知道各分量是相互独立的！而我做的变换也确实能保证$\mathbf{Z}$诸分量是正态的：
+\begin{align*}
+Z_i&=\mathbf{e}_i^T\mathbf{Z}\\
+& =\mathbf{e}_i^TQ^T(\mathbf{X}-\boldsymbol{\mu})\\
+& = (Q\mathbf{e}_i)^T\mathbf{X} - (Q\mathbf{e}_i)^T\boldsymbol{\mu}
+\end{align*}
+
+由假设，$(Q\mathbf{e}_i)^T\mathbf{X}$是正态，加上常数仍然正态。于是乎，$\mathbf{Z}$就确定是服从$N_n(\mathbf{0},\Lambda)$的。$\mathbf{X} = Q\mathbf{Z} + \boldsymbol{\mu}$，于是就有$\mathbf{X}\sim N_n(\boldsymbol{\mu}, Q\Lambda Q^T)=N_n(\boldsymbol{\mu}, \Sigma)$。
+\end{proof}
+
+有了这些性质，我们就能更向前迈进了。
+
+\subsubsection{Rayleigh分布}
+
+瑞利分布常用于描述二维向量的模长分布。它在形式上类似于指数分布的升级版。
+
+若随机变量 $X$ 的概率密度函数为
+
+\[
+f_X(x) = \begin{cases}
+    \dfrac{x}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}}, & x \geq 0,\\
+    0, & x < 0,
+\end{cases}
+\]
+其中 $\sigma > 0$ 为尺度参数，则称 $X$ 服从参数为 $\sigma$ 的Rayleigh分布，记作 $X \sim \mathrm{Rayleigh}(\sigma)$。
+
+其累积分布函数为
+
+\[
+F_X(x) = \begin{cases}
+    1 - e^{-\frac{x^2}{2\sigma^2}}, & x \geq 0,\\
+    0, & x < 0.
+\end{cases}
+\]
+
+如果随机变量 $Y_1, Y_2$ 均服从 $N(0, \sigma^2)$且相互独立，则 $R = \sqrt{Y_1^2 + Y_2^2} \sim \mathrm{Rayleigh}(\sigma)$。
+
+它的均值
+\begin{align*}
+E(X) &= \int_{0}^{+\infty} \dfrac{x^2}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} dx\\
+&= \sqrt{2}\sigma\int_{0}^{+\infty} u^{\frac 12} e^{-u} du & u=\frac{x^2}{2\sigma^2}\\
+&= \sqrt{2}\sigma \Gamma(\frac{3}{2}) = \sigma \sqrt{\frac{\pi}2}
+\end{align*}
+
+方差
+\begin{align*}
+D(X) &= E(X^2)- (E(X))^2 \\
+&= \int_{0}^{+\infty} \dfrac{x^3}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} dx-\sigma^2 \frac{\pi}2\\
+&= 2\sigma^2\int_{0}^{+\infty} ue^{-u} du - \sigma^2 \frac{\pi}2\\
+&= 2\sigma^2\Gamma(2)-\sigma^2 \frac{\pi}2\\
+&=\frac{4-\pi}{2}\sigma^2
+\end{align*}
+
+通信中平坦衰落信道的包络，雷达信号中杂波幅值，风速、海洋波高等物理量都可以用瑞利分布拟合。
+
+\subsubsection{Weibull分布}
+
+韦布尔分布是可靠性工程与生存分析中极为重要的连续分布，它是指数分布与Rayleigh分布的推广，也是三类极值分布之一。
+
+若随机变量 $X$ 的概率密度函数为
+
+\[
+f_X(x) = \begin{cases}
+    \dfrac{k}{\lambda} \left( \dfrac{x}{\lambda} \right)^{k-1} e^{-(x/\lambda)^k}, & x \geq 0,\\
+    0, & x < 0,
+\end{cases}
+\]
+其中 $k > 0$ 为形状参数，$\lambda > 0$ 为尺度参数，则称 $X$ 服从Weibull分布，记作 $X \sim \mathrm{Weibull}(k, \lambda)$。
+
+其累积分布函数为
+
+\[
+F_X(x) = \begin{cases}
+    1 - e^{-(x/\lambda)^k}, & x \geq 0,\\[6pt]
+    0, & x < 0.
+\end{cases}
+\]
+
+可以看到，当 $k = 1$ 时，退化为指数分布 $Exp(\lambda)$；当 $k = 2$ 时，即为Rayleigh分布 $\mathrm{Rayleigh}\bigl(\frac{\lambda}{\sqrt{2}}\bigr)$；当 $k \approx 3.6$ 时，分布形状很接近正态分布。
+
+其均值：
+\begin{align*}
+E(X) &= \int_0^{+\infty} k \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}dx \\
+&= \lambda\int_0^{+\infty} u^{\frac{1}{k}} e^{-u}du & u=\left(\frac{x}{\lambda}\right)^k \\
+&= \lambda\Gamma\left(1+\frac{1}{k}\right)
+\end{align*}
+
+其方差：
+\begin{align*}
+D(X) &= E(X^2)-(E(X))^2 \\
+&= \int_0^{+\infty} kx \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}dx - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right)\\
+&= \lambda^2\int_0^{+\infty} u^{\frac{2}{k}} e^{-u}du - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right) & u=\left(\frac{x}{\lambda}\right)^k\\
+&= \lambda^2\left(\Gamma\left(1+\frac{2}{k}\right)- \Gamma^2\left(1+\frac{1}{k}\right)\right)
+\end{align*}
+
+\subsubsection{Gamma分布}
+Gamma分布由$\Gamma$函数标准化而来，也可以作为泊松过程中第 $s$（非整数）个事件的等待时间分布的推广
+
+若随机变量 $X$ 的概率密度函数为
+
+\[
+f_X(x) = \begin{cases}
+    \dfrac{x^{s-1} e^{-\frac{x}{\theta}}}{\theta^s \Gamma(s)}, & x > 0,\\[10pt]
+    0, & x \le 0,
+\end{cases}
+\]
+其中 $s > 0$ 为形状参数，$\theta > 0$ 为尺度参数，则称 $X$ 服从Gamma分布，记作 $X \sim \Gamma(s, \theta)$。
+
+当 $s = 1$ 时，即为指数分布 $Exp(\theta)$；当 $s = n$（正整数）时，即为Erlang分布 $Erlang(n, \theta)$。
+
+Gamma分布具有可加性，若 $X \sim \Gamma(s_1, \theta)$，$Y \sim \Gamma(s_2, \theta)$ 且独立，则 $X + Y \sim \Gamma(s_1 + s_2, \theta)$。这一证明和前面Erlang分布的可加性如出一辙，只不过把阶乘换成$\Gamma$函数就是了。
+
+也很容易推广出其均值$E(X)=s\theta$，方差$D(X)=s\theta^2$。
+
+\subsubsection{Beta分布}
+Beta分布是定义在区间 $(0,1)$ 上的连续分布，由Beta函数标准化而来。
+
+若随机变量 $X$ 的概率密度函数为
+
+\[
+f_X(x) = \begin{cases}
+    \dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, & 0 < x < 1,\\[10pt]
+    0, & \text{其他},
+\end{cases}
+\]
+其中 $\alpha > 0$，$\beta > 0$ 为形状参数，则称 $X$ 服从Beta分布，记作 $X \sim \mathrm{Beta}(\alpha, \beta)$。
+
+其均值
+\begin{align*}
+E(X)&=\int_{0}^{1} \dfrac{x^{\alpha}(1-x)^{\beta-1}}{B(\alpha,\beta)}dx\\
+&= \frac{B(\alpha+1,\beta)}{B(\alpha,\beta)} = \dfrac{\alpha}{\alpha + \beta}
+\end{align*}
+
+方差
+\begin{align*}
+D(X) &= E(X^2)-(E(X))^2 \\
+&= \int_{0}^{1} \dfrac{x^{\alpha+1}(1-x)^{\beta-1}}{B(\alpha,\beta)}dx-\dfrac{\alpha^2}{(\alpha + \beta)^2}\\
+&= \frac{B(\alpha+2,\beta)}{B(\alpha,\beta)} - \dfrac{\alpha^2}{(\alpha + \beta)^2}\\
+&= \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
+\end{align*}
+
+从Beta函数的定义就能很自然得出：若 $Y_1 \sim \Gamma(\alpha, 1)$，$Y_2 \sim \Gamma(\beta, 1)$ 且独立，则
+\[
+X = \frac{Y_1}{Y_1 + Y_2} \sim \mathrm{Beta}(\alpha, \beta).
+\]
+
+Beta分布可以用来描述顺序统计量的分布：
+
+对于 $U_{(1)}, \dots, U_{(n)}$ 为来自 $U(0,1)$ 的次序统计量（即我们从小到大排了个序），有 $U_{(k)} \sim \mathrm{Beta}(k, n-k+1)$。这也是因为Beta函数就可以理解为组合数的一种解析延拓。
+
+\subsubsection{Cauchy分布}
+柯西分布一般是作为一个经典反例而出现的。我们记随机变量$X$服从柯西分布为$X\sim Cauchy(a, b)$。$a$和$b$分别被称为位置参数和尺度参数。
+
+柯西分布的概率密度函数是：
+\[
+f_X(x) = \frac{1}{b\pi} \frac{1}{1+(\frac{x-a}{b})^2}
+\]
+
+令$a=0, \;b=1$就得到标准柯西分布$\frac{1}{\pi}\frac{1}{1+x^2}$。显然任意柯西分布$X\sim Cauchy(a,b)$可以通过变量代换得出$a+bX\sim Cauchy(0,1)$。
+
+它最显著的性质就是：没有均值！不妨对标准柯西分布尝试一下：
+\[
+\int_{-\infty}^{\infty} x \frac{1}{\pi} \frac{1}{1+x^2} dx
+\]
+
+看上去是个奇函数，可以直接对称区间积分得零。\textbf{但这是广义积分}。任意一边拿出来积分都不收敛：
+\[
+\frac{1}{\pi} \frac{x}{1+x^2} > \frac{1}{\pi x}
+\]
+
+\textbf{后面的几个经典不等式和大数定律也将与它无缘}。
+
+不过蛮好，柯西分布稳定可加。令$X\sim Cauchy(a_1,b_1),\; Y\sim Cauchy(a_2,b_2)$，$X,Y$独立则有$X+Y\sim Cauchy(a_1+a_2,b_1+b_2)$。如果缺乏复分析技巧的话，仅用积分技巧很难得到这个结论。而使用复分析的手法来计算的话，思路非常简单，只是有一些烦人的代数化简，所以这里就姑且跳过证明。真正好使的处理方法是用特征函数。

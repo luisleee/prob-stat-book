@@ -1,0 +1,316 @@
+
+\section{经典定理}
+\subsection{马尔可夫不等式}
+
+该不等式不要求方差存在，只需非负性与期望存在。其形式简单但威力强大，是后续更精细不等式的基础。
+马尔可夫不等式给出了非负随机变量超出某正数的概率上界。
+
+\begin{theorem}[马尔可夫不等式]
+设 \(X\) 为非负随机变量（即 \(P(X \ge 0)=1\)），且均值 \(E(X)\) 存在。则对任意实数 \(a > 0\)，有
+\[
+P(X \ge a) \le \frac{E(X)}{a}.
+\]
+\end{theorem}
+
+\begin{proof}
+证明是非常简单直接的。这里用连续的形式表示，离散的情况是类似的。
+\begin{align*}
+P(X\geq a) &= \int_{a}^{+\infty}f(x)dx\\ 
+&\leq \int_{a}^{+\infty}\frac{x}{a}f(x)dx \\
+&\leq \int_{0}^{+\infty}\frac{x}{a}f(x)dx = \frac{E(X)}{a}
+\end{align*}
+\end{proof}
+
+\subsection{切比雪夫不等式}
+
+切比雪夫不等式利用方差对随机变量偏离其均值的程度给出概率上界。
+
+\begin{theorem}[切比雪夫不等式]
+设随机变量 \(X\) 的数学期望 \(E(X)=\mu\) 和方差 \(D(X)=\sigma^2\) 均存在（\(\sigma^2>0\)）。则对任意实数 \(k > 0\)，有
+\[
+P(|X-\mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2}.
+\]
+\end{theorem}
+
+\begin{proof}
+对非负随机变量 \((X-\mu)^2\) 应用马尔可夫不等式，取 \(a=\epsilon^2\)，得
+\[
+P\left( (X-\mu)^2 \ge \epsilon^2 \right) \le \frac{E((X-\mu)^2)}{\epsilon^2} = \frac{\sigma^2}{\epsilon^2}.
+\]
+\end{proof}
+
+该不等式给出了分布未知时偏差概率的保守估计。特别地，取 \(\epsilon = m\sigma\) 可得 \(P(|X-\mu| \ge m\sigma) \le \frac{1}{m^2}\)。它表明方差越小，随机变量越集中在均值附近。
+
+如果此时$\sigma = 0$，那么$P(X=\mu) =1$，也就是$X$\textbf{几乎处处}为常数！
+
+\subsection{弱大数定律}
+弱大数定律描述了独立同分布随机变量序列的样本均值依概率收敛于总体均值的经典结论。
+
+\begin{theorem}[弱大数定律]
+设 \(X_1, X_2, \dots, X_n, \dots\) 是独立同分布的随机变量序列，且 \(E(X_i)=\mu\)，\(D(X_i)=\sigma^2 < \infty\)。记样本均值为
+\[
+\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i.
+\]
+则对任意 \(\varepsilon > 0\)，有
+\[
+\lim_{n \to \infty} P\left( \left| \overline{X}_n - \mu \right| \ge \varepsilon \right) = 0.
+\]
+即 \(\overline{X}_n\) 依概率收敛于 \(\mu\)，记作 \(\overline{X}_n \stackrel{P}{\longrightarrow} \mu\)。
+\end{theorem}
+
+\begin{proof}
+    
+由独立同分布性，
+\[
+E(\overline{X}_n) = \mu, \quad D(\overline{X}_n) = \frac{\sigma^2}{n}.
+\]
+对 \(\overline{X}_n\) 应用切比雪夫不等式得
+\[
+P\left( \left| \overline{X}_n - \mu \right| \ge \varepsilon \right) \le \frac{D(\overline{X}_n)}{\varepsilon^2} = \frac{\sigma^2}{n \varepsilon^2}.
+\]
+令 \(n \to \infty\)，右端趋于 \(0\)，即得
+\[
+\lim_{n \to \infty} P\left( \left| \overline{X}_n - \mu \right| \ge \varepsilon \right) = 0.
+\]
+\end{proof}
+
+注意这里给出的该定律是方差有限的形式。若去掉方差有限的条件，仅保留期望存在，仍有一个更一般的弱大数定律（辛钦大数定律），但证明需用特征函数等工具。
+
+并且注意这里的收敛性是依概率收敛。这里有几种不同的收敛性：依分布收敛，依概率收敛，几乎必然收敛，均方收敛。强大数定律的收敛是几乎必然收敛。
+这几种收敛性的定义和区别如下：
+
+\begin{enumerate}
+    \item \textbf{依分布收敛}：分布函数逐点收敛到极限分布函数（在连续点处）。
+    \item \textbf{依概率收敛}：随机变量序列与极限随机变量的偏差超过任意给定值的概率趋于零。
+    \item \textbf{几乎必然收敛}：随机变量序列以概率1收敛到极限随机变量。
+    \item \textbf{均方收敛}：随机变量序列与极限随机变量的均方差趋于零。
+\end{enumerate}
+
+它们之间的强弱关系为：
+\[
+\text{几乎必然收敛} \implies \text{依概率收敛} \implies \text{依分布收敛},
+\]
+\[
+\text{均方收敛} \implies \text{依概率收敛}.
+\]
+收敛强弱关系的证明就不在这里给出了。
+
+这一大数定律也给出了伯努利大数定律，联系概率与频率的理论基础。
+\begin{theorem}[伯努利大数定律]
+设 $n_A$ 为 $n$ 次独立伯努利试验中事件 $A$ 发生的次数，每次试验中 $A$ 发生的概率为 $p$（$0 < p < 1$）。则对任意 $\varepsilon > 0$，有
+\[
+\lim_{n \to \infty} P\left( \left| \frac{n_A}{n} - p \right| \ge \varepsilon \right) = 0.
+\]
+即事件 $A$ 发生的频率 $f_A=\frac{n_A}{n}$ 依概率收敛于其概率 $p$。
+\end{theorem}
+
+\section{中心极限定理}
+中心极限定理是概率论中最重要的定理之一，它揭示了大量独立（得有均值方差）随机变量和的标准化形式依分布收敛于标准正态分布的规律。
+
+\subsection{矩母函数和特征函数（傅里叶变换）}
+要严格证明中心极限定理，我们需要引入刻画随机变量分布特征的工具——矩母函数和特征函数。
+\paragraph{矩母函数}
+设随机变量 $X$ 的分布函数为 $F_X(x)$。若存在 $h > 0$，使得对任意 $|t| < h$，期望 $E(e^{tX})$ 存在，则称
+\[
+M_X(t) = E(e^{tX}) = \int_{-\infty}^{+\infty} e^{tx} dF_X(x)
+\]
+为 $X$ 的矩母函数。
+
+事实上另一个等价的定义才是其得名的原因：
+\begin{align*}
+M_X(t)&=\int_{-\infty}^{+\infty} e^{tx} dF_X(x)\\
+&=\int_{-\infty}^{+\infty} \sum_{n=0}^{+\infty}\frac{(tx)^n}{n!} dF_X(x)\\
+&=\sum_{n=0}^{\infty}\frac{t^n}{n!}\int_{-\infty}^{+\infty}x^n dF_X(x)\\
+&=\sum_{n=0}^{\infty}\frac{\mu_nt^n}{n!}
+\end{align*}
+如果它的各阶矩存在的话，这就是其各阶矩给出的一个泰勒级数。
+
+有一件好事是，若两个随机变量的矩母函数在包含$0$某个区间内相等，则它们服从同一分布。这事实上就是解析函数的性质使然。至于为什么包含$0$呢？因为在$t=0$处，矩母函数的诸阶导数就是诸阶矩。
+
+然而，仅凭矩相等（而不假定矩母函数在 $0$ 点邻域存在）并不能保证分布相同。著名的反例由 Stieltjes 和 Heyde 给出：
+
+考虑密度函数
+\[
+f_0(x) = \frac{1}{\sqrt{2\pi}} x^{-1} e^{-(\ln x)^2/2}, \quad x > 0,
+\]
+以及对于 $\alpha \in [-1, 1]$，
+\[
+f_\alpha(x) = f_0(x) \bigl[1 + \alpha \sin(2\pi \ln x) \bigr], \quad x > 0.
+\]
+
+这些分布具有以下性质：
+\begin{itemize}
+    \item 对任意 $\alpha \in [-1, 1]$，$f_\alpha(x)$ 是合法的概率密度函数（非负且归一）。
+    \item 所有 $f_\alpha$ 对应的分布具有完全相同的各阶矩：
+    \[
+    \int_0^\infty x^k f_\alpha(x) dx = e^{k^2/2}, \quad k = 0, 1, 2, \dots
+    \]
+    \item 但当 $\alpha \neq 0$ 时，$f_\alpha$ 与 $f_0$ 是不同的分布。
+\end{itemize}
+
+这个反例之所以成立，是因为这些分布的矩母函数 $M(t) = E(e^{tX})$ 在 $t>0$ 时不收敛（矩增长太快，$E(e^{tX}) = \infty$ 对任意 $t>0$），因此定理中“矩母函数在包含 $0$ 的区间内存在”的条件不满足。此时仅凭矩序列无法唯一确定分布。
+
+这一现象也出现在具有\textbf{本性奇点}的复变函数中：尽管函数在某点所有导数都相同（对应矩相等），但函数本身在该点邻域内可能有不同的解析延拓（对应不同分布）。解析性始终是这个问题的关键。
+
+不过在性质良好的分布情况下，我们有更精彩的结论：\textbf{卷积定理}。如果随机变量$X,Y$相互独立，且矩母函数分别为$M_X(t),M_Y(t)$，则$Z=X+Y$的矩母函数就有$M_Z(t)=M_X(t)M_Y(t)$。我在这里给出一个连续情况的证明：
+
+\begin{align*}
+M_Z(t)&= \int_{-\infty}^{+\infty}e^{tz}f_Z(z)dz\\
+&= \int_{-\infty}^{+\infty}e^{tz}\left(\int_{-\infty}^{+\infty}f_X(\tau)f_Y(z-\tau)d\tau\right)dz\\
+&= \int_{-\infty}^{+\infty}e^{t\tau}f_X(\tau)\left(\int_{-\infty}^{+\infty}e^{t(z-\tau)}f_Y(z-\tau)dz\right)d\tau\\
+&= \int_{-\infty}^{+\infty}e^{t\tau}f_X(\tau)\left(\int_{-\infty}^{+\infty}e^{tu}f_Y(u)du\right)d\tau & u= z-\tau\\
+&= \left(\int_{-\infty}^{+\infty}e^{t\tau}f_X(\tau)d\tau\right)\left(\int_{-\infty}^{+\infty}e^{tu}f_Y(u)du\right)\\
+&= M_X(t)M_Y(t)
+\end{align*}
+
+\paragraph{特征函数}
+坏消息是，矩母函数不一定收敛。不过好消息是，我们在实的解析性难以取得的时候，可以考虑转向复的解析性。
+
+设随机变量 $X$ 的分布函数为 $F_X(x)$，称
+\[
+\phi_X(t) = E(e^{itX}) = \int_{-\infty}^{+\infty} e^{itx} dF_X(x)
+\]
+为 $X$ 的特征函数。
+
+特征函数的好处是：对任意随机变量 $X$ 和任意 $t \in \mathbb{R}$，有 $|e^{itX}| = 1$，故 $|E(e^{itX})| \le 1$，特征函数总是存在。
+
+而且显然它存在就具有解析性，因为指数就是解析的。于是就有特征函数与分布函数一一对应。只要在包含$0$的足够稠密的区间上两个特征函数处处相等，则两个分布也相等。我们可以找出一种从特征函数反过来求分布的逆变换，不过我们先把它放在后面。
+
+如果矩都收敛的话，这是个复的泰勒级数：
+
+\begin{align*}
+\phi_X(t) &=\int_{-\infty}^{+\infty} e^{itx} dF_X(x) \\
+&=\sum_{n=0}^{\infty}\frac{(it)^n}{n!}\int_{-\infty}^{+\infty}x^n dF_X(x)\\
+&=\sum_{n=0}^{\infty}\mu_ni^n\frac{t^n}{n!}\\
+\end{align*}
+
+此时能求导得回$\mu_k=i^{-k} \phi_X^{(k)}(0)$。
+
+眼尖的朋友会发现，这不就是傅里叶变换吗（不过差了一个符号）？掏出我们的二重积分来验证，卷积定理仍然成立。如果随机变量$X,Y$相互独立，且特征函数分别为$\phi_X(t),\phi_Y(t)$，则$Z=X+Y$的特征函数就有$\phi_Z(t)=\phi_X(t)\phi_Y(t)$。
+\begin{align*}
+\phi_Z(t)&= \int_{-\infty}^{+\infty}e^{itz}f_Z(z)dz\\
+&= \int_{-\infty}^{+\infty}e^{itz}\left(\int_{-\infty}^{+\infty}f_X(\tau)f_Y(z-\tau)d\tau\right)dz\\
+&= \int_{-\infty}^{+\infty}e^{it\tau}f_X(\tau)\left(\int_{-\infty}^{+\infty}e^{it(z-\tau)}f_Y(z-\tau)dz\right)d\tau\\
+&= \int_{-\infty}^{+\infty}e^{it\tau}f_X(\tau)\left(\int_{-\infty}^{+\infty}e^{itu}f_Y(u)du\right)d\tau & u= z-\tau\\
+&= \left(\int_{-\infty}^{+\infty}e^{it\tau}f_X(\tau)d\tau\right)\left(\int_{-\infty}^{+\infty}e^{itu}f_Y(u)du\right)\\
+&= \phi_X(t)\phi_Y(t)
+\end{align*}
+
+非常容易归纳到任意多相互独立随机变量，卷积计算大大简化，而且总能这么做。
+
+傅里叶变换还提醒我们尺度收缩和平移性质，放在一起就是线性变换性质。若$X$的特征函数为$\phi_X(t)$，则$Y=a+bX\quad(b\neq 0)$的特征函数$\phi_Y(t)$有：
+\begin{align*}
+\phi_Y(t) &=\int_{-\infty}^{+\infty}e^{ity}f_Y(y)dy\\
+&= \int_{-\infty}^{+\infty}e^{ity}\frac1{|b|}f_X\left(\frac{y-a}{b}\right)dy\\
+&= \int_{-\infty}^{+\infty} e^{it(a+bu)} f_X(u)du & u=\frac{y-a}{b}\\
+&= e^{ita}\int_{-\infty}^{+\infty} e^{i(bt)u} f_X(u)du\\
+&=e^{ita} \phi_X(bt)
+\end{align*}
+
+傅里叶变换告诉我们逆变换是怎样的（只要$\phi_X$绝对可积）：
+\[
+f_X(x) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} e^{-itx} \phi_X(t) dt.
+\]
+
+上面给出的一些分布的特征函数是这样的：
+\begin{itemize}
+    \item \textbf{正态分布} $N(\mu, \sigma^2)$：
+    \[
+    \phi(t) = \exp\left(i\mu t - \frac{\sigma^2 t^2}{2}\right).
+    \]
+    
+    \item \textbf{泊松分布} $\pi(\lambda)$：
+    \[
+    \phi(t) = \exp\left[\lambda(e^{it} - 1)\right].
+    \]
+    
+    \item \textbf{指数分布} $\mathrm{Exp}(\theta)$：
+    \[
+    \phi(t) = \frac{1}{1 - i\theta t}.
+    \]
+    
+    \item \textbf{伽马分布} $\Gamma(s, \theta)$：
+    \[
+    \phi(t) = \frac{1}{(1 - i\theta t)^s}.
+    \]
+    \item \textbf{柯西分布} $Cauchy(a, b)$：
+    \[
+    \phi(t) = e^{iat-b|t|}.
+    \]
+\end{itemize}
+
+在走向中心极限定理之前，我们只差一个结论了，即特征函数连续性定理。
+
+\begin{theorem}[连续性定理]
+分布函数列 $\{F_n\}$ 弱收敛（也就是\textbf{几乎处处}收敛）于分布函数 $F$ 当且仅当相应的特征函数列 $\{\phi_n(t)\}$ 逐点收敛于 $F$ 的特征函数 $\phi(t)$，且 $\phi(t)$ 在 $t=0$ 处连续。
+\end{theorem}
+
+证明涉及控制收敛定理，本人放弃在此说明。
+
+\subsection{中心极限定理}
+
+这里我们终于可以真正严格地走向中心极限定理了。
+
+\begin{theorem}[Lindeberg–Lévy 中心极限定理]
+设 $X_1, X_2, \dots$ 是\textbf{独立同分布}的随机变量序列，$E(X_i) = \mu$，$D(X_i) = \sigma^2 < \infty$（$\sigma > 0$）。记
+\[
+S_n = \sum_{i=1}^n X_i, \quad \overline{X}_n = \frac{S_n}{n}.
+\]
+则标准化和
+\[
+Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}} = \frac{\overline{X}_n - \mu}{\sigma/\sqrt{n}}
+\]
+\textbf{依分布收敛}于标准正态分布：
+\[
+Z_n \xrightarrow{d} N(0,1), \quad n \to \infty.
+\]
+即对任意 $x \in \mathbb{R}$，
+\[
+\lim_{n\to\infty} P(Z_n \le x) = \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{-t^2/2} dt.
+\]
+\end{theorem}
+
+\begin{proof}
+设 $Y_i = \frac{X_i - \mu}{\sigma}$，则 $E(Y_i)=0$，$D(Y_i)=1$，且 $Z_n = \frac{1}{\sqrt{n}} \sum_{i=1}^n Y_i$。
+
+记 $\phi(t)$ 为 $Y_i$ 的特征函数。由于 $E(Y_i)=0$，$E(Y_i^2)=1$，且高阶矩有限，由泰勒展开：
+\[
+\phi(t) = 1 - \frac{t^2}{2} + o(t^2), \quad t \to 0.
+\]
+
+$Z_n$ 的特征函数为：
+\[
+\phi_{Z_n}(t) = E\left(e^{itZ_n}\right) = E\left(e^{i\frac{t}{\sqrt{n}}\sum_{i=1}^n Y_i}\right) = \left[\phi\left(\frac{t}{\sqrt{n}}\right)\right]^n.
+\]
+
+取对数得：
+\[
+\ln \phi_{Z_n}(t) = n \ln\left[1 - \frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right].
+\]
+
+利用 $\ln(1+z) = z + o(z)$（$z\to 0$），当 $n\to\infty$ 时：
+\[
+\ln \phi_{Z_n}(t) = n\left[-\frac{t^2}{2n} + o\left(\frac{t^2}{n}\right)\right] = -\frac{t^2}{2} + o(1).
+\]
+
+故
+\[
+\lim_{n\to\infty} \phi_{Z_n}(t) = e^{-t^2/2}.
+\]
+
+而 $e^{-t^2/2}$ 正是标准正态分布 $N(0,1)$ 的特征函数。
+
+由连续性定理，特征函数逐点收敛且极限函数 $e^{-t^2/2}$ 在 $t=0$ 处连续（实际上在全实轴连续），故 $Z_n$ 的分布函数弱收敛于标准正态分布函数 $\Phi(x)$。
+\end{proof}
+
+干得漂亮！
+
+随之有个简单的推论。如果我们把二项分布看成独立同分布两点分布之和，应用中心极限定理就得到
+\begin{theorem}[Laplace-De Moivre中心极限定理]
+若$X\sim b(n,p)$，则$n\to\infty$时有：
+\[
+\frac{X-np}{\sqrt{np(1-p)}}\xrightarrow{d} N(0,1)
+\]
+\end{theorem}
+
+像这样的中心极限定理还很多，不过万变不离其宗。我们可以对泊松分布、Erlang分布、卡方分布等也给出类似结论。

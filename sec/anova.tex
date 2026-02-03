@@ -1,0 +1,325 @@
+
+\section{方差分析}
+方差分析（简称 ANOVA）是一种统计方法，用于检验两个或两个以上总体均值之间的差异是否显著。单因素方差分析是指只考虑一个因素（自变量）对观测结果（因变量）的影响。其基本思想是将观测数据的总变异分解为两部分：一是由所研究的因素引起的变异（组间变异），二是由随机误差引起的变异（组内变异）。通过比较这两部分变异的大小来判断该因素对观测结果的影响是否显著。
+\subsection{单因素试验的方差分析}
+
+我们的模型是这样的：假设某因素有 $r$ 个水平，每个水平下进行了 $n_i$ 次独立试验，结果为随机变量 $X_{ij}$。单因素方差分析的模型为：
+\[
+X_{ij}=\mu_i+\epsilon_{ij}=\mu+\delta_i+\epsilon_{ij},\quad i=1,2,\ldots,r;\quad j=1,2,\ldots,n_i
+\]
+
+其中：
+\begin{itemize}
+\item $X_{ij}$服从正态分布$N(\mu_i,\sigma^2)$，且相互独立。
+\item $\mu$ 为\textbf{总平均}。
+\item $\delta_i$ 为第 $i$ 个水平的\textbf{效应}，满足 $\sum_{i=1}^r n_i \delta_i = 0$。
+\item $\epsilon_{ij}$ 为随机误差，服从正态分布 $N(0, \sigma^2)$。注意这里预设了方差齐性。
+\end{itemize}
+
+它的假设检验也就是这样的：
+\begin{align*}
+H_0&: \mu_1 = \mu_2 = \dots = \mu_r = \mu\\
+H_1&：\exists \mu_i \neq \mu
+\end{align*}
+或者等价地：
+\begin{align*}
+H_0&: \delta_1 = \delta_2 = \dots = \delta_r = 0\\
+H_1&：\exists \delta_i \neq 0
+\end{align*}
+
+这一检验的统计量构造是有挑战性的。为了行文方便，我们先给出一些基本参数和统计量的定义。
+
+\begin{align*}
+\text{总样本量：} &n = \sum_{i=1}^r n_i\\
+\text{总样本均值：} &\overline{X} = \frac{1}{n}\sum_{i=1}^r\sum_{j=1}^{n_i}X_{ij} \\
+\text{组内样本均值：} &\overline{X}_i = \frac{1}{n_i}\sum_{j=1}^{n_i}X_{ij} \\
+\end{align*}
+
+其中关键的一些量是一些平方和：
+\begin{itemize}
+\item \textbf{总离差平方和} $S_T = \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X})^2$，反映全部观测值的总变异。
+\item \textbf{组间离差平方和} $S_A = \sum_{i=1}^r n_i (\overline{X}_i - \overline{X})^2$，反映因素水平不同引起的变异。
+\item \textbf{组内离差平方和} $S_E = \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X}_i)^2$，反映随机误差引起的变异。
+\item 三者关系：$S_T = S_A + S_E$。
+\end{itemize}
+
+我们在下面简单地展开验证下平方分解。
+\begin{align*}
+S_T &= \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X})^2\\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} [(X_{ij} - \overline{X}_i) + (\overline{X}_i - \overline{X})]^2 \\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X}_i)^2 + \sum_{i=1}^r \sum_{j=1}^{n_i} (\overline{X}_i - \overline{X})^2 + 2\sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X}_i)(\overline{X}_i - \overline{X}) \\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X}_i)^2 + \sum_{i=1}^r n_i(\overline{X}_i - \overline{X})^2\\
+&= S_E+S_A
+\end{align*}
+
+有一些朴素的计算化简：
+\begin{align*}
+S_T &= \sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X})^2\\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} X_{ij}^2 - 2\overline{X}\sum_{i=1}^r \sum_{j=1}^{n_i}X_{ij} + \sum_{i=1}^r \sum_{j=1}^{n_i}\overline{X}^2\\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} X_{ij}^2 - 2n\overline{X}^2 + n\overline{X}^2\\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} X_{ij}^2 - n\overline{X}^2\\
+\end{align*}
+以及
+\begin{align*}
+S_A &= \sum_{i=1}^r n_i (\overline{X}_i - \overline{X})^2\\
+&= \sum_{i=1}^r n_i \overline{X}_i^2 -2\overline{X}\sum_{i=1}^r n_i\overline{X}_i^2 + \sum_{i=1}^r n_i\overline{X}^2\\
+&= \sum_{i=1}^r n_i \overline{X}_i^2 -2n\overline{X}^2  + n\overline{X}^2\\
+&= \sum_{i=1}^r n_i \overline{X}_i^2 -n\overline{X}^2
+\end{align*}
+
+记总和$T=n\overline{X}$，组内总和$T_i=n_i\overline{X}_i$，也可以写成
+\begin{align*}
+S_T &= \sum_{i=1}^r \sum_{j=1}^{n_i} X_{ij}^2 - \frac{T^2}{n}\\
+S_A &= \sum_{i=1}^r \frac{T_i^2}{n_i} -\frac{T^2}{n}\\
+S_E &= S_T-S_A
+\end{align*}
+
+它们有这样的统计特性：
+\begin{theorem}
+对于组间离差平方和$S_A$，组内离差平方和$S_E$，总样本均值$\overline{X}$，有：
+
+\begin{itemize}
+    \item $S_A$与$S_E$与$\overline{X}$相互独立
+    \item $\frac{S_E}{\sigma^2}\sim \chi^2(n-r)$
+    \item \textbf{在原假设下}，$\frac{S_A}{\sigma^2}\sim \chi^2(r-1)$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+这个命题看起来很像我们对样本方差和样本均值的论述，其证明也是类似的，重点在于构造正交变换。
+
+首先我们给出样本的随机向量$\mathbf{X} = (X_{11},\ldots,X_{1n_1},\ldots,X_{r1},\ldots,X_{rn_r})^T$。
+
+我们构造的这个正交变换$Q$，要让我们得到的$\mathbf{Z}=Q\mathbf{X}$是这样的：
+\begin{itemize}
+    \item 第一个分量$Y_1$对应总体均值
+    \item 接下来$r-1$个分量对应组间变异
+    \item 剩下$n-r$个分量对应组内变异
+\end{itemize}
+
+这个构造基本上就是把这些表达式写出来，然后归一化。具体来说，$Q$的第一行为
+\[
+\mathbf{q}_1=(\frac{1}{\sqrt{n}},\ldots,\frac{1}{\sqrt{n}})
+\]
+接下来的 $r-1$ 行（组间对比方向）：
+
+第 $k+1$ 行（$k=1,\ldots,r-1$）：
+\[
+\mathbf{q}_{k+1} = (c_{k1}, \ldots, c_{k1},
+c_{k2}, \ldots, c_{k2},
+\cdots ,
+c_{kr}, \ldots, c_{kr})
+\]
+
+其中：
+\[
+c_{ki} = 
+\begin{cases}
+\displaystyle \frac{1}{\sqrt{n_1 + \cdots + n_k}} \cdot \sqrt{\frac{n_i}{n}} & i \leq k \\
+\displaystyle -\sqrt{\frac{n_1 + \cdots + n_k}{n_{k+1}}} \cdot \sqrt{\frac{n_i}{n}} & i = k+1 \\
+0 & i > k+1
+\end{cases}
+\]
+
+剩下的 $n-r$ 行（组内变异方向）：
+
+对于第 $i$ 组（$i=1,\ldots,r$），在该组内部构造 $n_i-1$ 个正交向量。记第 $i$ 组的观测位置为 $p_i+1$ 到 $p_i+n_i$，其中 $p_i = \sum_{j=1}^{i-1} n_j$。
+
+对于 $a=1,\ldots,n_i-1$，定义向量 $\mathbf{q}_{r+p_i+a}$ 的第 $j$ 个分量为：
+\[
+(\mathbf{q}_{r+p_i+a})_j = 
+\begin{cases}
+\displaystyle \frac{1}{\sqrt{a(a+1)}} &  p_i+1 \leq j \leq p_i+a \\
+\displaystyle -\frac{r}{\sqrt{a(a+1)}} &  j = p_i+a+1 \\
+0 & \text{其他}
+\end{cases}
+\]
+
+这样就构造完成了，请自己检验下吧。
+
+于是我们就可以把$\mathbf{X}\sim N_n(\boldsymbol{\mu},\sigma^2I_n)$变换成
+$\mathbf{Z}\sim N_n(Q\boldsymbol{\mu},Q\sigma^2I_nQ^T) = N_n(Q\boldsymbol{\mu},\sigma^2I_n)$。它的各分量是独立的！
+
+$\overline{X}$就是$\mathbf{Z}$第一个分量，$S_A$就是$\mathbf{Z}$后面的$r-1$个分量的平方和，$S_E$就是剩下$n-r$各分量的平方和。三者相互独立就证明完成了。剩下就是证明两个卡方分布了。
+
+注意我们对$Q$的定义，\textbf{在原假设下}（也就是说一切$X_{ij}$都是独立同分布的），$\boldsymbol{\mu} = \mu\mathbf{1}_n$，由我们对$Q$的定义，$Q\boldsymbol{\mu} = \mu(\sqrt{n},0,\ldots,0)^T$。
+所以我们取走$\mathbf{Z}$的后面$r-1$和$n-r$个分量，它们就服从独立同方差的正态分布$N_{n-1}(\mathbf{0},\sigma^2I_{n-1})$。
+
+于是这两个卡方分布也很显然了。
+不过事实上，在原假设不为真的情况下，$\frac{S_E}{\sigma^2}\sim \chi^2(n-r)$也是成立的。这只需要一点小小的分析：
+\begin{align*}
+\frac{S_E}{\sigma^2} &= \frac1{\sigma^2}\sum_{i=1}^r \sum_{j=1}^{n_i} (X_{ij} - \overline{X}_i)^2 \\
+&= \sum_{i=1}^r \sum_{j=1}^{n_i} \left(\frac{\epsilon_{ij}}{\sigma}\right)^2
+\end{align*}
+我们知道$\frac{\epsilon_{ij}}{\sigma} \sim N(0,1)$，并且所有随机误差相互独立。所以平方和加在一起就是$\frac{S_E}{\sigma^2}\sim \chi^2(n-r)$。
+\end{proof}
+
+
+于是我们就能构造一个$F$检测统计量：
+\[
+F=\frac{S_A/(r-1)}{S_E/(n-r)}
+\]
+
+这是一个单侧检验，因为假设不成立时，$S_A$会偏大。于是它的的拒绝域就是
+\[
+F=\frac{S_A/(r-1)}{S_E/(n-r)}\geq F_\alpha(r-1,n-r)
+\]
+
+我们可以把分析结果排在一个\textbf{方差分析表}中。
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{c|c|c|c|c}
+    \hline
+方差来源    &平方和    &自由度    &均方 &F值  \\
+    \hline
+因素A      & $S_A$   & $r-1$     & $\overline{S}_A=\frac{S_A}{r-1}$ & $F=\frac{\overline{S_A}}{\overline{S_E}}$ \\
+    \hline
+误差E      & $S_E$   & $n-r$     & $\overline{S}_E=\frac{S_E}{r-1}$ &\\
+    \hline
+综合T      & $S_T$   & $n-1$    & &\\
+    \hline
+\end{tabular}
+    \caption{方差分析表}
+    \label{tab:anova}
+\end{table}
+
+\subsection{未知参数估计}
+
+在对$\sigma^2$做估计的时候，我们应该求助于$S_E$，因为$S_A$与$\sigma^2$的关系会因原假设是否成立而改变。
+
+由前面的式子，知道$E(\frac{S_E}{n-r}) =\sigma^2$，它可以作为$\sigma^2$的无偏估计。我们对$\mu$和$\mu_i$也有无偏估计$\overline{X}$，$\overline{X}_i$。
+
+当我们拒绝原假设时，问题会变得复杂。这时均值是不完全相同的，即效应$\delta_i$不全为$0$。因为$\delta_i = \mu_i -\mu$，所以其无偏估计为$\overline{X}_i-\overline{X}$。
+
+我们还想知道，拒绝原假设时$S_A$是怎样的。我们知道它会偏大，但是定量地说：
+\begin{align*}
+E(S_A) &= E\left( \sum_{i=1}^r n_i \overline{X}_i^2 -n\overline{X}^2 \right) \\
+& = \sum_{i=1}^r n_i E(\overline{X}_i^2) - nE(\overline{X}^2)\\
+& = \sum_{i=1}^r n_i [D(\overline{X}_i)+(E(\overline{X}_i))^2] - n[D(\overline{X})+(E(\overline{X}))^2]\\
+&= \sum_{i=1}^r n_i\left( \frac{\sigma^2}{n_i}+\mu_i^2\right) - n\left(\frac{\sigma^2}{n} +\mu^2 \right)\\
+&= r\sigma^2 +\sum_{i=1}^r n_i(\mu+\delta_i)^2 - \sigma^2 +n\mu^2\\
+&= (r-1)\sigma^2 + \sum_{i=1}^r n_i\mu^2 +2\mu\sum_{i=1}^r n_i\delta_i +\sum_{i=1}^rn_i\delta_i^2 - n\mu^2\\
+&= (r-1)\sigma^2 +\sum_{i=1}^rn_i\delta_i^2
+\end{align*}
+
+在拒绝原假设时，我们不光想了解两个总体$N(\mu_i,\sigma^2)$和$N(\mu_j,\sigma^2)$的均值之差的点估计，我们还想要区间估计。根据前面的讨论，它们是独立的。我们这时应该用$t$分布去估计，而不是正态分布，因为方差是未知的，我们只是用$S_E$估计了方差！
+
+这个$t$分布则应该通过$\overline{X}_i-\overline{X}_j$和$S_E$来构造，它们是独立的。应用前面的结论，就有：
+\[
+\frac{(\overline{X}_i-\overline{X_j})-(\mu_i-\mu_j)}{\sqrt{S_E\left(\frac{1}{n_i}+\frac{1}{n_j}\right)}} \sim t(n_i+n_j-2)
+\]
+注意$S_E$是一个平方和，是类似方差而不是标准差的量，虽然它记号上很像标准差。
+
+\subsection{等重复双因素试验的方差分析}
+
+加入第二个因素之后，事情会一下子变得复杂起来。两个因素不仅可能各自独立地对结果产生效应，它们还可能交互地对结果产生效应。同时如果试验重复次数不等，那么因素的分解还会更加困难，和顺序相关（会产生四类平方和的计算方式）。所以这里我们先研究等重复的情况。
+
+我们的模型会变成这样：假设因素A有 $r$ 个水平，因素B有$r$个水平，每种水平的组合下进行了 $t$ 次独立试验，结果为随机变量 $X_{ijk}$。双因素方差分析的模型为：
+\[
+X_{ijk}=\mu_{ij}+\epsilon_{ijk},\quad i=1,2,\ldots,r;\quad j=1,2,\ldots,s;\quad k=1,2,\ldots,t
+\]
+或者
+\[
+X_{ijk} = \mu + \alpha_i+\beta_j+\gamma_{ij} + \epsilon_{ijk}
+\]
+
+其中：
+\begin{itemize}
+\item $X_{ijk}$服从正态分布$N(\mu_{ij},\sigma^2)$，且相互独立。
+\item $\mu$ 为\textbf{总平均}。
+\item $\mu_{i\cdot}$为\textbf{行平均}，即对因素A的第$i$个水平求平均。
+\item $\mu_{\cdot j}$为\textbf{列平均}，即对因素B的第$j$个水平求平均。
+\item $\alpha_i$ 为因素A第 $i$ 个水平的效应，即$\mu_{i\cdot}-\mu$，满足 $\sum_{i=1}^r  \alpha_i = 0$。
+\item $\beta_j$ 为因素B第 $j$ 个水平的效应，即$\mu_{\cdot j}-\mu$，满足 $\sum_{j=1}^s \beta_j = 0$。
+\item $\gamma_{ij}$为因素A第 $i$ 个水平与因素B第 $j$ 个水平的\textbf{交互效应}，即$\mu_{ij}-\mu_{i\cdot}-\mu_{\cdot j} +\mu$，满足$\sum_{i=1}^r\gamma_{ij}=0$，$\sum_{j=1}^s\gamma_{ij}=0$。
+\item $\epsilon_{ijk}$ 为随机误差，服从正态分布 $N(0, \sigma^2)$。注意这里预设了方差齐性。
+\end{itemize}
+
+这时其实就有三个假设待我们检验：
+\begin{align*}
+H_{01}&:\alpha_1=\cdots=\alpha_r=0 \\
+H_{02}&:\beta_1=\cdots=\beta_s=0 \\
+H_{03}&:\gamma_{11}=\cdots=\gamma_{rs}=0 \\
+\end{align*}
+也就是因素A有没有差女生效应，因素B有没有产生效应，因素A和因素B有没有产生交互效应。
+
+类比单因素的思路，我们可以将总偏差平方和（又叫\textbf{总变差}）进行分解，分解为\textbf{误差平方和}$S_E$，因素A、因素B的\textbf{效应平方和}$S_A,S_B$，和A与B的\textbf{交互效应平方和}$S_{A\times B}$。
+
+我们先引入一些统计量的记号，然后再来研究这一分解。
+\begin{align*}
+\overline{X} &= \frac{1}{rst}\sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^tX_{ijk}\\
+\overline{X}_{i\cdot} &= \frac{1}{st}\sum_{j=1}^s\sum_{k=1}^tX_{ijk}\\
+\overline{X}_{\cdot j} &= \frac{1}{rt}\sum_{i=1}^r\sum_{k=1}^tX_{ijk}\\
+\overline{X}_{ij} &= \frac{1}{t}=\sum_{k=1}^tX_{ijk}\\
+\end{align*}
+
+和单因素类似，总变差不过多了一次求和，我们这里给出它的定义和分解：
+\begin{align*}
+S_T&=\sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^t(X_{ijk}-\overline{X})^2\\
+&= \sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^t[(X_{ijk}-\overline{X}_{ij})
++(\overline{X}_{i\cdot}-\overline{X})
++(\overline{X}_{\cdot j}-\overline{X})
++(\overline{X}_{ij}-\overline{X}_{i\cdot}-\overline{X}_{\cdot j}+\overline{X})]^2\\
+&= \sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^t(X_{ijk}-\overline{X}_{ij})^2\\
+&\quad+ st\sum_{i=1}^r(\overline{X}_{i\cdot}-\overline{X})^2\\
+&\quad+ rt\sum_{j=1}^s(\overline{X}_{\cdot j}-\overline{X})^2\\
+&\quad+ t \sum_{i=1}^r\sum_{j=1}^s(\overline{X}_{ij}-\overline{X}_{i\cdot}-\overline{X}_{\cdot j}+\overline{X})^2
+\end{align*}
+
+这四部分分解就是：
+\begin{align*}
+S_E &= \sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^t(X_{ijk}-\overline{X}_{ij})^2\\
+S_A &= st\sum_{i=1}^r(\overline{X}_{i\cdot}-\overline{X})^2\\
+S_B &= rt\sum_{j=1}^s(\overline{X}_{\cdot j}-\overline{X})^2\\
+S_{A\times B} &= t \sum_{i=1}^r\sum_{j=1}^s(\overline{X}_{ij}-\overline{X}_{i\cdot}-\overline{X}_{\cdot j}+\overline{X})^2\\
+S_T &= S_E +S_A + S_B+S_{A\times B}
+\end{align*}
+
+平方和也可以被写成：
+\begin{align*}
+S_E &= \sum_{i=1}^r\sum_{j=1}^s\sum_{k=1}^tX_{ijk}^2-rst\overline{X}^2\\
+S_A &= st\sum_{i=1}^r\overline{X}_{i\cdot}^2-rst\overline{X}^2\\
+S_B &= rt\sum_{j=1}^s\overline{X}_{\cdot j}^2-rst\overline{X}^2\\
+S_{A\times B} &= \left(t\sum_{i=1}^r\sum_{j=1}^s\overline{X}_{ij}-rst\overline{X}^2 \right) -S_A-S_B\\
+S_E &= S_T - S_A-S_B -S_{A\times B}
+\end{align*}
+
+它们的统计特性和单因素类似：
+\begin{itemize}
+    \item $\overline{X}$,$S_A$,$S_B$,$S_{A\times B}$,$S_E$相互独立。
+    \item $\frac{S_E}{\sigma^2}\sim \chi^2(rs(t-1))$。
+    \item $E(S_E)=rs(t-1)\sigma^2$。
+    \item $H_{01}$成立时，$\frac{S_A}{\sigma^2}\sim \chi^2(r-1)$。更进一步，$\frac{S_A/(r-1)}{S_E/[rs(t-1)]} \sim F(r-1,rs(t-1))$。
+    \item $E(S_A)=(r-1)\sigma^2+st\sum_{i=1}^r \alpha_i^2$。
+    
+    \item $H_{02}$成立时，$\frac{S_B}{\sigma^2}\sim \chi^2(s-1)$。更进一步，$\frac{S_B/(s-1)}{S_E/[rs(t-1)]} \sim F(s-1,rs(t-1))$。
+    \item $E(S_B)=(s-1)\sigma^2+rt\sum_{j=1}^s \beta_j^2$。
+    
+    \item $H_{03}$成立时，$\frac{S_{A\times B}}{\sigma^2}\sim \chi^2((r-1)(s-1))$。更进一步，$\frac{S_{A\times B}/[(r-1)(s-1)]}{S_E/[rs(t-1)]} \sim F((r-1)(s-1),rs(t-1))$。
+    \item $E(S_{A\times B})=(r-1)(s-1)\sigma^2+t\sum_{i=1}^r\sum_{j=1}^s\gamma_{ij}^2$。
+\end{itemize}
+
+于是像单因素试验一样，我们也可以对这三个假设用$F$检验了。我们一样可以列出方差分析表\ref{tab:two-way-anova}。
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{c|c|c|c|c}
+    \hline
+    方差来源    & 平方和 & 自由度 & 均方 & $F$值 \\
+    \hline
+    因素$A$      & $S_A$   & $r-1$     & $\overline{S}_A = \frac{S_A}{r-1}$ & $F_A = \frac{\overline{S}_A}{\overline{S}_E}$ \\
+    \hline
+    因素$B$      & $S_B$   & $s-1$     & $\overline{S}_B = \frac{S_B}{s-1}$ & $F_B = \frac{\overline{S}_B}{\overline{S}_E}$ \\
+    \hline
+    交互作用$A\times B$ & $S_{A\times B}$ & $(r-1)(s-1)$ & $\overline{S}_{A\times B} = \frac{S_{A\times B}}{(r-1)(s-1)}$ & $F_{A\times B} = \frac{\overline{S}_{A\times B}}{\overline{S}_E}$ \\
+    \hline
+    误差$E$      & $S_E$   & $rs(t-1)$ & $\overline{S}_E = \frac{S_E}{rs(t-1)}$ & \\
+    \hline
+    总和$T$      & $S_T$   & $rst-1$   & & \\
+    \hline
+    \end{tabular}
+    \caption{双因素等重复试验方差分析表}
+    \label{tab:two-way-anova}
+\end{table}

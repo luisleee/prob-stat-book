@@ -1,0 +1,160 @@
+\section{概率空间}
+
+一切概率论的问题都应该被放在概率空间里进行研究。所谓概率空间，就是一个三元组，通常记作 $(\Omega, \mathcal{F}, P)$，其中：
+
+$\Omega$ 是\textbf{样本空间}，代表所有可能的实验结果的集合。
+
+$\mathcal{F}$ 是$\Omega$上的 $\sigma$-代数，它是一个集合族，满足以下条件：
+\begin{itemize}
+    \item 包含样本空间 $\Omega$，即 $\Omega \in \mathcal{F}$。
+    \item 若事件 $A \in \mathcal{F}$，则其补集 $A^c \in \mathcal{F}$。（这隐含$\emptyset \in \mathcal{F}$）
+    \item 若事件序列 $A_1, A_2, \ldots \in \mathcal{F}$，则它们的可数并集 $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$。
+\end{itemize}
+这是所有\textbf{事件}的集合。一个事件就是包含一些基本结果的集合。
+
+$P$ 是\textbf{概率测度}，它是定义在 $\mathcal{F}$ 上的函数，满足：
+
+\begin{itemize}
+    \item 对于任意事件 $A \in \mathcal{F}$，$P(A) \geq 0$。
+    \item $P(\Omega) = 1$，即整个样本空间的概率为 1。这一性质也叫归一性。
+    \item 若 $A_1, A_2, \ldots$ 是一列可数的两两不相交的事件，则 $P\left(\bigsqcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$。
+\end{itemize}
+概率$P(A)$就是衡量事件$A$发生的可能性的值，它在$[0,1]$范围内。
+
+这样的定义，保证了我们对的概率定义是良好的，同时我们也有集合论和Lebesgue积分等丰富的工具来研究概率。
+
+事件的本性就是一个集合，于是我们可以用集合论的手法来研究它。事件的运算就是集合的运算。对于两个事件$A,B$：
+\begin{itemize}
+    \item 和事件：$A+B=A \cup B$ 表示事件 $A$ ，$B$ 至少有一个事件发生。
+    \item 积事件：$AB=A \cap B$ 表示事件 $A$ 和事件 $B$ 同时发生。
+    \item 逆事件：$\overline{A}$ 表示事件 $A$ 不发生。
+    \item 差事件：$A - B$ 表示事件 $A$ 发生但事件 $B$ 不发生。
+\end{itemize}
+这些常见的构造也自然满足各种布尔代数性质，这里略过。
+
+事件之间的关系另有一套术语。$A\cap B=\emptyset$称为$A$，$B$\textbf{互斥}。$A$和$\overline{A}$称为一对\textbf{对立}事件。$A\subset B$称为$B$\textbf{包含}$A$，也就是$A$发生一定$B$发生。
+
+根据定义，我们就可以得出事件运算和概率的关系。几个简单的的结论：
+
+\[
+P(\emptyset) =0
+\]
+
+若一族有限的事件$A_i$两两互斥（不交），
+\[
+P(\bigsqcup_{i=1}^{n}A_i) = \sum_{i=1}^{n}A_i
+\]
+
+若$A\subset B$，
+\begin{align*}
+P(B-A)&=P(B)-P(A)\\
+P(B)&\geq P(A)
+\end{align*}
+
+\[
+P(A)\leq P(\Omega) = 1
+\]
+
+\[
+P(\overline{A})=1-P(A)
+\]
+
+概率另有一种连续性的存在。对于一族可数的无穷递增事件$A_1\subset A_2 \subset \cdots $，令$A=\bigcup_{i=1}^{\infty}A_i=\lim_{n\to\infty}A_n$，有：
+\[
+P(A)=\lim_{n\to\infty}P(A_n)
+\]
+这一事实基于可数可加性。令$A^*_i=A_{i+1}-A_i,A_0^*=A_1$，那么我可以把$A$表示成$\bigsqcup_{i=0}^{\infty}A^*_i$，证明也就基本结束了。
+
+对于不一定互斥的事件，他们和事件的概率是这样的：
+
+\[
+P(A+B) = P(A+(B-AB)) = P(A) + P(B-AB) =P(A)+P(B)-P(AB)
+\]
+
+这一经典结论可以推广到任意有限多个事件的和。
+\[
+P(\bigcup_{i=1}^n A_i) = \sum_{k=1}^{n}(-1)^{k-1}\sum_{1\leq i_1<i_2<\cdots<i_k\leq n}P(A_{i_1}A_{i_2}\cdots A_{i_k})
+\]
+这个又叫容斥原理。证明方法很多样，一种简单的方式是使用归纳法。我在这里展示一种莫比乌斯反演的解释。
+\begin{proof}
+为了方便叙述，我们令集合$N=\{1,\ldots,n\}$，我们后面的集合下标就会从$N$中取。$N$的幂集$2^N$中的一个元素就是一组下标的集合${i_1,\ldots,i_k}$。
+
+我们想要求的$P(\bigcup_{i=1}^n A_i)$实际不是一个很方便处理的形式。比较方便处理的是
+\[
+P(\bigcap_{i=1}^n \overline{A_i}) = 1 - P(\bigcup_{i=1}^n A_i)
+\]
+
+接下来，只要能够处理这种积事件的概率，我们就赢了。
+
+我们为了方便计数，我们一定选择不交的事件的积来计算概率。给出一族下标$S\in 2^N$，我可以给出集合$X_S=(\bigcap_{i\in S}A_i)\cap(\bigcap_{i\notin S}\overline{A_i})$。对于任意选定的不同下标组合，对应的这个集合都不交。我们通过这些集合的并，就能轻松组合出任意$Y_S=\bigcap_{i\in S} A_i$。(注意对于$S=\emptyset$，我们可以认为这个交为$\Omega$而不产生任何问题。对偶地，我们认为空并为$\emptyset$。)
+
+比方说对于下标集合$S$，那么我这样就能从一些$X$不交并出集合$Y_S$：
+
+\[
+Y_S=\bigsqcup_{S\subset T} X_T
+\]
+
+对应到概率，令$f(S)=P(X_S),g(S)=P(Y_S)$，有
+
+\[
+g(S) = \sum_{S\subset T}f(T)
+\]
+
+这给我们一个方便的莫比乌斯反演：$2^N$，加上$\subset$构成的偏序集上面的莫比乌斯反演函数是$\mu(S,T)=(-1)^{|S|-|T|}$。莫比乌斯反演的玩法就是，有了上面这个式子，就可以立马得到：
+
+\[
+f(S) = \sum_{S\subset T} \mu(S,T)g(T) = \sum_{S\subset T} (-1)^{|S|-|T|}g(T)
+\]
+
+我们上面想要的东西就是$f(\emptyset)$，按照反演公式，
+
+\begin{align*}
+1 - P(\bigcup_{i=1}^n A_i)&=P(\bigcap_{i=1}^n \overline{A_i})\\
+&=f(\emptyset)\\
+&= \sum_{S\in 2^N}(-1)^{|S|}g(S)\\
+&= \sum_{S\in 2^N}(-1)^{|S|}P(\bigcap_{i\in S}A_i)\\
+&= \sum_{k=0}^n(-1)^k\sum_{1\leq i_1 <i_2 <\cdots <i_k\leq n}P(A_{i_1}A_{i_2}\cdots A_{i_k})
+\end{align*}
+
+好嘛！证明基本就完成了，只差一个$1$和一个负号！单独把$k=0$的情况拿出来，问题就解决了，证明就完成了。
+
+\end{proof}
+
+从容斥原理可以得到两个方便近似的不等式：Boole不等式和Bonferroni不等式。
+
+如果我们只取容斥原理的单事件概率部分，就有：
+\[
+P(\bigcup_{i=1}^n A_i) \leq \sum_{1\leq i\leq n}P(A_{i})
+\]
+
+如果我们只取到奇数个事件之积，那会得到一个概率的上界；只取到偶数个事件之积，那就会得到一个下界：
+\begin{align*}
+\sum_{k=1}^{m}(-1)^{2k-1}\sum_{1\leq i_1<i_2<\cdots<i_2k\leq n}P(A_{i_1}A_{i_2}\cdots A_{i_{2k}})\leq P(\bigcup_{i=1}^n A_i)\\
+P(\bigcup_{i=1}^n A_i) \leq \sum_{k=1}^{m}(-1)^{2k-2}\sum_{1\leq i_1<i_2<\cdots<i_{2k-1}\leq n}P(A_{i_1}A_{i_2}\cdots A_{i_{2k-1}})
+\end{align*}
+
+这得益于式子的正负交错性质。
+
+\textbf{条件概率}在直觉上表示的是，在某个事件$A, P(A)\neq 0$已发生的条件下，另一个事件$B$发生的概率，记作$P(B|A)$。我们可以认为，这由事件$A,P(A)\neq 0$诱导的一个新的概率空间给出。这个概率空间的样本空间有$\Omega'=\Omega$，$\mathcal{F}'=\mathcal{F}$，而条件概率$P(B|A)=\frac{P(A\cap B)}{P(A)}$。很容易验证,它满足概率空间公理。
+
+事件\textbf{独立性}的讨论和条件概率有关。事件$A$与$B$独立也就是$P(A|B)=P(A)$或者$P(B|A)=P(B)$。不过这里需要注意的是，刚才的条件概率不允许条件发生的概率为$0$。为了不失一般性，我们可以认为概率为$0$的事件和其他任意事件都是无关的。刚才的式子可以修改成$P(A)P(B)=P(AB)$。
+
+对于多个事件的无关性，我们起码要求其中任意两个事件之间独立，同时其中任意三个、四个、乃至更多事件放在一起也满足一定的独立性条件。这个独立性条件可以类比为$\prod_{i=1}^nP(A_i)=P(\bigcap_{i=1}^nA_i)$。这一概念推广到可数多事件也是不费力的：可数多事件$A_1,A_2,\ldots$独立当且仅当
+
+\[
+\forall I \in 2^{\mathbb{N}}, \prod_{i\in I}P(A_i)=P(\bigcap_{i\in I}A_i)
+\]
+
+关于条件概率，几个重要的结论是全概率公式和Bayes公式。全概率公式告诉我们如何通过一些条件概率求出事件的概率。令$B$为某个事件，$A_k,k=1,2,\cdots$为一族可数的事件，且$\bigsqcup_{i=1}^\infty A_i = \Omega, P(A_i)\neq 0$，则有：
+\[
+P(B)=\sum_{i=1}^{\infty}P(B|A_i)P(A_i)
+\]
+
+这是比较容易理解的：我们无一遗漏无一重复地考虑所有可能的情况$A_i$，然后计算某种情况发生的概率$P(A_i)$，乘上$P(B|A_i)$就得到情况$A_i$与事件$B$同时发生的概率$P(BA_i)$。对$i$求和就得到了$B$发生的所有可能情况，就是$B$的概率。
+
+如果再进一步，我们就可以通过诸$P(B|A_i)$反过来算出诸$P(A_i|B)$。因为$P(A_i|B)=\frac{P(A_iB)}{P(B)}$。上面的式子可以按定义展开，下面的式子可以由刚才的全概率公式给出。也就有：
+\[
+P(A_i|B)=\frac{P(B|A_i)P(A_i)}{\sum_{i=1}^{\infty}P(B|A_i)P(A_i)}
+\]
+
+有人喜欢把这个称为先后验概率来进行阐释，赋予它一种形而上学意味。我则严格认为，它应该与任何这种解释撇清关系。这会把主观性重新带回我们费尽心思公理化的概率论中，让人感到错误的惊异，并无助于解释的清晰性。

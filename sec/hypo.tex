@@ -1,0 +1,269 @@
+\section{假设检验}
+在统计推断中，除了对未知参数进行估计（点估计和区间估计）之外，另一类核心问题是根据样本信息来判断关于总体分布或参数的某个陈述是否成立。我们会提出一个假设，然后通过统计的手段给出证据决定接受还是拒绝这个假设，这类问题就称为假设检验。
+
+我们这里涉及的假设检验都是\textbf{显著性检验}。它是这样的一个过程：首先我们给出一个\textbf{原假设}$H_0$，和一个与它\textbf{对立}的\textbf{备择假设}$H_1$。也就是说无论怎样，$H_0,H_1$两个命题中都恰好有一个命题是对的，另一个是错的。比如说，$H_0:\mu=\mu_0$，那么$H_1$必须是$\mu\neq \mu_0$。
+
+你可能觉得原假设和备择假设选取是完全任意的，把哪个当作原假设都可以。但实际上是有区别的。一般来说，原假设是一个我们尝试去推翻的东西。我们推翻一个东西时，可以利用归谬法，即先假设它是正确的，然后从中引出荒诞的结论。在概率的世界里，没有什么是绝对荒诞的，只有事情发生的概率不同。对于一枚均匀的硬币，连扔一千次都是正面确实是可能的，但如果这件事真的发生了，我们就该怀疑这个假设了。换句话说，如果在原假设成立的情况下，这组观察值的出现是一个几乎不可能的小概率事件，我们就该拒绝原假设。对于什么是几乎不可能的小概率事件，我们可以用一个\textbf{显著性水平}$\alpha$来量化描述：如果某个事情发生的概率小于$\alpha$，我们就视之为一个几乎不可能的小概率事件。对于不同的任务，我们对显著性水平有不同的选取。比如在检验某种药物是否有效时，我们显然要比检验两种冰淇凌谁更畅销使用更苛刻的标准。
+
+一个常见的误区是，我们拒绝和接受原假设不代表证明其真假。我们实际在做的是尝试去拒绝原假设，而接受原假设只是因为没有足够证据拒绝原假设。
+
+那么这就引出了一个问题：我在是否拒绝原假设这件事上肯定有几率犯错，那我犯错的概率是多大？首先我们需要明确一下什么是犯错。错误有两种，一种是我们本来不该拒绝原假设，但是我们却拒绝了，这叫\textbf{第I类错误}；另一种是我们本来应该拒绝原假设，但是我们却没拒绝，这叫\textbf{第II类错误}。在我们给出显著性水平$\alpha$之后，这种检验犯第I类错误的概率就是：概率小于$\alpha$的某个事件发生的概率。有点绕，但实际上很直接，这一概率就是$\alpha$。显著性检验就是预先给出显著性水平以控制犯第I类错误的概率。但是在显著性检验中，我们犯第II类错误的概率就没这么简单了，我们有时把它叫做$\beta$，把$1-\beta$称为检验的\textbf{功效}。功效是一个和效应大小、参数、样本容量等诸多都相关的量。我们一般会先设定一个预期的功效，然后按该功效决定样本容量，以达到预期功效。当我们把原假设和备择假设的位置对调之后，第I类错误和第II类错误其实就反过来了，$\alpha$和$\beta$也就对调了，所以它们的地位并不随便。实际检验时我们一般会遵循一个“无罪推定”原则，即通常将“无效果”、“无差异”设为原假设。
+
+我们一般把原假设成立时，观测到与当前样本一样极端或更极端结果的概率叫做\textbf{p值}。显然由定义，$\alpha <p$时就无法拒绝原假设，$p >\alpha$时就要拒绝原假设。显著性水平越小，我们就需要更强力的证据来拒绝原假设。我们必须在试验前就指定$\alpha$，在试验后求出p值，如果倒过来无异于先射箭再画靶。这里需要着重强调，这个概率并不是$H_0$为假的概率，而是我前面所说的类似$P(\mathbf{X}=\mathbf{x}|H_0)$这样的条件概率。另一个需要澄清的事情是：p值小不代表实际上的重要效应，有可能只是我们有充足大量的样本。
+
+有一些关于分布参数的特殊形式假设，它们各自有各自的名字和检验方法。不要害怕，求p值这一步的方法就是上一节做区间估计的方法。
+
+对于
+\[H_0:\mu=\mu_0,\quad H_1:\mu\neq\mu_0\]
+这类假设，$H_1$表示参数的取值可能大于$\mu_0$或者小于$\mu_0$。我们把$H_1$称为\textbf{双边备择假设}，我们的检验方法称为\textbf{双边假设检验}。实际上我们做的就是双侧区间估计。
+
+对于
+\[H_0:\mu \geq \mu_0,\quad H_1:\mu<\mu_0\]
+这类假设，我们称$H_1$为\textbf{左边备择假设}，我们的检验方法称为\textbf{左边假设检验}。实际上我们做的就是只给出置信\textbf{下}限的单侧区间估计。
+
+对于
+\[H_0:\mu \leq \mu_0,\quad H_1:\mu>\mu_0\]
+这类假设，我们称$H_1$为\textbf{右边备择假设}，我们的检验方法称为\textbf{右边假设检验}。实际上我们做的就是只给出置信\textbf{上}限的单侧区间估计。
+
+上面两种检验合称\textbf{单边假设检验}。我们必须在试验之前就给出检验的方向，不能看到数据的偏向性之后再选择单边检验。
+
+具体检验中，我们做区间估计用到的枢轴量在这里就被称为\textbf{检验统计量}。我们根据检验统计量$T$的可能取值范围，将其划分成两个互斥的区域：
+
+\begin{itemize}
+    \item \textbf{拒绝域} $R$：如果根据样本计算出的统计量观测值$t$落入这个区域，我们就拒绝原假设。
+    \item \textbf{接受域} $A$：如果$t$落入这个区域，我们就不拒绝原假设。
+\end{itemize}
+
+拒绝域和接受域的边界点就叫\textbf{临界点}。单侧检验有一个临界点，双侧检验有两个临界点。
+
+\subsection{常见的正态总体均值、方差检验法}
+许多正态总体均值、方差检验方法和上一章是雷同的。和上一章内容没有本质区别的部分被我整理在了表\ref{tab:normal_tests}。
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{正态总体均值与方差的假设检验}
+\label{tab:normal_tests}
+\begin{tabular}{c >{\centering\arraybackslash}m{4.2cm} c}
+\toprule
+\textbf{原假设 $H_0$} & \textbf{检验统计量} & \textbf{拒绝域} \\
+\midrule
+% 单正态 Z 检验 (均值检验，方差已知)
+\multirow{3}{*}{$\begin{aligned}
+&\mu \leq \mu_0 \\
+&\mu \geq \mu_0 \\
+&\mu = \mu_0
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}} \sim N(0,1)$} &
+$Z \geq z_{\alpha}$ \\
+& & $Z \leq -z_{\alpha}$ \\
+& & $|Z| \geq z_{\alpha/2}$ \\
+\cmidrule(lr){1-3}
+% 单正态 t 检验 (均值检验，方差未知)
+\multirow{3}{*}{$\begin{aligned}
+&\mu \leq \mu_0 \\
+&\mu \geq \mu_0 \\
+&\mu = \mu_0
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle T = \frac{\bar{X} - \mu_0}{S / \sqrt{n}} \sim t(n-1)$} &
+$T \geq t_{\alpha}(n-1)$ \\
+& & $T \leq -t_{\alpha}(n-1)$ \\
+& & $|T| \geq t_{\alpha/2}(n-1)$ \\
+\cmidrule(lr){1-3}
+% 单正态 卡方检验 (方差检验)
+\multirow{3}{*}{$\begin{aligned}
+&\sigma^2 \leq \sigma_0^2 \\
+&\sigma^2 \geq \sigma_0^2 \\
+&\sigma^2 = \sigma_0^2
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle \chi^2 = \frac{(n-1)S^2}{\sigma_0^2} \sim \chi^2(n-1)$} &
+$\chi^2 \geq \chi^2_{\alpha}(n-1)$ \\
+& & $\chi^2 \leq \chi^2_{1-\alpha}(n-1)$ \\
+& & $\chi^2 \geq \chi^2_{\alpha/2}(n-1) \text{ 或 } \chi^2 \leq \chi^2_{1-\alpha/2}(n-1)$ \\
+\cmidrule(lr){1-3}
+% 双正态 Z 检验 (均值差检验，方差已知)
+\multirow{3}{*}{$\begin{aligned}
+&\mu_1 - \mu_2 \leq \delta_0 \\
+&\mu_1 - \mu_2 \geq \delta_0 \\
+&\mu_1 - \mu_2 = \delta_0
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle Z = \frac{(\bar{X} - \bar{Y}) - \delta_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1)$} &
+$Z \geq z_{\alpha}$ \\
+& & $Z \leq -z_{\alpha}$ \\
+& & $|Z| \geq z_{\alpha/2}$ \\
+\cmidrule(lr){1-3}
+% 双正态 t 检验 (均值差检验，方差未知但相等)
+\multirow{3}{*}{$\begin{aligned}
+&\mu_1 - \mu_2 \leq \delta_0 \\
+&\mu_1 - \mu_2 \geq \delta_0 \\
+&\mu_1 - \mu_2 = \delta_0
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle T = \frac{(\bar{X} - \bar{Y}) - \delta_0}{S_W \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t(n_1 + n_2 - 2)$} 
+&
+$T \geq t_{\alpha}(n_1 + n_2 - 2)$ \\
+& & $T \leq -t_{\alpha}(n_1 + n_2 - 2)$ \\
+& & $|T| \geq t_{\alpha/2}(n_1 + n_2 - 2)$ \\
+\cmidrule(lr){1-3}
+% 双正态 F 检验 (方差比检验)
+\multirow{3}{*}{$\begin{aligned}
+&\sigma_1^2 \leq \sigma_2^2 \\
+&\sigma_1^2 \geq \sigma_2^2 \\
+&\sigma_1^2 = \sigma_2^2
+\end{aligned}$} &
+\multirow{3}{*}{$\displaystyle F = \frac{S_1^2}{S_2^2} \sim F(n_1 - 1, n_2 - 1)$} &
+$F \geq F_{\alpha}(n_1 - 1, n_2 - 1)$ \\
+& & $F \leq F_{1-\alpha}(n_1 - 1, n_2 - 1)$ \\
+& & $F \geq F_{\alpha/2}(n_1 - 1, n_2 - 1)$ \\
+& & $\text{ 或 } F \leq F_{1-\alpha/2}(n_1 - 1, n_2 - 1)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{基于成对数据的$t$检验}
+成对数据是这样的和两组独立的数据是有区别的，成对数据可能有每一对之间的耦合关系。不过我们可以认为不同对的数据是独立的。更形式地说，我们可以认为$(X_1,Y_1),\ldots,(X_n,Y_n)$是来自总体$(X,Y)$的样本。我们在比较它们的差异值$D=X-Y$时，和两个独立总体的情况有所不同。
+
+
+在$X$和$Y$独立的条件下，我们知道：
+\[
+\frac{\overline{D}-\delta}{S_W\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} \sim t(n_1+n_2-2)
+\]
+其中$\delta=\mu_1-\mu_2$，$S_W^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$。
+
+这一结论的基础是在$X,Y$独立的情况下，
+\[
+D(\overline{D}) =D(\overline{X})+D(\overline{Y})= \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}
+\]
+
+但在成对数据中，$X$和$Y$并没有预设的独立性。于是$X,Y$协方差仍然需要考虑。
+\[
+D(\overline{D})=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}-2Cov(\overline{X},\overline{Y})
+\]
+
+样本容量比较小的时候，我们对$\overline{D}$的分布基本束手无策。但是当样本容量很大时，由中心极限定理就有$\overline{D} \approx N(\mu_D,\frac{\sigma_D^2}{n})$。于是这又回到了单正态总体的$t$检验问题了。
+
+我们来推导一下它的双边检验。单边检验留给读者。
+
+检验假设
+\begin{align*}
+H_0 &: \mu_D = 0\\
+H_1 &: \mu_D \neq 0
+\end{align*}
+
+我们的检验统计量为
+\[
+T=\frac{\overline{D}-0}{\frac{S_D}{\sqrt{n}}} \sim t(n-1)
+\]
+
+检验统计量的观察值为
+\[
+t=\frac{\overline{d}}{\frac{s_d}{\sqrt{n}}}
+\]
+
+双边的拒绝域就应该是
+\[
+|t| \geq t_{\frac{\alpha}{2}}(n-1)
+\]
+
+\subsection{分布拟合检验}
+前面的例子都是分布已知但是参数未知的问题。而分布拟合检验处理的假设检验问题是这样的：
+\[
+H_0:\text{总体X的分布为}F(x)
+\]
+
+这看起来很困难，但是Pearson在1900年给出了一个精妙的解答：
+\begin{theorem}[Pearson定理]
+设随机变量$X$可能取值的空间为$\Omega$。一组$k$个集合$\{A_j\}$给出了$\Omega$的划分，即$\bigsqcup_{j=1}^kA_j=\Omega$。记$p_j=P(A_j)$。
+
+设$X_1,\ldots,X_n$与$X$同分布并相互独立，令随机向量$\mathbf{O}=(O_1,\ldots,O_k)^T$
+\[
+O_j=\#\{X_i\in A_j\},\quad j=1,2,\ldots,k
+\]
+即这些随机变量落在$A_k$内的个数。
+
+令
+\[
+\chi^2_n=\sum_{j=1}^k \frac{(O_j-np_j)^2}{np_j}
+\]
+
+则有
+\[
+\chi^2_n \xrightarrow{d} \chi^2(k-1)
+\]
+\end{theorem}
+\begin{proof}
+首先做一点观察，我们知道$\sum_{j=1}^k p_j =1$。根据定义我们就知道，我们可以把它当作$n$次有$k$种可能结果的独立试验，$\mathbf{O}\sim Mult(n,k,p_1,\ldots,p_k)$。
+
+回忆下多项分布的性质，有
+\[
+E(O_j)=np_j,\quad Cov(O_i,O_j)=\delta_{ij}p_i-p_ip_j
+\]
+
+我们最后想要得到一个卡方分布，也就是一些独立标准正态分布的平方和。我们现在构造的这个统计量也是一个平方和。我们不妨设随机向量$\mathbf{Z}=(Z_1,\ldots,Z_n)^T$，其中$Z_j=\frac{O_j-np_j}{\sqrt{np_j}}$，就有
+\[
+\chi^2_n = \sum_{j=1}^k Z_j^2
+\]
+我们要做的就是通过某种变换把它变成一些独立正态变量。
+
+但是问题是：正态压根就没从我们前面的式子里出现过。让它出现就必须要中心极限定理。这里我们用到的是一种多元中心极限定理，可以认为是Laplace-De Moivre中心极限定理的推广。多项分布在这里就起到了一个类似二项分布的作用。不过多元的结论和一元的区别最大之处在于：它需要考虑诸变量之间的相关性。在这里相关性肯定是存在的：$\sum_{j=1}^kp_k=1,\quad \sum_{j=1}^k O_j=n$。这个关系明确地对$\mathbf{Z}$写出来就是
+\[
+\sum_{j=1}^k\sqrt{p_j}Z_j=\frac{1}{\sqrt{n}}\sum_{j=1}^k(O_j-np_j) =  \frac{1}{\sqrt{n}}(\sum_{j=1}^kO_j-n\sum_{j=1}^kp_j) = 0
+\]
+我们用个紧凑的写法，设$\mathbf{v}=(\sqrt{p_1},\ldots,\sqrt{p_k})^T$，就有$\mathbf{v}^T\mathbf{Z}=0$。$\mathbf{v}$在后面仍然有用。
+
+我不证明这个中心极限定理了，总之有$n\to \infty$时：
+\[
+\frac{O-n\mathbf{p}}{\sqrt{n}} \xrightarrow{d} N_k(\mathbf{0},\Sigma)
+\]
+其中$\Sigma=Cov(\mathbf{O})$，$\Sigma_{ij}=\delta_{ij}p_i-p_ip_j$。
+
+于是我们也就知道，$n\to \infty$时$\mathbf{Z}$也服从多元正态分布。这个分布显然就应该是$N_k(\mathbf{0}, \Psi)$，其中$\Psi=Cov(\mathbf{Z})$，$\Psi_{ij}=\delta_{ij}-\sqrt{p_ip_j}$。仔细观察下这个矩阵，这就是$I-\mathbf{v}\mathbf{v}^T$，这是个沿$\mathbf{v}$方向的正交投影！我们把这个分布先叫做$\mathbf{Z}_\infty$。
+
+（注意到这其实不是一个正定的协方差矩阵，和我们之前的讨论有些许出入。但我们仍然可以允许这么做，它是一个“退化”的正态分布，即这个正态变量其实\textbf{几乎必然}分布在一个子空间上，没有那么大的自由度。这种形式的正交投影会把$k$维的向量正交投影到一个$k-1$的子空间里。之前的讨论其实仍然适用（线性变换不变性，\textbf{部分}变量的独立性），因为谱定理也能处理特征值为$0$的情况。只不过唯一的问题就是我们写不出概率密度函数了，我们需要把它成一个更低维度的多元正态分布来处理。）
+
+我们梦寐以求的标准性仍然没有到来，但它离得不远了，我们可以通过线性变换做到这一点。由线性变换不变性，我们确实可以把$\mathbf{Z}_{\infty}$通过变换降维得到标准正态向量。我们取$\operatorname{Im}\Psi$的一组规范正交基，组成一个$k \times (k-1)$的矩阵$U$。这就是一个赤裸裸的降维，我们其实给$U$添上一列$\mathbf{v}$就得到$\Psi$了，令
+\[
+\mathbf{W}=U^T\mathbf{Z}_{\infty}
+\]
+则有
+\[
+\mathbf{W}\sim N_{k-1}(\mathbf{0},U^T\Psi U)=N_{k-1}(\mathbf{0},I_{k-1})
+\]
+这是好事啊。于是$n\to\infty$时就有
+\[
+\mathbf{Z}_{\infty}^T\mathbf{Z}_{\infty} = \mathbf{W}^T\mathbf{W} \sim \chi^2(k-1)
+\]
+注意，从这里到最终的结论还差一步，并不显然。我们需要连续映射定理告诉我们$\mathbf{Z}\xrightarrow{d} \mathbf{Z}_\infty$时，
+
+\[
+\chi^2_n=\mathbf{Z}^T\mathbf{Z} \xrightarrow{d} \mathbf{Z}_{\infty}^T\mathbf{Z}_{\infty}
+\]
+
+这样才算结束了：
+\[
+\chi^2_n \xrightarrow{d} \chi^2(k-1)
+\]
+
+\end{proof}
+
+那我们怎么应用它呢？注意到定理中的$X_i$其实就是样本，$O_j$的观察值就是频率$f_i$。$p_j$则是根据假设推断出来的。
+于是就有
+\[
+\sum_{j=1}^k\frac{(f_j-np_j)^2}{np_j} \approx \chi^2(k-1)
+\]
+
+不过这里要注意中心极限定理的条件。首先样本容量需要足够大（$n\geq 50$），其次$np_j$不能太小（$np_j\geq 5$）。如果不满足的话，我们需要适当合并类别。当卡方检验统计量过大时（超过$\chi^2_\alpha(k-1)$），我们就该拒绝原假设。
+
+\subsubsection{分布族拟合检验}
+真实情况并非如此简单。我们往往连分布的参数也不知道，这时我们连$p_j$也需要猜了。这时我们一般会在假设下先对$p$做一个最大似然估计$\hat{p}$，然后再照样去做。注意这时要用原始数据而不是分组数据去估计。
+
+当从数据估计 $r$ 个参数时，卡方统计量的极限分布也会发生变化：因为$\hat{p_j}$这时也掺和进来了相关性。这里给出定理而不证明。
+
+\begin{theorem}[Chernoff-Lehmann 定理]
+在适当正则条件下，
+\[
+\sum_{j=1}^k\frac{(O_j-n\hat{p}_j)^2}{n\hat{p}_j} \xrightarrow{d} \chi^2(k-r-1)
+\]
+其中$r$是估计的参数个数。
+\end{theorem}
+
+最后我们可能并不拒绝原假设。这时我们接受假设意味着我们认可总体的分布属于某个分布族，但我们不能认为它就是符合某个特定参数的分布。我们可以采用该分布族作为模型，但是还有其他可能同样兼容的分布族，并且其参数值也不确定。

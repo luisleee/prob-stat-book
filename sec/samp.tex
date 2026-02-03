@@ -1,0 +1,620 @@
+
+\section{样本和抽样分布}
+\subsection{随机样本和统计量}
+在统计中，我们将研究对象的全体称为\textbf{总体}，组成总体的每个基本单元称为\textbf{个体}。总体通常用一个随机变量 $X$ 及其概率分布来描述，该分布称为\textbf{总体分布}。
+
+为了解总体的性质，我们不可能研究所有个体，所以需要一个\textbf{抽样}的过程。
+
+从总体 $X$ 中随机抽取 $n$ 个个体 $X_1, X_2, \dots, X_n$，称之为一个\textbf{样本}，$n$ 称为\textbf{样本容量}。
+
+在简单随机抽样的过程中，我们为了使样本能有效代表总体，我们要求抽样满足：
+\begin{itemize}
+    \item 代表性：每个 $X_i$ 都与总体 $X$ 同分布。
+    \item 独立性：$X_1, X_2, \dots, X_n$ 相互独立。
+\end{itemize}
+        
+这样的样本叫做\textbf{简单随机样本}，我们会得到一些独立同分布的\textbf{随机变量}，用大写字母表示。实际得到的数值叫做\textbf{观察值}或者\textbf{样本值}，用小写字母表示。它们之间的意义区分是明确的。
+
+因此，若总体 $X$ 的累积分布函数为 $F(x)$，则一个简单随机样本 $X_1, X_2, \dots, X_n$ 的联合分布函数为：
+\[
+F(x_1,\ldots,x_n) = \prod_{i=1}^nF(x_i)
+\]
+
+\textbf{统计量}则是\textbf{样本}的一个随机变量函数。注意这句话的意思是：它和样本有关，而且只和样本有关，不和其他未知参数相关。
+
+设$X_1,\ldots,X_n$是一组样本，$Y_1,\ldots,Y_n$是容量相同的另一组样本。其中$X_i$独立同分布，来自总体$X$；$Y_i$独立同分布，来自总体$Y$。对于$i\neq j$，$X_i,Y_j$独立。或者说，$(X_i,Y_i)$是来自总体$(X,Y)$的一组样本。
+
+在这里我们有一些经典统计量。并且由于它们本性上是随机变量，我也可以得到它们的数字特征。我们这里假设它们来自的总体$X,Y$各自都有均值和方差，$E(X)=\mu_x,E(Y)=\mu_y, D(X)=\sigma_x^2, D(Y)=\sigma_y^2,Cov(X,Y)=\rho\sigma_x\sigma_y$。
+
+\paragraph{样本均值}
+样本均值定义为：
+\[
+\overline{X}=\frac 1n\sum_{i=1}^nX_i
+\]
+
+样本均值的均值和原分布的均值正好一致
+\[
+E(\overline{X})=E\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1n\sum_{i=1}^nE(X_i)=\mu_x
+\]
+样本均值的方差则和样本量有一些有趣的关系：
+\[
+D(\overline{X})=D\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1{n^2}\sum_{i=1}^nD(X_i)=\frac{\sigma_x^2}{n}
+\]
+可以很直观地理解：我们抽样的样本容量越大，其平均偏差大概就会更小。
+
+对于两个样本均值，它们的协方差也是如此：
+\begin{align*}
+Cov(\overline{X},\overline{Y}) &= Cov\left(\frac 1n\sum_{i=1}^nX_i,\frac 1n\sum_{i=1}^nY_i\right)\\
+&=\frac 1{n^2}\sum_{i=1}^n\sum_{j=1}^nCov(X_i,Y_j)\\
+&=\frac 1{n^2}\sum_{i=1}^nCov(X_i,Y_i)\\
+&=\frac{\rho\sigma_x\sigma_y}{n}
+\end{align*}
+\[
+\]
+
+上面的推导全都基于它们独立同分布的假设，我们后面不再强调。
+
+\paragraph{样本方差、标准差}
+样本方差和标准差定义为：
+\[
+S^2_x=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2,\quad S_x=\sqrt{S_x^2}
+\]
+注意这里分母是$n-1$！（感叹号并不表示阶乘）这不是没有道理的。样本方差的均值是这样的：
+\begin{align*}
+E(S^2) &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n((X_i-\mu_x)-(\overline{X}-\mu_x))^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)\sum_{i=1}^n(X_i-\mu_x)+\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)\sum_{i=1}^n(X_i-\mu_x)+2(\overline{X}-\mu_x)\sum_{i=1}^n(\overline{X}-\mu_x)-\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)\sum_{i=1}^n(X_i-\overline{X})-\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)(\sum_{i=1}^nX_i-n\overline{X})-\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
+&= \frac{1}{n-1}\left[\sum_{i=1}^nE\left((X_i-\mu_x)^2\right)-nE\left((\overline{X}-\mu_x)^2\right)\right]\\
+&= \frac{1}{n-1}(n\sigma_x^2-n\frac{\sigma_x^2}{n}) =\sigma_x^2
+\end{align*}
+
+这个分母的$n-1$是为了让样本方差的均值和总体的方差一致，这很重要。
+
+样本方差的方差不是什么简单东西，这里只给出一个式子。如果总体分布的四阶原点矩$\mu_4$存在，
+\[
+D(S^2)=\frac{1}{n}\left(\mu_4-\frac{n-3}{n-1}\sigma^4 \right)
+\]
+而对于正态总体而言，$\mu_4=3\sigma^4$，$D(S^2)=\frac{2\sigma^4}{n-1}$。我们会在卡方分布处想起它。
+
+如果单把右边的和式拿出来，我们称之为\textbf{离差平方和}：
+\[
+S_{xx} = \sum_{i=1}^n(X_i-\overline{X})=(n-1)S^2_x
+\]
+
+\paragraph{样本协方差}
+对于混合起来的量，我们也有定义样本协方差：
+\[
+S_{xy} = \frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})
+\]
+这里分母仍然是$n-1$，仍然是为了均值的无偏性，即$E(S_{xy})=\rho\sigma_x\sigma_y$，证明思路和刚才的求和一致：
+\begin{align*}
+E(S_{xy}) &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n\left((X_i-\mu_x)-(\overline{X}-\mu_x)\right)\left((Y_i-\mu_y)-(\overline{Y}-\mu_y)\right)\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)(Y_i-\mu_y)\right)\\
+&\quad-\frac{1}{n-1}E\left((\overline{X}-\mu_x)\sum_{i=1}^n(Y_i-\mu_y)
+-(\overline{Y}-\mu_y)\sum_{i=1}^n(X_i-\mu_x)\right)\\
+&\quad+\frac{1}{n-1}E\left((\overline{X}-\mu_x)\sum_{i=1}^n(\overline{Y}-\mu_y)
++(\overline{Y}-\mu_y)\sum_{i=1}^n(\overline{X}-\mu_x)\right)\\
+&\quad-\frac{1}{n-1}E\left(\sum_{i=1}^n(\overline{X}-\mu_x)(\overline{Y}-\mu_y)\right)\\
+&= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)(Y_i-\mu_y)
+-\sum_{i=1}^n(\overline{X}-\mu_x)(\overline{Y}-\mu_y)\right)\\
+&= \frac{1}{n-1}(n\rho\sigma_x\sigma_y
+-n\frac{\rho\sigma_x\sigma_y}{n})\\
+&= \rho\sigma_x\sigma_y
+\end{align*}
+
+注意：虽然它记号类似$S_{xx}$，但是完全不同！
+
+类似地，不除以$n-1$的统计量叫做\textbf{样本离差积和}：
+\[
+SP_{xy} = \sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y}) = (n-1)S_{xy}
+\]
+
+类似地，我们也可以定义\textbf{样本相关系数}，又叫Pearson相关系数：
+\[
+r_{xy} = \frac{S_{xy}}{S_xS_y}
+\]
+
+当然我们也可以不只限于两组样本，我们可以像协方差矩阵一样将其推广，得到到任意有限维\textbf{样本协方差矩阵}和\textbf{样本相关系数矩阵}。
+
+\paragraph{样本矩}
+刚才在维度上做了推广，下面在次数上做推广。
+
+我们可以定义\textbf{样本$k$阶原点矩}：
+\[
+A_k=\frac{1}{n}\sum_{i=1}^nX_i^k
+\]
+
+由于$X_i^k$都是独立同分布的，应用样本均值的结论，就有$E(A_k)=\mu_k$。其中$\mu_k$为总体的$k$阶原点矩。
+
+\paragraph{次序统计量}
+还有一些次序统计量，即把样本排序后得到的统计量。设样本$X_1,\ldots,X_n$排序后得到$X_{(1)}\leq \cdots \leq X_{(n)}$。
+
+它们每一个拿出来都可以作为统计量，其中$X_{(k)}$叫做\textbf{第$k$个次序统计量}。如果总体的累积分布函数是$F$，则
+\begin{align*}
+F_{X_{(k)}}(x) &= P(\text{至少有$k$个观察值$\leq x$})\\
+&= \sum_{j=k}^{n} \binom{n}{j} (F(x))^j(1-F(x))^{n-j}
+\end{align*}
+这是\textbf{不完全Beta函数}，这里我不打算写出这种表达。如果总体的概率密度$f$也存在：
+\[
+f_{X_{(k)}}(x) = \frac{n!}{(k-1)!(n-k)!}(F(x))^{k-1}(1-F(x))^{n-k}f(x)
+\]
+这个式子推导的大概是：恰有$1$个数在$(x,x+dx)$内概率为$f(x)dx$，恰有$k-1$个数在$<x$概率为$(F(x))^{k-1}$，恰有$n-k$个数$>x$概率为$(1-F(x))^{n-k}$。这里的$\frac{n!}{(k-1)!(n-k)!}$其实就是多项式系数$\binom{n}{k-1\;1\;n-k}$。
+
+也有一个有趣的事实：如果次序统计量各不相同（连续情况下这是几乎必然的），则所有次序统计量的联合概率密度是$n!\prod_{i=1}^nf(x_i),\quad (x_1<x_2<\cdots< x_n)$，比无序情况多了个全排列。
+
+这个公式显然也包含了最特别的那两个次序统计量\textbf{样本最小值}和\textbf{样本最大值}。
+\[
+X_{(1)} = \min(X_1,\ldots,X_n),\quad X_{(n)} = \max(X_1,\ldots,X_n),
+\]
+这两个统计量的累积分布函数前面已经给出过了，这里也可以代入上面的公式验证一下。
+
+\textbf{样本极差}：
+\[
+R=X_{(n)}-X_{(1)}
+\]
+
+\textbf{样本中位数}：
+\[
+M_e=\begin{cases}
+    X_{(\frac{n+1}{2})} & n=2k+1\\
+    \frac 12 X_{\frac{n}{2}} + \frac 12 X_{\frac{n}{2}+1} & n=2k
+\end{cases}
+\]
+
+\textbf{样本$p$分位数}：它其实没有一个统一的符号。这里的$p$需要满足$0<p<1$。
+$np$不为整数时取$X_{(\lfloor np\rfloor)}$，否则取$X_{(\lfloor np\rfloor)}$和$X_{(\lfloor np\rfloor+1)}$的均值。样本中位数即样本$\frac 12$分位数。
+
+上面这些量没有特别简单的统一公式，必须根据特定的分布进行推导。其基础是任意位置次序统计量的分布。
+
+\subsection{$\chi^2$分布}
+卡方分布大概是抽样分布中最重要的分布之一。设$X_1,\ldots,X_n$是独立的\textbf{标准}正态分布，令$Y=\sum_{i=1}^nX_i^2$，则称$Y\sim \chi^2(n)$，即随机变量$Y$服从\textbf{自由度}为$n$的卡方分布。
+所谓自由度就是独立变量个数。从这个定义来看它就具有可加性。
+
+它的概率密度函数是：
+\[
+f_Y(y) = \begin{cases}
+    \frac{1}{2^{\frac n2}\Gamma(\frac n2)}y^{\frac n2 -1}e^{-\frac y2} & y>0\\
+    0 & y \leq 0
+\end{cases}
+\]
+
+这一公式可以用多种方式验证。一种方法是我前面给出的概率密度函数的公式：
+联合概率密度
+\[
+f_{X_1,\ldots,X_n}(x_1,\ldots,x_n) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi}} e^{-\frac{x_i^2}{2}}
+\]
+
+考虑$g(x_1, \ldots, x_n) = \sum_{i=1}^n x_i^2 = y$，则
+\[
+\nabla g(x_1,\ldots,x_n) = (2x_1, 2x_2, \ldots, 2x_n)
+\]
+\[
+|\nabla g(x)| = 2 \sqrt{\sum_{i=1}^n x_i^2} = 2 \sqrt{y}
+\]
+
+每个$y$对应的是$n$维球面$S^{n-1}$，半径$r = \sqrt{y}$。
+
+由余面积公式，
+\[
+f_Y(y) = \int_{g(\mathbf{x}) = y} \frac{f_{X_1,\ldots,X_n}(x_1,\ldots,x_n)}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x})
+\]
+由对称性，密度在球面上处处一致；故可化为球面积分：
+\[
+f_Y(y) = \frac{1}{2 \sqrt{y}} \cdot S_{n-1}(r) \cdot \prod_{i=1}^n \frac{1}{\sqrt{2\pi}} e^{-\frac{y}{2}}
+\]
+其中$S_{n-1}(r)$为$n-1$维球面面积，半径$r = \sqrt{y}$。已知
+\[
+S_{n-1}(r) = \frac{2 \pi^{\frac{n}{2}}}{\Gamma(\frac{n}{2})} r^{n-1} = \frac{2 \pi^{\frac{n}{2}}}{\Gamma(\frac{n}{2})} y^{\frac{n-1}{2}}
+\]
+于是整理化简得：
+
+\begin{align*}
+f_Y(y) &= \frac{1}{2 \sqrt{y}} \cdot \frac{2 \pi^{\frac{n}{2}}}{\Gamma\left(\frac{n}{2}\right)} y^{\frac{n-1}{2}} \cdot \left( \frac{1}{\sqrt{2\pi}} \right)^n e^{-\frac{y}{2}} \\
+&= \frac{1}{2 \sqrt{y}} \cdot \frac{2 \pi^{\frac{n}{2}}}{\Gamma\left(\frac{n}{2}\right)} y^{\frac{n-1}{2}} \cdot (2\pi)^{-\frac{n}{2}} e^{-\frac{y}{2}} \\
+&= \frac{1}{2 \sqrt{y}} \cdot \frac{2 \pi^{\frac{n}{2}} y^{\frac{n-1}{2}}}{(2\pi)^{\frac{n}{2}} \Gamma\left(\frac{n}{2}\right)} e^{-\frac{y}{2}} \\
+&= \frac{1}{2 \sqrt{y}} \cdot \frac{2 y^{\frac{n-1}{2}}}{\Gamma\left(\frac{n}{2}\right)} e^{-\frac{y}{2}} \\
+&= \frac{1}{\Gamma\left(\frac{n}{2}\right) 2^{\frac{n}{2}}} y^{\frac{n}{2}-1} e^{-\frac{y}{2}}, \qquad y > 0
+\end{align*}
+
+这就是$\chi^2_n$分布的概率密度函数表达式。当然我们在计算时可以先抛掉常系数，得到$Cy^{\frac n2 -1}e^{-\frac y2}$，然后归一化计算出常系数$C$。
+
+另一种方法是用特征函数。对于自由度为$1$的卡方分布，它就是正态的平方，其概率密度很容易通过变量代换$Z=X^2$得到：
+\[
+f_Z(z) = \begin{cases}
+    \frac{1}{\sqrt{2\pi}}x^{-\frac12}e^{-\frac x2} & x >0\\
+    0 & x\leq 0
+\end{cases}
+\]
+它的特征函数是：
+\[
+\phi_Z(t) = (1-2it)^{-\frac{1}{2}}
+\]
+
+卡方分布可加性在这里也显而易见地体现出来了。对于刚才的卡方变量$Y\sim \chi^2(n)$，由卷积公式就有
+\[
+\phi_Y(t) = (1-2it)^{-\frac{n}{2}}
+\]
+
+眼尖的朋友会发现，这就是个变量代换后的$\Gamma(\frac{n}{2},\frac12)$，这就是自由度为$n$的卡方分布了。
+
+坏消息是，我们没有其累积分布函数的解析式，但这不妨碍我们给出数值。
+
+自由度为$n$的卡方分布的均值是什么？$n$个自由度为$1$的卡方分布均值加起来。自由度为$n$的卡方分布的方差是什么？$n$个自由度为$1$的卡方分布方差加起来。令$X\sim N(0,1),Z=X^2$，或者说$Z\sim \chi^2(1)$：
+\[
+E(Z)=E(X^2)=1,\quad D(Z)=D(X^2)=E(X^4)-(E(X^2))^2=3-1=2
+\]
+
+于是对于$Y\sim \chi^2(n)$，$E(Y)=n,D(Y)=2n$。
+
+\subsection{$t$分布}
+另一个重要的抽样分布是$t$分布。它又叫学生氏分布，有一段有趣的小故事。
+设 $X \sim N(0,1)$，$Y \sim \chi^2(n)$，且 $X$ 与 $Y$ 相互独立。令
+\[
+T=\frac{X}{\sqrt{\frac{Y}{n}}}
+\]
+则称$T\sim t(n-1)$，即自由度为$n$的$t$分布。
+
+对$\phi(x,y) =\frac{x}{\sqrt{\frac{y}{n}}}$用用前面的随机变量函数公式，就能计算其概率密度。
+\[
+\nabla \phi(x,y) = \left(\frac{\sqrt{n}}{\sqrt{y}}, -\frac{x\sqrt{n}}{2y^{\frac32}}\right)
+\]
+
+\[
+|\nabla\phi| = \sqrt{\frac{n}{y}+\frac{x^2n}{4y^3}} 
+\]
+
+等值线$\phi(x,y)=t$可以参数化为$x= t\sqrt{\frac{y}{n}}$，$\left(\frac{dx}{dy}\right)^2=\frac{t^2}{2ny}$。
+
+\begin{align*}
+f_T(t) &= \int_{\phi(x,y)=t} \frac{f_X(x)f_Y(y)}{|\nabla\phi(x,y)|}d\sigma(x,y)\\
+&= \int_{0}^{+\infty} \frac{f_X(x)f_Y(y)}{\sqrt{\frac{n}{y}+\frac{x^2n}{4y^3}}}\sqrt{1+\frac{t^2}{2ny}}dy\\
+&= \int_{0}^{+\infty} f_X\left(t\sqrt{\frac{y}{n}}\right)f_Y(y)\sqrt{\frac{y}{n}}dy\\
+&= \int_{0}^{+\infty}
+     \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2 y}{2n}}
+     \cdot \frac{1}{2^{n/2}\Gamma(n/2)} y^{n/2-1} e^{-y/2}
+     \cdot \sqrt{\frac{y}{n}}\, dy \\
+&= \frac{1}{\sqrt{2\pi n}\, 2^{n/2}\Gamma(n/2)}
+    \int_{0}^{+\infty} y^{\frac{n+1}{2}-1}
+    \exp\!\left[-\frac{y}{2}\left(1+\frac{t^2}{n}\right)\right] dy\\
+&= \frac{1}{\sqrt{\pi n}\Gamma(n/2)}\int_{0}^{+\infty} y^{\frac{n+1}{2}-1} e^{-a y}\, dy, \quad a=\frac{1}{2}\left(1+\frac{t^2}{n}\right)\\
+&= \frac{1}{\sqrt{\pi n}\Gamma(n/2)}\frac{\Gamma\!\left(\frac{n+1}{2}\right)}{a^{(n+1)/2}}\\
+&= \frac{\Gamma\!\left(\frac{n+1}{2}\right)}{\sqrt{\pi n}\,\Gamma(n/2)}
+          \cdot \left(1+\frac{t^2}{n}\right)^{-(n+1)/2}
+\end{align*}
+
+很艰难，但是完全是套公式和凑$\Gamma$积分。可见这个公式是很强大的。
+
+这个式子告诉我们一个事情，即$t$分布是对称的。另一件事是，$n\to\infty$时，它逐点收敛于标准正态分布。具体证明需要Stirling公式，在此不作证明。我们一般在$n>30$时就可以用正态近似表示了。如图
+
+\begin{tikzpicture}
+    \begin{axis}[
+        domain=-4:4,
+        samples=200,
+        axis lines=middle,
+        xlabel={$t$},
+        ylabel={概率密度},
+        title={标准正态分布与t分布对比（自由度=4,8,25）},
+        ymin=0, ymax=0.45,
+        xmin=-4.2, xmax=4.2,
+        xtick={-4,-3,...,4},
+        ytick={0,0.1,0.2,0.3,0.4},
+        grid=major,
+        width=12cm, height=8cm,
+        legend style={
+            cells={anchor=west},
+            legend pos=north east,
+            font=\small
+        },
+        every axis label/.append style={font=\small},
+    ]
+    
+    % 标准正态分布（参考）
+    \addplot[line width=1.2pt, color=black, dashed] 
+        {1/sqrt(2*pi) * exp(-x^2/2)};
+    \addlegendentry{$N(0,1)$}
+    
+    % t分布，自由度=4 (n=4)
+    % Γ((4+1)/2) = Γ(2.5) = 1.32934
+    % Γ(4/2) = Γ(2) = 1
+    % 系数: 1.32934/(√(π*4)*1) = 0.375
+    \addplot[line width=1.2pt, color=red] 
+        {3/(8*sqrt(pi)) * (1+x^2/4)^(-2.5)};
+    \addlegendentry{$t(4)$}
+    
+    % t分布，自由度=8 (n=8)
+    % Γ((8+1)/2) = Γ(4.5) = 11.6317
+    % Γ(8/2) = Γ(4) = 6
+    % 系数: 11.6317/(√(π*8)*6) = 0.3866
+    \addplot[line width=1.2pt, color=blue] 
+        {105/(384*sqrt(pi)) * (1+x^2/8)^(-4.5)};
+    \addlegendentry{$t(8)$}
+    
+    % t分布，自由度=25 (n=25)
+    % Γ((25+1)/2) = Γ(13) = 12! = 479001600
+    % Γ(25/2) = Γ(12.5) = 11.5 * 10.5 * 9.5 * ... * 1.5 * 0.5 * √π ≈ 16268300
+    % 系数: 479001600/(√(π*25)*16268300) ≈ 0.3975
+    \addplot[line width=1.2pt, color=green!70!black] 
+        {0.3975 * (1+x^2/25)^(-13)};
+    \addlegendentry{$t(25)$}
+    
+    \end{axis}
+\end{tikzpicture}
+
+它的累积分布函数也是没有解析式的，我们需要数值计算。
+
+$t$ 分布的 $k$ 阶矩存在当且仅当 $k < n$。特别地，均值$E(T)=0\quad(n>1)$，方差$D(T)=\frac{n}{n-1}\quad(n>2)$。$n \le 2$ 时方差不存在，这大致在说$t$ 分布比正态分布具有更厚的尾部。
+
+\subsection{$F$分布}
+$F$ 分布由统计学家费希尔（R.A. Fisher）得名，主要用于比较两个正态总体的方差，也是方差分析和线性回归模型显著性检验的基础。设 $U \sim \chi^2(m)$，$V \sim \chi^2(n)$，且 $U$ 与 $V$ 相互独立。令
+\[
+F=\frac{U/m}{V/n}
+\]
+则称随机变量 $F$ 服从自由度为 $(m, n)$ 的 $F$ 分布，记作 $F \sim F(m, n)$。其中 $m$ 称为分子自由度，$n$ 称为分母自由度。
+
+由定义直接可以知道$F(m,n)$和$F(n,m)$之间有一种对偶关系。若 $F \sim F(m, n)$，则 $\frac{1}{F} \sim F(n, m)$。
+
+仍然从定义，若 $T \sim t(n)$，则 $T^2 \sim F(1, n)$。
+
+$F(m, n)$ 分布的概率密度函数为：
+\[
+f_F(x) = \begin{cases}
+\frac{\Gamma\left(\frac{m+n}{2}\right)}{\Gamma\left(\frac{m}{2}\right) \Gamma\left(\frac{n}{2}\right)}
+\left(\frac{m}{n}\right)^{m/2}
+\frac{x^{(m/2)-1}}{\left(1 + \frac{m}{n}x\right)^{(m+n)/2}} &x > 0\\
+0 & x \leq 0
+\end{cases}
+\]
+
+这一证明又需要我们大费周章用下随机变量函数的公式了。这个函数是
+
+\[
+\phi(x,y) = \frac{nx}{my}
+\]
+其梯度为
+\[
+\nabla \phi(x,y) = \left( \frac{n}{my},\ -\frac{nx}{my^2} \right).
+\]
+模长为
+\[
+|\nabla \phi| = \sqrt{ \left( \frac{n}{my} \right)^2 + \left( \frac{nx}{my^2} \right)^2 }
+              = \frac{n}{my^2} \sqrt{ y^2 + x^2 }.
+\]
+等值线 $\phi(x,y) = f$ 给出：
+\[
+\frac{nx}{my} = f \quad\iff\quad x = \frac{mf}{n} y.
+\]
+以 $y$ 为参数，$x = \frac{mf}{n} y$，则
+\[
+\frac{dx}{dy} = \frac{mf}{n}.
+\]
+弧长微元为
+\[
+d\sigma = \sqrt{1 + \left( \frac{dx}{dy} \right)^2} \, dy
+         = \sqrt{1 + \left( \frac{mf}{n} \right)^2} \, dy.
+\]
+注意到
+\[
+\frac{d\sigma}{|\nabla \phi|} = 
+\frac{\sqrt{1 + (mf/n)^2}}{ \dfrac{n}{my^2} \sqrt{ y^2 + \left( \frac{mf}{n} y \right)^2 } } \, dy= \frac{m}{n} y \, dy
+\]
+
+根据公式，
+\[
+f_F(f) = \int_{\phi(x,y)=f} \frac{f_X(x) f_Y(y)}{|\nabla \phi(x,y)|} \, d\sigma(x,y)
+\]
+代入参数化得
+\begin{align*}
+f_F(f) &= \int_{0}^{+\infty} f_X\left(\frac{mf}{n} y\right) f_Y(y)\frac{m}{n} y\, dy\\
+&= \int_{0}^{\infty} \frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
+    \left( \frac{mf}{n} \right)^{m/2 - 1} y^{m/2 - 1 + n/2 - 1}
+    e^{ -\frac{y}{2}\left(1 + \frac{mf}{n}\right) }
+    \cdot \frac{m}{n} y \, dy\\
+&= \frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
+    \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n}
+    \int_{0}^{\infty} y^{(m+n)/2 - 1}
+    e^{ -\frac{y}{2}\left(1 + \frac{mf}{n}\right) } \, dy\\
+&=\frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
+    \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n} \int_{0}^{\infty} y^{(m+n)/2 - 1} e^{-a y} \, dy \quad a=\frac{1}{2}\left(1 + \frac{mf}{n}\right)\\
+&= \frac{ \Gamma\left(\frac{m+n}{2}\right) }{ \Gamma(m/2) \Gamma(n/2) }
+    \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n}
+    \cdot \left(1 + \frac{mf}{n}\right) ^{-(m+n)/2}  \\
+&= \frac{\Gamma\left(\frac{m+n}{2}\right)}{\Gamma\left(\frac{m}{2}\right) \Gamma\left(\frac{n}{2}\right)}
+\left( \frac{m}{n} \right)^{m/2}
+\frac{f^{m/2 - 1}}{\left(1 + \frac{m}{n} f \right)^{(m+n)/2}}
+\end{align*}
+这个随机变量函数公式确实很夯。
+
+看着式子画个图，$F$ 分布的密度图形是右偏的。随着自由度 $m$ 和 $n$ 的增大，分布逐渐对称并趋近正态分布。
+
+\subsection{关于统计量分布的重要定理}
+在开始之前，我们先给出一些常用的术语和值的定义。
+\paragraph{上侧概率和上分位数}
+
+\textbf{上侧概率}指的是随机变量$X$ 的取值大于某个特定值的概率。也就是$P(X>x_0)=1-F(x_0)$。
+
+\textbf{上分位数}则反过来了，是指对于某个$0<p<1$，使$P(X>x_p)=p$的$x_p$。严格来说，有时没有这种值，我们就取为$\inf \{x\in \mathbb{R}:P(X>x)\geq p \}$。
+
+上分位数常被用作临界值。正如前面几个抽样分布的累积分布函数无解析式一样，其上分位数也没有解析式子。
+对于这些重要的分布，其上分位数都有特定的记号。
+
+\textbf{标准正态分布 $N(0,1)$}
+\begin{itemize}
+    \item \textbf{记号}：$z_{\alpha}$
+    \item \textbf{定义}：$P(Z > z_{\alpha}) = \alpha$，或等价地 $P(Z \le z_{\alpha}) = 1 - \alpha$
+    \item \textbf{对称性}：由标准正态分布关于 $0$ 对称，有 $z_{1-\alpha}= -z_{\alpha}$
+    \item \textbf{示例}：$z_{0.05} \approx 1.645$，$z_{0.025} \approx 1.96$
+\end{itemize}
+
+\textbf{$t$ 分布（自由度 $n$）}
+\begin{itemize}
+    \item \textbf{记号}：$t_{\alpha}(n)$
+    \item \textbf{定义}：$P(T > t_{\alpha}(n)) = \alpha$
+    \item \textbf{对称性}：由 $t$ 分布关于 $0$ 对称，有 $t_{1-\alpha}(n) = -t_{\alpha}(n)$
+    \item \textbf{示例}：
+        \begin{itemize}
+            \item $t_{0.05}(10) \approx 1.812$
+            \item $t_{0.95}(10) = -t_{0.05}(10) \approx -1.812$
+        \end{itemize}
+\end{itemize}
+
+\textbf{$\chi^2$ 分布（自由度 $n$）}
+\begin{itemize}
+    \item \textbf{记号}：$\chi^2_{\alpha}(n)$
+    \item \textbf{定义}：$P(\chi^2 > \chi^2_{\alpha}(n)) = \alpha$
+    \item \textbf{示例}：$\chi^2_{0.05}(5) \approx 11.07$
+\end{itemize}
+
+\textbf{$F$ 分布（自由度分别为 $m, n$）}
+\begin{itemize}
+    \item \textbf{记号}：$F_{\alpha}(m, n)$
+    \item \textbf{定义}：$P(F > F_{\alpha}(m, n)) = \alpha$
+    \item \textbf{性质}：$F_{1-\alpha}(m, n) = \dfrac{1}{F_{\alpha}(n, m)}$
+    \item \textbf{示例}：$F_{0.05}(3, 10) \approx 3.71$
+\end{itemize}
+
+\paragraph{$z$检验基础}
+由于中心极限定理的存在，我们遇到的很多随机总体都可以认为是服从正态分布的。如果总体$X\sim N(\mu,\sigma^2)$，那么我们有样本均值$\overline{X}\sim N(\mu, \frac{\sigma^2}{n})$。这个结论是简单的，因为独立正态变量之和仍然是正态变量。按我们前面的样本均值的均值方差推导，就得到了这个结果。
+
+更进一步，我们可以把它标准化，得到：
+\[
+\frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \sim N(0,1)
+\]
+
+这无疑对我们的计算来说是很方便的。
+
+如果我们想比对两个\textbf{独立}的正态总体$X\sim N(\mu_1,\sigma_1^2)$和$Y\sim N(\mu_2,\sigma_2^2)$均值之差，那么我们也可以给出类似的构造：因为这两个变量的差也是正态变量。$X-Y\sim N(\mu_1-\mu_2,\sigma_1^2+\sigma_2^2)$，$\overline{X}-\overline{Y}\sim N(\mu_1-\mu_2,\frac{\sigma_1^2}{m}+\frac{\sigma_2^2}{n})$。
+
+于是标准化一下就得到：
+\[
+\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{m}+\frac{\sigma_2^2}{n}}}\sim N(0,1)
+\]
+
+\paragraph{$t$检验基础}
+不过刚才的情况还是太理想了。一般来说，我们无从知道随机总体的方差，我们必须用$\chi^2$分布猜测方差，从而用$t$分布做猜测。
+
+我们先给出我们要用到的核心定理：
+\begin{theorem}
+设 $X_1, \ldots, X_n$独立，且均服从$N(\mu, \sigma^2)$，样本均值为 $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$，样本方差为 $S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2$。则有：
+
+\begin{enumerate}
+    \item $\bar{X}$ 与 $S^2$ 相互独立。
+    \item $\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+我们用多元独立同方差正态分布的正交变换性质来完成这个证明。
+
+令$\mathbf{X}=(X_1,\ldots,X_n)^T$，则$\mathbf{X}\sim N_n(\mu \mathbf{1}_n,\sigma^2 I_n)$。其中$\mathbf{1}_n=(1,\ldots,1)^T$
+
+我们的样本方差是一些平方和，样本均值是一个线性函数。我希望把样本方差表示成各自独立的正态变量平方和（这便成了卡方分布），把均值直接表示成一个和前面的变量都独立的正态变量。我们要从这个独立同方差多元正态分布得出另一组独立的正态变量，方法就是做正交变换。正交变换还有令一个好处，即保持内积，于是变换后变量的平方和仍然不变。
+
+$\overline{X}=\frac1n \sum_{i=1}^n X_i=\frac{1}{n}\mathbf{1}_n^T\mathbf{X}$。这提示我们这个正交变换的一个分量是什么了。只需要把$(\frac1n,\ldots,\frac{1}{n})^T$标准化一下得到$\mathbf{v}=(\frac{1}{\sqrt{n}},\ldots,\frac{1}{\sqrt{n}})^T$就好了。
+
+剩下的分量是什么，似乎并不重要。我们只需要补全一组包含$\mathbf{v}$的规范正交基就好了。我们把这样得到的正交变换叫做$Q$。令$\mathbf{Y}=(Y_1,\ldots,Y_n)^T=Q\mathbf{X}$，则有
+\begin{enumerate}
+    \item $Y_1=\frac{1}{\sqrt{n}}\sum_{i=1}^n X_i = \sqrt{n}\overline{X}$。
+    \item $\mathbf{Y}\sim N_n(\mu Q\mathbf{1}_n,\sigma^2 QI_nQ^T)=N_n(\mu Q\mathbf{1}_n,\sigma^2 I_n)$，仍然得到独立同方差的多元独立正态分布。
+    \item $\mu Q\mathbf{1}_n=(\mu\sqrt{n},0,\ldots,0)^T$。
+\end{enumerate}
+
+接下来就该处理$S^2$了。
+
+\begin{align*}
+S^2&=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2 \\
+&= \frac{1}{n-1}\left(\sum_{i=1}^nX_i^2 - n\overline{X}^2\right)\\
+&= \frac{1}{n-1}\left(\sum_{i=1}^nY_i^2 - Y_1^2\right)\\
+&= \frac{1}{n-1}\sum_{i=2}^nY_i^2\\
+\end{align*}
+功德圆满。现在$\overline{X}$和$S^2$一点不沾边了。
+
+后半部分的结论几乎就是直接的了。$\tilde{Y}=(Y_2,\ldots,Y_n)\sim N_{n-1}(\mathbf{0}_{n-1},\sigma^2 I_{n-1})$，独立标准正态分布乘上个$\sigma^2$。于是
+
+\[
+\dfrac{(n-1)S^2}{\sigma^2}\sim \chi^2(n-1)
+\]
+\end{proof}
+
+这和$t$分布有什么关系呢？注意前面这个式子$\frac{\overline{X}-\mu}{\sqrt{\frac{\sigma^2}{n}}}$里，$\sigma^2$是要需要猜的，而刚才的式子告诉我们要用卡方分布猜。放在一起看：
+
+\begin{align*}
+\frac{\overline{X}-\mu}{\sqrt{\frac{\sigma^2}{n}}} &\sim N(0,1)\quad \\
+\dfrac{(n-1)S^2}{\sigma^2} &\sim \chi^2(n-1)
+\end{align*}
+
+$t$分布就来了：
+\[
+\frac{\frac{\overline{X}-\mu}{\sqrt{\frac{\sigma^2}{n}}}}{\sqrt{\frac{\dfrac{(n-1)S^2}{\sigma^2}}{n-1}}}=\frac{\overline{X}-\mu}{\sqrt{\frac{S^2}{n}}} \sim t(n-1)
+\]
+
+在方差未知的时候，比对两个独立正态变量的均值同样可以用$t$分布，道理是一样的。设样本$X_1,\ldots,X_m$来自总体$X$，方差为$\sigma_1^2$；设样本$Y_1,\ldots,Y_n$来自总体$Y$，方差为$\sigma_2^2$。
+
+我们有
+\[
+\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{m}+\frac{\sigma_2^2}{n}}}\sim N(0,1)
+\]
+但是类比前面的式子，它的方差该怎么办呢？这需要一个小巧思。我们使用一个样本合并方差$S_W^2$来做到这一点，它可以反映两边合在一起的方差，下面先介绍引入它的动机。
+
+我们知道：
+\begin{align*}
+\frac{(m-1)S_1^2}{\sigma_1^2}&\sim \chi^2(m-1)\\
+\frac{(n-1)S_2^2}{\sigma_2^2}&\sim \chi^2(n-1)
+\end{align*}
+二者独立，所以由可加性：
+\[
+\frac{(m-1)S_1^2}{\sigma_1^2} + \frac{(n-1)S_2^2}{\sigma_2^2}\sim \chi^2(m+n-2)
+\]
+
+我们就可以构造出$t$分布了。不过有一个问题是：$\sigma_1 \neq \sigma_2$时，式子非常丑陋。我们先来考虑$\sigma_1=\sigma_2=\sigma$的情况：
+
+\begin{align*}
+Z=\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{\sigma\sqrt{\frac{1}{m}+\frac{1}{n}}}&\sim N(0,1)\\
+W=\frac{1}{\sigma^2}\left((m-1)S_1^2 + (n-1)S_2^2\right)&\sim \chi^2(m+n-2)\\
+\end{align*}
+则
+\[
+\frac{Z}{\sqrt{\frac{W}{m+n-2}}} =\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{ \sqrt{\frac{(m-1)S_1^2 + (n-1)S_2^2}{m+n-2}}\sqrt{\frac{1}{m}+\frac{1}{n}}}\sim t(m+n-2)
+\]
+我们把$S_W^2=\frac{(m-1)S_1^2 + (n-1)S_2^2}{m+n-2}$叫做样本合并方差。刚才的式子更紧凑一点就是：
+\[
+\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{S_W\sqrt{\frac{1}{m}+\frac{1}{n}}}\sim t(m+n-2)
+\]
+
+那方差不齐怎么办呢？这个便唤作Welch t检验。如果方差不齐的话，刚才式子里的$\sigma_1,\sigma_2$很难被消掉，我们只能做近似得到一个$t$分布。这里给出结论而不作证明。
+
+\begin{theorem}
+设样本$X_1,\ldots,X_m$来自总体$X$，方差为$\sigma_1^2$；设样本$Y_1,\ldots,Y_n$来自总体$Y$，方差为$\sigma_2^2$。则
+
+\[
+\hat{\nu}\frac{S_X^2/m+S_Y^2/n}{\sigma_1^2/m+\sigma_2^2/n} \approx \chi^2(\hat{\nu})
+\]
+
+\[
+\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{S_X^2}{m}+\frac{S_Y^2}{n}}}\approx t(\hat{\nu})
+\]
+其中$\hat{\nu}$叫做近似自由度，式子为：
+\[
+\hat{\nu}=\frac{\left(\frac{s_X^2}{m}+\frac{s_Y^2}{n}\right)^2}{\frac{(s_X^2/m)^2}{m-1}+\frac{(s_Y^2/n)^2}{n-1}}
+\]
+\end{theorem}
+
+$\hat{\nu}$不一定是整数。不过我们完全可以把$t$分布的式子延拓到非整数的情况去。
+
+\paragraph{$f$检验基础}
+如果我们想要比对两个不同的正态总体的方差，我们就需要用到$f$分布了。设样本$X_1,\ldots,X_m$来自总体$X$，方差为$\sigma_1^2$；设样本$Y_1,\ldots,Y_n$来自总体$Y$，方差为$\sigma_2^2$。
+
+我们知道：
+\begin{align*}
+\frac{(m-1)S_1^2}{\sigma_1^2}&\sim \chi^2(m-1)\\
+\frac{(n-1)S_2^2}{\sigma_2^2}&\sim \chi^2(n-1)
+\end{align*}
+
+于是
+\[
+\frac{\frac{(m-1)S_1^2}{\sigma_1^2}}{\frac{(n-1)S_2^2}{\sigma_2^2}}\frac{n-1}{m-1}=\frac{S_1^2\sigma^2_2}{S^2_2\sigma_1^2} \sim F(m-1,n-1)
+\]

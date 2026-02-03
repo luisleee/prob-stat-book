@@ -1,0 +1,226 @@
+\section{参数估计}
+参数估计是这样一个问题：我们已知总体的分布，但是不知道其具体参数。我们需要从统计量的观察值来猜出它。
+
+下面给出一些经典估计方法。
+
+\subsection{点估计}
+点估计是一种一发入魂的估计，我们直接猜我们认为最正确的那个数。\textbf{估计量}就是一个特殊的统计量，或者说关于样本的随机变量函数，它给出我们对某个参数的估计。对于参数$\theta$，我们一般计其估计量为盖了帽了的$\hat{\theta}$。注意，$\theta$是一个具体数值，$\hat{\theta}$是一个统计量。
+
+不过猜测肯定有好有坏，我们有这样几种方法来评判估计的好坏：
+
+\paragraph{弱相合性}
+如果随着样本容量的增大，对于任意可能的真实值$\theta\in\Theta$，估计量越来越接近真实参数值（依概率收敛），即
+\[
+\forall \epsilon>0,\quad\lim_{n\to\infty} P(|\hat{\theta}-\theta|<\epsilon) = 1
+\]
+则称该估计量是相合的。这意味着样本容量越大，猜得越准。不相合的估计量还有什么存在的必要呢（悲）。
+
+当然还可以有强相合性，即几乎必然收敛。
+\paragraph{无偏性}
+我这个估计量显然是以均值接近真实参数值为好吧。对于任意可能的参数值$\theta\in \Theta$
+\[
+E(\hat{\theta})=\theta
+\]
+则称估计量为无偏的。
+
+\paragraph{有效性}
+显然对于一个无偏估计量来说，估计量的分布更靠近均值更好吧。如果说对于任意可能的参数$\theta\in\Theta$，
+\[
+D(\hat{\theta}_1) \leq D(\hat{\theta}_2)
+\]
+
+就可以说$\hat{\theta}_1$比$\hat{\theta}_2$有效。如果过来也成立，可以视为一样有效；如果反过来不成立，就可以说$\hat{\theta}_1$比$\hat{\theta}_2$严格有效。
+
+\subsubsection{矩估计}
+样本矩是好东西。前面的大数定律告诉我们，它们会\textbf{依概率收敛}到对应阶矩（如果存在）。所以如果我们可以把参数表示成矩的连续可测函数，那我们就赢了。
+
+如果说
+$\theta=f(\mu_1,\ldots,\mu_k)$，那么令
+\[
+\hat{\theta} = f(A_1,\ldots,A_k)
+\]
+
+那么根据
+\begin{theorem}[弱连续映射定理]
+设$X_1,X_2,\ldots$是一列随机变量，$f$是一个连续可测函数。
+若$X_n\stackrel{P}{\longrightarrow}X$则
+\[
+f(X_n)\stackrel{P}{\longrightarrow}f(X)
+\]
+\end{theorem}
+
+我们有
+\[
+\hat{\theta} \stackrel{P}{\longrightarrow}f(\mu_1,\ldots,\mu_k)=\theta
+\]
+
+相合性就有了。无偏性则不能完全保证，除非$f$是线性函数（注意不是\textbf{多线性函数}）：
+\[
+E(\hat{\theta}) = E(f(A_1,\ldots,A_k)) = f(E(A_1),\ldots,E(A_k)) = \theta
+\]
+
+我们把$\hat{\theta}$叫做$\theta$的\textbf{矩估计量}，其观察值叫\textbf{矩估计值}。
+
+\subsubsection{最大似然估计}
+矩估计只是一个比较粗糙的估计，这里我们将引入一种更为精巧的估计方式。
+
+设总体$X$服从有一个未知参数$\theta$的某种离散分布，其概率质量为$p(x;\theta)$。注意这里有一种区分：变量在分号前，参数在分号后。有人认为这种区分是本质性的，我则认为这个区分基本是名字上的，没那么本质性。设$\mathbf{X}=(X_1,\ldots,X_n)$是来自$X$的样本，则有：
+\[
+P(\mathbf{X}=\mathbf{x}) = \prod_{i=1}^np(x_i;\theta)
+\]
+
+给定一组观察值$\mathbf{x}=(x_1,\ldots,x_n)$，我们可以定义\textbf{似然函数}$L(\mathbf{x};\theta)=\prod_{i=1}^np(x_i;\theta)$。我们给出估计的方式就是，给出让$L(\mathbf{x};\theta)$最大的$\hat{\theta}$。这种估计就叫\textbf{极大似然估计}。
+
+对于连续的情况，也有类似的结论成立。$X_i$落在$[x,x+dx]$内的概率质量为$f(x;\theta)dx$，则$X_1\times\cdots\times X_n$落在$[x_1,x_1+dx_1]\times\cdots\times[x_n,x_n+dx_n]$内的概率质量就是$ \prod_{i=1}^nf(x_i;\theta)dx_i=\left[\prod_{i=1}^nf(x_i;\theta)\right]d\mathbf{x}$，即联合分布在$\mathbf{x}$处的概率密度为$\prod_{i=1}^nf(x_i;\theta)$。不过这都是废话，在测度视角下看二者没有本质区别。
+
+要解释它，我们有两种方式，一种是频率的，一种是贝叶斯式的。它们的分歧主要在是否将$\theta$视为确定的上。我相信在这个问题上贝叶斯式的解释给出了更好更广泛的理解。不过，我这里并不是认可贝叶斯式的认识论，而只是认为贝叶斯式的计算解释方法有更好的泛用性或者一般性。
+首先我们需要审视一些词语的含义。似然（Likelihood）和概率（Probability）是一对含义相似，都表示某种可能性，但是含义微妙地对偶的词。贝叶斯公式就是这种对偶性淋漓尽致的体现。
+
+贝叶斯式的观点是这样的：在我们对参数一无所知的时候，可以把它视作随机的而不是固定的。前面那种变量和参数的本质性区分就模糊了，取而代之的是一种对偶性关系。我们把似然函数视为一种条件概率分布。这样的写法（不完全形式严格）可能会给人以启发：参数估计问题中，我们希望最大化的是$p(\theta|\mathbf{x})$，即猜对参数的“可能性”。这种可能性就叫似然性而不是概率。概率是知道分布后变量取值的可能性，似然性是知道变量取值后分布参数的可能性。
+
+（上面几段段话里暂时让概率取一个更狭义一点的说法，从更广义的观点来看，他们的区分就是两种条件概率的区分（有人称为先后验概率）。我们一直在处理条件概率，不过条件在不同东西上面。所以不妨放宽一点，为了更广的一般性。）
+
+似然函数$L(\mathbf{x};\theta)$正是我们在知道分布和参数时的概率，可以理解为$p(\mathbf{x}|\theta)$。那在什么时候，我们可以认为最大化$p(\mathbf{x}|\theta)$就和最大化$p(\mathbf{x}|\theta)$是一样的呢？贝叶斯公式告诉我们：$p(\theta|\mathbf{x})= \frac{p(\mathbf{x}|\theta)p(\theta)}{p(\mathbf{x})}$。在我们这个问题中，观察值应该被认为是已知的，$p(\mathbf{x})$应该被视为常数（当然在贝叶斯视角下常数和变量的位置经常发生对易）。于是答案就很简单了：二者等价当且仅当$p(\theta)$是完全均匀的（或者说我们对$\theta$什么都不知道）。
+
+这就是对最大似然估计的一种解释。在具体计算时，我们一般只会遇到可导的函数（如果不是的话，要小心了！前面那些概率密度得$0$的特殊情况都需要谨慎对待，比如说指数分布$<0$部分，均匀分布区间外的部分。）对于可导的函数，我们就有充足的手段来最大化，求导数找驻点。如果我们嫌$L(\theta)$里的乘积不好算，可以求个对数把它变成求和再最大化$\ln L(\theta)$。
+
+对于多个参数的估计，问题只不过变成了多变量的优化问题罢了，我们只用算梯度就行了。参数有约束的话的情况用个拉格朗日乘数法就好了（虽然一般不会有）。
+
+在相当一般的正则条件下，最大似然估计是相合的，这里不作证明。在更严格的条件下，最大似然估计还\textbf{依分布}收敛于正态分布，这里也不证明。
+
+比矩估计更进一步，最大似然估计有不变性的好性质：
+设 $\hat{\theta}$ 是 $\theta$ 的最大似然估计，$g$ 是任意函数（不必是一对一的）。则 $g(\hat{\theta})$ 是 $g(\theta)$ 的最大似然估计。
+对于任意可能的参数值 $\theta$，有：
+\[
+L(\mathbf{x};\theta)=L(\mathbf{x};g^{−1}(g(\theta)))
+\]
+
+当 $\theta = \hat{\theta}$ 时，似然函数达到最大，因此 $g(\hat{\theta})$ 使得 $g(\theta)$ 对应的似然函数也达到最大。这个性质非常实用！例如，如果 $\hat{\sigma}^2$ 是方差的最大似然估计，那么 $\hat{\sigma} = \sqrt{\hat{\sigma}^2}$ 就是标准差的最大似然估计。
+
+\subsection{区间估计}
+不过我们在做估计的时候，一般不会得到一个估计值就满足了，我们还想知道我们猜对的可能性有多大。不过对于连续分布，单点零测谈不了什么概率，我们必须给出一个估计区间才可以给出概率。这就是区间估计的玩法。我们一般在给定某个概率$p$的情况下，给出一个区间$(\underline{\theta},\overline{\theta})$，使得$P(\underline{\theta}<\theta<\overline{\theta})\geq p$。事实上这个$\overline{\theta}$和$\underline{\theta}$都应该被视为统计量。不过呢，我们做区间估计的时候，基本都是为了后面做假设检验，所以这里我们一般不是给出$p$，而是给出$\alpha=1-p$，即$p=1-\alpha$。这里的$1-\alpha$被称为\textbf{置信水平}。区间$(\underline{\theta},\overline{\theta})$就叫置信水平$1-\alpha$下的\textbf{置信区间}，$\underline{\theta},\overline{\theta}$分别叫置信水平$1-\alpha$下的\textbf{置信下限}和\textbf{置信上限}。
+
+不过实际在做的估计时候，我们会取尽可能窄的区间。在连续情况下会取令$\theta$落在置信区间中的概率正好为$1-\alpha$的区间；在离散情况可能取不到，就只能尽量。并且我们还会让区间的中点尽可能无偏。
+
+不过在估计的时候，我们也会用单侧的区间来估计，即只给出置信上限$\overline{\theta}$，让$P(\theta<\overline{\theta})\geq 1-\alpha$；或者只给出置信下限$\underline{\theta}$，让$P(\theta>\underline{\theta})\geq 1-\alpha$。此时的区间$(-\infty,\overline{\theta})$或$(\underline{\theta},+\infty)$叫做\textbf{单侧置信区间}；$\overline{\theta}$叫\textbf{单侧置信上限}，$\underline{\theta}$叫\textbf{单侧置信下限}。
+
+在区间估计中，我们想构造一个置信区间，其中上下限都是统计量。但是这就是问题了，如果仅凭统计量，不依赖于和未知参数有关的具体分布，我要怎么给出这个区间？答案是，我们需要把某个未知参数纳入进来，构造一种分布已知的量，即\textbf{枢轴量}。
+
+设 $\mathbf{X}=(X_1,\ldots,X_n)$ 是来自总体 $F(x;\theta)$ 的样本，$\theta$ 是待估参数（我们也可以把它扩展为参数向量）。
+
+如果一个函数 $G(\mathbf{X};\theta)$ 是依赖于参数$\theta$和样本$\mathbf{X}$的函数（和别的参数没有关系，并且必须和这个参数有关系！），并且其分布完全已知且与 $\theta$ （和任何其他\textbf{未知}参数）无关，
+则称 $G(\mathbf{X};\theta)$ 为枢轴量。
+
+注意它不是统计量，它依赖于那个待估的未知参数！有了枢轴量，我们就可以很容易地根据它的分布来列出
+
+\[
+P(\underline{g}<G(\mathbf{X};\theta)<\overline{g}) = 1-\alpha
+\]
+
+然后就能给出$(\underline{g},\overline{g})$，通过变换得到等价的$(\underline{\theta},\overline{\theta})$。
+
+我们下面就来给出一些对正态总体进行区间估计的例子，它们的枢轴量基本都可以通过上一节抽样分布中的定理得出。下面的例子中我都采用置信水平$1-\alpha$。
+
+\subsubsection{单个正态总体$N(\mu,\sigma^2)$}
+这里我们假设样本容量是$n$。
+
+\paragraph{$\mu$待估，$\sigma^2$已知}
+
+这里我们构造的枢轴量是
+\[
+Z=\frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}}\sim N(0,1)
+\]
+
+它的分布已知（与未知参数无关），包含待估参数$\mu$，包含已知参数$\sigma$，所以可以拿来做枢轴量。所以我们给出的区间：
+
+\[
+z_{1-\frac{\alpha}{2}}< \frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} <z_{\frac{\alpha}{2}}
+\]
+
+上分位数作为临界值起到了很好的作用。对于正态这种对称分布，我们有$z_{1-\frac{\alpha}{2}}=-z_{\frac{\alpha}{2}}$。换成关于$\mu$的区间就是：
+\[
+\overline{X} - \frac{\sigma}{\sqrt{n}}z_{\frac{\alpha}{2}}<\mu< \overline{X} + \frac{\sigma}{\sqrt{n}}z_{\frac{\alpha}{2}}
+\]
+
+单侧区间估计也是类似的，我就不再赘述其推导了。在后面其他的例子中，我也不再会给出单侧置信区间了，因为推导是雷同的。
+
+单侧置信上限：
+\[
+\overline{\mu} = \overline{X} + \frac{\sigma}{\sqrt{n}}z_{\alpha}
+\]
+
+单侧置信下限
+\[
+\underline{\mu} = \overline{X} + \frac{\sigma}{\sqrt{n}}z_{1-\alpha} = \overline{X} - \frac{\sigma}{\sqrt{n}}z_{\alpha}
+\]
+
+\paragraph{$\mu$待估，$\sigma^2$未知}
+
+方差未知的时候，我们就不能用刚才的正态分布做估计了，我们需要$t$分布。这里的枢轴量是
+\[
+T =\frac{\overline{X}-\mu}{\frac{S}{\sqrt{n}}} \sim t(n-1)
+\]
+
+所以我们给出区间：
+\[
+t_{1-\frac{\alpha}{2}}(n-1)<\frac{\overline{X}-\mu}{\frac{S}{\sqrt{n}}} < t_{\frac{\alpha}{2}}(n-1)
+\]
+$t$分布也是对称的，也有$t_{1-\frac{\alpha}{2}}(n-1)=-t_{\frac{\alpha}{2}}(n-1)$，我们于是做变换得到：
+\[
+\overline{X}-\frac{S}{\sqrt{n}}t_{\frac{\alpha}{2}}(n-1)<t<\overline{X}+\frac{S}{\sqrt{n}}t_{\frac{\alpha}{2}}(n-1)
+\]
+
+后面由于推导过于雷同，我只给出枢轴量和置信区间。真正消耗智力的内容在上一节，这一节只是应用一下。
+
+\paragraph{$\sigma^2$待估，$\mu$未知}
+
+这里适用卡方分布进行估计。枢轴量
+\[
+\chi^2 = \frac{(n-1)S^2}{\sigma^2}\sim \chi^2(n-1)
+\]
+
+置信区间
+\[
+\frac{(n-1)S^2}{\chi^2_{1-\frac{\alpha}{2}}(n-1)}<\sigma^2<\frac{(n-1)S^2}{\chi^2_{\frac{\alpha}{2}}(n-1)}
+\]
+
+注意我们的这套记号有一个明显的弊端：容易把自由度参数当成因式，不小心消掉$n-1$。
+
+\subsubsection{两个独立正态总体$N(\mu_1,\sigma_1^2)$，$N(\mu_2,\sigma_2^2)$}
+这里我们假设样本容量分别是$n_1$，$n_2$。
+
+\paragraph{$\mu_1-\mu_2$待估，$\sigma_1^2,\sigma_2^2$已知}
+
+方差已知的情况一直都很好办，我们可以用正态做估计。枢轴量
+\[
+Z=\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}} \sim N(0,1)
+\]
+置信区间
+\[
+\overline{X}-\overline{Y}-z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}<\mu_1-\mu_2<\overline{X}-\overline{Y}+z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+\]
+
+\paragraph{$\mu_1-\mu_2$待估，$\sigma_1^2,\sigma_2^2$未知相等}
+
+这个时候需要用$t$分布估计，枢轴量
+\[
+T=\frac{(\overline{X}-\overline{Y})-(\mu_1-\mu_2)}{S_W\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} \sim t(n_1+n_2-2)
+\]
+其中样本合并方差$S_W^2=\frac{(n_1-1)S_1^2+(n_2-1)S^2_2}{n_1+n_2-2}$。
+
+置信区间
+\[
+\overline{X}-\overline{Y}-t_{\frac{\alpha}{2}}S_W\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}<\mu_1-\mu_2<\overline{X}-\overline{Y}+t_{\frac{\alpha}{2}}S_W\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}
+\]
+
+\paragraph{$\sigma^2_1/\sigma^2_2$待估，$\mu_1,\mu_2$未知}
+这里用到$F$分布进行估计。枢轴量
+\[
+F=\frac{S_1^2/S_2^2}{\sigma_1^2/\sigma_2^2} \sim F(n_1-1,n_2-1)
+\]
+
+置信区间
+\[
+\frac{S_1^2}{S_2^2} \frac{1}{F_{\frac{\alpha}{2}}(n_1-1,n_2-1)}<\sigma^2_1/\sigma^2_2<\frac{S_1^2}{S_2^2} \frac{1}{F_{1-\frac{\alpha}{2}}(n_1-1,n_2-1)}
+\]
+注意有个倒数别搞反了。
