@@ -31,7 +31,7 @@
 
 若 $P_X$ 关于 Lebesgue 测度绝对连续（记为 $P_X \ll \lambda$），则存在非负可测函数 $f_X: \mathbb{R} \to [0, \infty)$，使得对任意可测集 $B \subseteq \mathbb{R}$，
 \[
-P_X(B) = \int_B f_X(t) \, d\lambda(t) = \int_B f_X(t) \, dt.
+P_X(B) = \int_B f_X(t) \, d\lambda(t) = \int_B f_X(t) \, \dif t.
 \]
 
 此时 $f_X$ 称为 $X$ 的概率密度函数，它在几乎处处意义下唯一确定。下面给出的是更简单情况下的概率密度函数。
@@ -57,11 +57,11 @@ $P(X=x_k)=p_k$这种表现形式叫做随机变量的\textbf{分布律}，也叫
 一个连续型随机变量在某一点处的的概率密度函数是累计分布函数的导数（当然它也可能不存在）。有了概率密度函数$f_X$，我们就可以从积分来得出累积分布函数：
 
 \[
-F_X(x) = \int_{-\infty}^{x}f_X(t)dt
+F_X(x) = \int_{-\infty}^{x}f_X(t)\dif t
 \]
 
 它被称为概率密度函数也就是因为，$f_X(t)$表示了在这一处一个无限小的区间内的“概率质量”的集中程度。
-$f_X(t)dt$就可以认为是$P(t<X<t+dt)$。
+$f_X(t)\dif t$就可以认为是$P(t<X<t+\dif t)$。
 
 很明显，如果概率密度函数存在，那么它满足：
 
@@ -71,7 +71,7 @@ f_X(x)\geq 0
 \]
 归一：
 \[
-\int_{-\infty}^{\infty}f_X(t)dt = 1
+\int_{-\infty}^{\infty}f_X(t)\dif t = 1
 \]
 
 事实上对于任意一个可积的非负函数，我都可以乘上一个系数让它归一，从而满足概率密度的要求。利用这一事实往往可以节约计算。
@@ -79,10 +79,10 @@ f_X(x)\geq 0
 并且此时，我可以通过它求随机变量落在任意可测集合内的概率：
 
 \[
-P(X\in S)=\int_{S}f_X(t)dt
+P(X\in S)=\int_{S}f_X(t)\dif t
 \]
 
-特别地，$F_X(x)=P(X\leq x)=\int_{-\infty}^{x}f_X(t)dt$。
+特别地，$F_X(x)=P(X\leq x)=\int_{-\infty}^{x}f_X(t)\dif t$。
 
 如刚才的叙述，它们在测度视角下都是一样的，只不过是换了种测度。
 

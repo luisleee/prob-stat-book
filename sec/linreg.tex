@@ -6,7 +6,7 @@
 Y=f(x_1,\ldots,x_n) + \epsilon
 \]
 
-$Y$是因变量，$f$是我们的回归函数模型，$x_i$是自变量，$\epsilon$是随机误差项（它的均值应该是$0$，并且它常常是正态的）。这里注意一种本性上的区分，我们的自变量是普通的变量，而因变量是随机变量。对于自变量每个确定的取值，都有一个因变量的分布与之对应。
+$Y$是因变量，$f$是我们的回归函数模型，$x_i$是自变量，$\epsilon$是随机误差项（它的均值应该是$0$，并且它常常是正态的）。注意这里存在着一种本性上的区分，我们的自变量是普通的变量，而因变量是随机变量。对于自变量每个确定的取值，都有一个因变量的分布与之对应。
 
 先看回单变量的形式。对于自变量的一组不完全相同的取值$x_1,\ldots,x_n$，设$Y_1,\ldots,Y_n$是在这些取值处对$Y$的独立观察结果。那么我们称
 \[
@@ -207,12 +207,12 @@ $R^2$正好和样本相关系数平方一致。
 
 它的均值是：
 \begin{align*}
-E(\overline{Y})&=\frac{1}{n}\sum E(Y_i)\\
+\E[\overline{Y}]&=\frac{1}{n}\sum \E[Y_i]\\
 &= \frac{1}{n}\sum (a+bx_i)=a+b\overline{x}
 \end{align*}
 方差是：
 \[
-D(\overline{Y}) = \frac{1}{n^2}\sum D(Y_i)= \frac{\sigma^2}{n}
+\Dev[\overline{Y}] = \frac{1}{n^2}\sum \Dev[Y_i]= \frac{\sigma^2}{n}
 \]
 
 于是$\overline{Y}\sim N(a+b\overline{x},\frac{\sigma^2}{n})$。
@@ -229,7 +229,7 @@ S_{YY} &= \sum (Y_i-\overline{Y})^2\\
 能看出$S_{xY}$是正态的，而$S_{YY}$看起来有点像卡方但是没那么卡方。我们先来研究$S_{xY}$：
 
 \begin{align*}
-E(S_{xY}) &= \sum (x_i-\overline{x})E(Y_i)\\
+\E[S_{xY}] &= \sum (x_i-\overline{x})\E[Y_i]\\
 &= \sum (x_i-\overline{x})(a+bx_i)\\
 &= a\sum(x_i-\overline{x}) +b(\sum x_i^2-\overline{x}\sum x_i)\\
 &= b(\sum x_i^2-n\overline{x}^2)\\
@@ -237,7 +237,7 @@ E(S_{xY}) &= \sum (x_i-\overline{x})E(Y_i)\\
 \end{align*}
 
 \begin{align*}
-D(S_{xY}) &= \sum (x_i-\overline{x})^2D(Y_i)\\
+\Dev[S_{xY}] &= \sum (x_i-\overline{x})^2\Dev[Y_i]\\
 &=\sum (x_i-\overline{x})^2\sigma^2=\sigma^2S_{xx}
 \end{align*}
 

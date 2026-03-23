@@ -5,87 +5,91 @@
 
 对任意随机变量 $X: \Omega \to \mathbb{R}$，定义其\textbf{均值}为：
 \[
-E(X) = \int_\Omega X(\omega) \, dP(\omega).
+\E[X] = \int_\Omega X(\omega) \, \dif P(\omega).
 \]
 
 这是个从测度角度的定义，我们也可以给出简单一点的连续型随机变量$X$的均值定义为：
 
 \[
-E(X)=\int_{-\infty}^{\infty} xf_X(x)dx
+\E[X]=\int_{-\infty}^{\infty} xf_X(x)\dif x
 \]
 
 离散型就是把积分改为求和，就是换了个测度。注意到我们有处理无限积分/和的情况，所以有时均值不一定存在。
 
 它的意义基本就是一个按概率的加权平均数。
 
-对于一个存在均值的随机变量$X$，我们把$X-E(X)$叫做\textbf{中心化}的随机变量
+对于一个存在均值的随机变量$X$，我们把$X-\E[X]$叫做\textbf{中心化}的随机变量
 
 均值是对于单个随机变量而言的，不过对于随机变量函数，我们也可以计算其均值。为了方便讨论，我们只研究连续随机变量函数。
 
 \begin{theorem}
 设 \(\mathbf{X} = (X_1, X_2, \dots, X_n)^T\) 是 \(n\) 维连续型随机向量，其联合概率密度函数为 \(f_{\mathbf{X}}(\mathbf{x})\)。设 \(g: \mathbb{R}^n \to \mathbb{R}\) 是一个可测函数，定义新的随机变量 \(Y = g(\mathbf{X})\)。
 \[
-E(g(\mathbf{X})) = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) \, d\mathbf{x}
+\E[g(\mathbf{X})] = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) \, \dif \mathbf{x}
 \]
 \end{theorem}
 
 \begin{proof}
 由定义
 \[
-E(g(\mathbf{X})) = \int_\Omega g(\mathbf{X}(\omega))  dP(\omega)
+\E[g(\mathbf{X})] = \int_\Omega g(\mathbf{X}(\omega))  \dif P(\omega)
 \]
 
 由于 $g$ 可测，应用积分变换：
 \[
-\int_\Omega g(\mathbf{X}(\omega)) dP(\omega) = \int_{\mathbb{R}^n} g(\mathbf{x}) dP_{\mathbf{X}}(\mathbf{x})
+\int_\Omega g(\mathbf{X}(\omega)) \dif P(\omega) = \int_{\mathbb{R}^n} g(\mathbf{x}) \dif P_{\mathbf{X}}(\mathbf{x})
 \]
 
 再应用概率密度的定义：
 \[
-\int_{\mathbb{R}^n} g(\mathbf{x}) dP_{\mathbf{X}}(\mathbf{x}) = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) d\mathbf{x}
+\int_{\mathbb{R}^n} g(\mathbf{x}) \dif P_{\mathbf{X}}(\mathbf{x}) = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) \dif\mathbf{x}
 \]
 
 综上即得
 \[
-E(g(\mathbf{X})) = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) \, d\mathbf{x}
+\E[g(\mathbf{X})] = \int_{\mathbb{R}^n} g(\mathbf{x}) f_{\mathbf{X}}(\mathbf{x}) \, \dif\mathbf{x}
 \]
 \end{proof}
 
 一个直观的理解就是我们可以直接把这个函数拿到积分内。对于线性函数来说，应用定理得到
 \begin{align*}
-E\left(\sum_{i=1}^n a_i X_i + b\right) 
-&= \int_{\mathbb{R}^n} \left( \sum_{i=1}^n a_i x_i + b \right) f_{\mathbf{X}}(\mathbf{x}) d\mathbf{x} \\
-&= \left(\sum_{i=1}^n\int_{\mathbb{R}^n}   a_i x_i  f_{\mathbf{X}}(\mathbf{x}) d\mathbf{x} \right)
-   + \int_{\mathbb{R}^n} b f_{\mathbf{X}}(\mathbf{x}) d\mathbf{x}\\
-&= \sum_{i=1}^n a_i E\left(X_i\right) +b 
+E\left[\sum_{i=1}^n a_i X_i + b\right]
+&= \int_{\mathbb{R}^n} \left( \sum_{i=1}^n a_i x_i + b \right) f_{\mathbf{X}}(\mathbf{x}) \dif\mathbf{x} \\
+&= \left(\sum_{i=1}^n\int_{\mathbb{R}^n}   a_i x_i  f_{\mathbf{X}}(\mathbf{x}) \dif\mathbf{x} \right)
+   + \int_{\mathbb{R}^n} b f_{\mathbf{X}}(\mathbf{x}) \dif\mathbf{x}\\
+&= \sum_{i=1}^n a_i E\left[X_i\right] +b 
 \end{align*}
 这就是期望的线性性。它还告诉我们：常数的均值是常数。注意线性性这一事实并不依赖于随机变量的任何独立性。
 
 随机变量的独立性则体现在它们乘积的期望上。
 
 \begin{align*}
-E(XY) &= \int_{\mathbb{R}^2} xy f_{XY}(x,y) dxdy\\
-E(X)E(Y) &= \left(\int_{\mathbb{R}} x f_{X}(x) dx\right) \left(\int_{\mathbb{R}} y f_{Y}(y)dy\right)\\
-&= \int_{\mathbb{R}^2} xy f_{X}(x)f_{Y}(y) dxdy
+\E[XY] &= \int_{\mathbb{R}^2} xy f_{XY}(x,y) \dif x\dif y\\
+\E[X]\E[Y] &= \left(\int_{\mathbb{R}} x f_{X}(x) \dif x\right) \left(\int_{\mathbb{R}} y f_{Y}(y)\dif y\right)\\
+&= \int_{\mathbb{R}^2} xy f_{X}(x)f_{Y}(y) \dif x\dif y
 \end{align*}
 
-可见当$X$与$Y$独立时，上下两个式子相等。注意，反过来是不一定成立的。$E(X)E(Y)=E(XY)$只能得出$f_{X}(x)f_{Y}(y)=f_{XY}(x,y)$\textbf{几乎处处}相等。
+可见当$X$与$Y$独立时，上下两个式子相等。
+
+\begin{attention}
+上面的结论反过来是不一定成立的。$\E[X]\E[Y]=\E[XY]$只能得出$f_{X}(x)f_{Y}(y)=f_{XY}(x,y)$\textbf{几乎处处}相等。
+\end{attention}
 
 \subsection{方差}
 
-随机变量$X$的\textbf{方差}定义为$E((X-E(X))^2)$。
+随机变量$X$的\textbf{方差}定义为$\E[(X-\E[X])^2]$。
 
 连续型随机变量$X$的\textbf{方差}定义为：
 
 \[
-D(X)=\int_{-\infty}^{\infty} (x-E(X))f_X(x)dx
+\Dev[X]=\int_{-\infty}^{\infty} (x-\E[X])f_X(x)\dif x
 \]
 
 离散型就是把积分改为求和。注意到我们有处理无限积分/和的情况，所以有时方差也可能不存在。
 
 它描述了随机变量的分布偏离均值的情况，并且总是非负的。
 
-由于对于常数$C$，$E(C)=C$，我们可以得到$D(C)=0$。这一结论反过来也\textbf{几乎}是成立的，但我们把证明留在弱大数定律的部分，我们先放心使用这个结论。请放心，弱大数定律的证明不会依赖这中间的任何东西。
+由于对于常数$C$，$\E[C]=C$，我们可以得到$\Dev[C]=0$。这一结论反过来也\textbf{几乎}是成立的，但我们把证明留在弱大数定律的部分，我们先放心使用这个结论。请放心，弱大数定律的证明不会依赖这中间的任何东西。
 
 对于一般的随机变量函数，它的方差没有什么太好的结论，只有在应用线性函数时才有比较好的结论。不过为了叙述的简洁性，我们把它的性质留到协方差这一部分来介绍。
 
@@ -96,45 +100,45 @@ D(X)=\int_{-\infty}^{\infty} (x-E(X))f_X(x)dx
 对于两个随机变量$X$，$Y$，它们的协方差定义为
 
 \[
-Cov(X,Y) = E((X-E(X))(Y-E(Y))) = E(XY)-E(X)E(Y)
+\Cov(X,Y) = \E\left[(X-\E[X])(Y-\E[Y])\right] = \E[XY]-\E[X]\E[Y]
 \]
 
-按式子就有：$D(X)=Cov(X,X)=E(X^2)-(E(X))^2$。我们还可以验证这一表达式的对称性和双线性性：
+按式子就有：$\Dev[X]=\Cov(X,X)=\E[X^2]-(\E[X])^2$。我们还可以验证这一表达式的对称性和双线性性：
 \[
-Cov(X,Y)=Cov(Y,X)
+\Cov(X,Y)=\Cov(Y,X)
 \]
 \[
-Cov(\alpha X_1+\beta X_2,Y) = \alpha Cov(X_1,Y) +\beta Cov(X_2,Y)
+\Cov(\alpha X_1+\beta X_2,Y) = \alpha \Cov(X_1,Y) +\beta \Cov(X_2,Y)
 \]
 
-同时还有平移不变性$Cov(X+C,Y)=Cov(X,Y)$，和非负性$Cov(X,X)\geq 0$。
+同时还有平移不变性$\Cov(X+C,Y)=\Cov(X,Y)$，和非负性$\Cov(X,X)\geq 0$。
 
 这些性质代入到方差中，就可以知道：
 
 \[
-D(\lambda X) = \lambda^2D(X),\quad D(X+C)=D(X)
+\Dev[\lambda X] = \lambda^2\Dev[X],\quad \Dev[X+C]=\Dev[X]
 \]
 
 所有这些性质的证明基本都依赖于均值的线性性质。
 
-在适当的函数空间上，我们可以把协方差看作一个内积。如果我们把两个相差一个\textbf{几乎处处}常值随机变量的随机变量视为等价的（相当于我们在处理中心化后的随机变量），那么协方差就有\textbf{正定性}了，也就构成一个实内积了。标准差于是就是它诱导的范数。
+在适当的函数空间上，我们可以把协方差看作一个内积。如果我们把两个相差一个\textbf{几乎处处}为常值随机变量的随机变量视为等价的（相当于我们在处理中心化后的随机变量），那么协方差就有\textbf{正定性}了，也就构成一个实内积了。标准差于是就是它诱导的范数。
 
 相应地，我们可以给出内积经典结论。
 
 首先是勾股定理
 \begin{align*}
-D(X+Y)&=Cov(X+Y,X+Y)\\
-&= Cov(X,X) + Cov(Y,Y) + 2Cov(X,Y)\\
-&= D(X)+D(Y)+2Cov(X,Y)
+\Dev[X+Y]&=\Cov(X+Y,X+Y)\\
+&= \Cov(X,X) + \Cov(Y,Y) + 2\Cov(X,Y)\\
+&= \Dev[X]+\Dev[Y]+2\Cov(X,Y)
 \end{align*}
 
-于是$D(X+Y)=D(X)+D(Y)$当且仅当$Cov(X,Y)=0$。
+于是$\Dev[X+Y]=\Dev[X]+\Dev[Y]$当且仅当$\Cov(X,Y)=0$。
 
 这种“协方差正交性”我们称为\textbf{不相关性}。
 
 然后是柯西不等式：
 \[
-Cov(X,Y)^2\leq D(X)D(Y)
+\Cov(X,Y)^2\leq \Dev[X]\Dev[Y]
 \]
 
 等号成立当且仅当一个是另一个的标量倍。注意这里我们是在零均值意义下讨论的，所以它们还可能相差一个常数。不过总归是$Y=a+bX$这种线性关系就是了。
@@ -142,33 +146,33 @@ Cov(X,Y)^2\leq D(X)D(Y)
 这里很自然地，这里就有一个类似余弦的量：
 
 \[
-\rho_{XY} = \frac{Cov(X,Y)}{\sqrt{D(X)D(Y)}} \leq 1
+\rho_{XY} = \frac{\Cov(X,Y)}{\sqrt{\Dev[X]\Dev[Y]}} \leq 1
 \]
 
-这就称为\textbf{相关系数}。反过来协方差也可以表示成$\rho_{XY}\sqrt{D(X)D(Y)}$。
+这就称为\textbf{相关系数}。反过来协方差也可以表示成$\rho_{XY}\sqrt{\Dev[X]\Dev[Y]}$。
 
-由前面的式子可以知道，$X,Y$独立时有$Cov(X,Y)=E(XY)-E(X)E(Y)=0$。也就是说：\textbf{独立性蕴含不相关性}。但不相关的变量不一定独立。我们只能通过换位得到并非不相关的变量不是独立的。
+由前面的式子可以知道，$X,Y$独立时有$\Cov(X,Y)=\E[XY]-\E[X]\E[Y]=0$。也就是说：\textbf{独立性蕴含不相关性}。但不相关的变量不一定独立。我们只能通过换位得到并非不相关的变量不是独立的。
 
 对于一组随机变量$\mathbf{X}=(X_1,\ldots,X_n)^T$，我们也可以给出一个类似Gram矩阵的构造：协方差矩阵。
 
-我们称矩阵$(C)_{ij} = Cov(X_i,X_j)$为它们的协方差矩阵，也记作$Cov(\mathbf{X})$。这是个对称半正定矩阵，我们可以轻松用谱定理分解它。如果我们丢掉小特征值对应的部分，就能对数据进行降维分析。如果对$\mathbf{X}$做一个线性变换得到$\mathbf{Y}=A\mathbf{X}+\mathbf{b}$，那么有$Cov(\mathbf{Y})=ACov(\mathbf{X})A^T$
+我们称矩阵$(C)_{ij} = \Cov(X_i,X_j)$为它们的协方差矩阵，也记作$\Cov(\mathbf{X})$。这是个对称半正定矩阵，我们可以轻松用谱定理分解它。如果我们丢掉小特征值对应的部分，就能对数据进行降维分析。如果对$\mathbf{X}$做一个线性变换得到$\mathbf{Y}=A\mathbf{X}+\mathbf{b}$，那么有$\Cov(\mathbf{Y})=A\Cov(\mathbf{X})A^T$
 
 \subsection{矩}
 矩是一类更一般的数字特征，实际上上面的数字特征都属于特殊的矩。矩作为一类更一般的数字特征，统一描述了随机变量的位置、离散度、形状等信息。
 
-对单个随机变量$X$，它的$k$阶原点矩$\mu'_k$定义为$E(X^k)$。均值就是$1$阶原点矩。
+对单个随机变量$X$，它的$k$阶原点矩$\mu'_k$定义为$\E[X^k]$。均值就是$1$阶原点矩。
 
 矩的一个好处是，随机变量的任意多项式函数的均值都可以表示成矩的线性函数。
 
-$k$阶中心矩$\mu_k$定义为$E( (X - E(X))^k )$。方差就是$2$阶中心矩。
+$k$阶中心矩$\mu_k$定义为$\E[ (X - \E(X])^k )$。方差就是$2$阶中心矩。
 
 $k$阶标准化矩$\tilde{\mu}_k$定义为$E\left( \left( \frac{X - \mu}{\sigma} \right)^k \right)$。$3$阶标准化矩叫做偏度，$4$阶标准化矩叫做峰度。
 
 对随机变量 \(X\) 与 \(Y\)，其 \((m,n)\) 阶或者$m+n$阶混合矩定义为：
 \begin{align*}
-    &\text{混合原点矩：} \quad \mu_{mn}' = E(X^m Y^n)\\
+    &\text{混合原点矩：} \quad \mu_{mn}' = \E[X^m Y^n]\\
     &\text{混合中心矩：} \quad \mu_{mn} = E\left[ (X - \mu_X)^m (Y - \mu_Y)^n \right]
 \end{align*}
-当 \(m=1, n=1\) 时，$2$阶混合中心矩 \(\mu_{11} = \text{Cov}(X, Y)\) 即协方差。协方差矩阵中的诸元素就是诸$2$阶中心矩。
+当 \(m=1, n=1\) 时，$2$阶混合中心矩 \(\mu_{11} = \Cov(X, Y)\) 即协方差。协方差矩阵中的诸元素就是诸$2$阶中心矩。
 
 它真正强大的应用在矩母函数和矩估计处。

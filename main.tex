@@ -5,9 +5,17 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{booktabs, multirow, array}
+\usepackage{hyperref}
 \pgfplotsset{compat=1.18}
 
 \newtheorem{theorem}{定理}
+\newtheorem{definition}{定义}
+\newtheorem{attention}{注意}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Dev}{D}
+
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 
 \title{概率论与统计小书}
 \author{luisleee }
@@ -30,5 +38,8 @@
 \include{sec/hypo}
 \include{sec/anova}
 \include{sec/linreg}
+\include{sec/complex-var}
+\include{sec/sto-process}
+\include{sec/stationary-process}
 
 \end{document}

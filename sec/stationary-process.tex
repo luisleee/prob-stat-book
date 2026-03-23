@@ -1,0 +1,172 @@
+\section{平稳过程}
+前面我们已经提过了严平稳和宽平稳的概念，这里不再重提了，只粗略描述下。平稳性就是一种时不变性，严平稳要求任意有限维分布时不变，宽平稳要求均值和协方差时不变。
+
+\begin{attention}
+严平稳过程并不一定是宽平稳过程，考虑到均值和协方差并不一定存在。加上二阶矩过程的条件后，严平稳性才蕴含宽平稳性。我们下面基本都处理二阶矩过程。
+\end{attention}
+
+这时对于二阶矩平稳过程来说，我们一般采用自相关函数的\(R_X(\tau)=\E[X(t)X(t+\tau)]\)这种形式。
+
+前面我们提到了时间平均，我们这里只简单重提。时间平均的存在性并非显然，但若二阶矩过程均方连续，则相应的积分便是有意义的。
+
+对于平稳过程来说，我们还可以更多地，用时间平均定义一种相关函数。随机过程\(X(t)\)的时间自相关函数定义为：
+\[
+\overline{X(t)X(t+\tau)} = \lim_{T\to \inf}\frac{1}{T}\int^{T/2}_{-T/2}X(t)X(t+\tau)\dif t
+\]
+
+这时就有一个问题：什么时候时间均值/自相关函数和统计均值/自相关函数相同？这种性质就叫做遍历性。如果时间平均\textbf{几乎必然}等于统计平均，那么称随机过程\textbf{关于均值遍历}；如果时间自相关函数\textbf{几乎必然}等于统计自相关函数，那么称随机过程\textbf{关于自相关函数遍历}。
+
+\begin{attention}
+事实上，遍历性通常只有在平稳过程的前提下谈论才有意义。
+\end{attention}
+
+接下来我们感兴趣的是：什么时候一个平稳过程才具有遍历性？我们有这样一个定理：
+
+\begin{theorem}
+均方连续的平稳过程\(X(t)\)关于均值具有遍历性当且仅当
+\[
+\lim_{T\to \infty}\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau}{2T}\right)(R_{X}(\tau) -m_X^2)\dif \tau = 0
+\]
+
+若均方连续的平稳过程\(X(t)\)对于任意给定的\(\tau\)有\(X(t)X(t+\tau)\)也是均方连续的平稳过程，则\(X(t)\)关于自相关函数具有遍历性当且仅当
+
+\[
+\lim_{T\to \infty}\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau_1}{2T}\right)(B_{X}(\tau, \tau_1) -R_X^2(\tau))\dif \tau = 0
+\]
+
+其中\(B_X(\tau, \tau_1) = \E[X(t)X(t+\tau)X(t+\tau_1)X(t+\tau+\tau_1)]\)
+\end{theorem}
+
+我们这里只给出第一个部分的证明：
+\begin{proof}
+\begin{align*}
+&\E\left[\left(\frac{1}{T}\int_{-T/2}^{T/2}X(t)\dif t -m_X \right)^2\right]\\
+=&\E\left[\frac{1}{4T^2}\int_{-T}^{T}X(s)\dif s\int_{-T}^{T}X(t)\dif t- \frac{m_X}{T}\int_{-T}^{T}X(t)\dif t+m_X^2 \right]\\
+=&\frac{1}{4T^2}\int_{-T}^{T}\int_{-T}^{T}R_X(t-s)\dif t\dif s-\frac{m_X}{T}\int_{-T}^{T}m_X\dif t +m_X^2\\
+=&\frac{1}{4T^2}\int_{-2T}^{2T}(2T-|\tau|)R_X(\tau)\dif \tau -m_X^2 & \tau=s-t\\
+=&\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau}{2T}\right)R_{X}(\tau)\dif \tau - m_X^2\\
+=&\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau}{2T}\right)(R_{X}(\tau) -m_X^2)\dif \tau \\
+\end{align*}
+\end{proof}
+
+\subsection{平稳过程的谱}
+平稳过程最广泛的应用在信号处理中，随机信号通常被我们建模为一个平稳过程。在信号处理中，我们常常希望了解一个信号的频率成分——即信号的能量或功率在频域上是如何分布的。对于确定性信号，傅里叶变换提供了从时域到频域的方法。显然，对于随机过程，情况更为复杂：样本路径通常不满足绝对可积条件，且我们面对的是一个随机性的信号族，而非单一信号。因此，我们需要引入谱密度的概念，并建立其与自相关函数之间的联系。
+
+\subsubsection{能量谱}
+
+作为铺垫，我们先回顾确定性信号的谱分析。设 \(x(t)\) 是一个确定性信号，且能量有限，即
+\[
+E = \int_{-\infty}^{\infty} |x(t)|^2 \, \dif t < \infty
+\]
+此时 \(x(t)\) 的傅里叶变换存在：
+\[
+X(\omega) = \int_{-\infty}^{\infty} x(t) e^{-i\omega t} \, \dif t
+\]
+由帕塞瓦尔定理，信号的总能量可以在频域中计算：
+\[
+E = \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(\omega)|^2 \, \dif \omega
+\]
+因此，我们称
+\[
+\mathcal{E}(\omega) = |X(\omega)|^2
+\]
+为信号 \(x(t)\) 的\textbf{能量谱密度}。它描述了信号的能量在频域上的分布：在频率 \(\omega\) 附近单位带宽内的能量为 \(\mathcal{E}(\omega)\)。
+
+\subsubsection{功率谱}
+
+对于随机过程 \(X(t)\)，我们面临两个根本性的困难。首先平稳过程通常持续无限长时间，其样本路径往往不满足能量有限的条件（例如，白噪声或常数过程）。因此，能量谱的概念无法直接应用。并且我们面对的不是单一信号，而是一族随机的样本函数。因此，我们需要一个能够反映过程“平均”频域特性的量。
+
+为了解决这两个问题，我们引入\textbf{功率谱密度}的概念。其核心思想是：先考虑有限时间截断，计算该段内的能量，再除以时间长度得到平均功率，最后取时间趋于无穷的极限和统计均值。
+
+对于平稳随机过程 \(X(t)\)，定义其\textbf{功率谱密度}为
+\[
+S_X(\omega) = \lim_{T \to \infty} \frac{1}{2T} \E\left[ \left| \int_{-T}^{T} X(t) e^{-i\omega t} \, \dif t \right|^2 \right]
+\]
+
+这就是有限截断的傅里叶变换取极限。
+
+维纳-辛钦定理是平稳过程谱分析的核心结果，它揭示了功率谱密度与自相关函数之间的傅里叶变换关系。
+
+\begin{theorem}[维纳-辛钦定理]
+设 \(X(t)\) 是宽平稳过程，其自相关函数 \(R_X(\tau) = \mathbb{E}[X(t)X(t+\tau)]\) 满足 \(\int_{-\infty}^{\infty} |R_X(\tau)| \, \dif \tau < \infty\)（或更一般地，在均方意义下），则功率谱密度 \(S_X(\omega)\) 与 \(R_X(\tau)\) 构成傅里叶变换对：
+\[
+S_X(\omega) = \int_{-\infty}^{\infty} R_X(\tau) e^{-i\omega\tau} \, \dif \tau
+\]
+\[
+R_X(\tau) = \frac{1}{2\pi} \int_{-\infty}^{\infty} S_X(\omega) e^{i\omega\tau} \, \dif \omega
+\]
+\end{theorem}
+
+我们暂时保留它的证明，直到介绍正交增量过程时再说。
+
+由维纳-辛钦定理和自相关函数的性质，可以推导出功率谱密度的重要性质：
+
+\begin{enumerate}
+    \item \textbf{非负性}：\(S_X(\omega) \ge 0\)，对任意 \(\omega\) 成立。这是因为功率谱密度表示平均功率的分布，不能为负。
+    
+    \item \textbf{实偶性}：若 \(X(t)\) 是实过程，则 \(R_X(\tau)\) 是实偶函数，从而 \(S_X(\omega)\) 也是实偶函数：
+    \[
+    S_X(-\omega) = S_X(\omega) \in \mathbb{R}
+    \]
+    因此，我们通常只关心 \(\omega \ge 0\) 的频谱，并将 \(S_X(\omega)\) 定义为双边功率谱密度。有时也使用单边谱密度 \(G_X(\omega) = 2S_X(\omega)\)（\(\omega \ge 0\)）。
+    
+    \item \textbf{总平均功率}：当 \(\tau = 0\) 时，自相关函数等于过程的均方值：
+    \[
+    R_X(0) = \E[X^2(t)]
+    \]
+    由逆变换公式，有
+    \[
+    \E[X^2(t)] = \frac{1}{2\pi} \int_{-\infty}^{\infty} S_X(\omega) \, \dif \omega
+    \]
+\end{enumerate}
+
+\subsubsection{谱的遍历性}
+
+维纳-辛钦定理给出了统计自相关函数与功率谱密度的关系，但在实际应用中，我们通常只能获得单条样本路径，而非所有样本。这就引出了谱的遍历性问题。
+
+若过程\textbf{关于自相关函数遍历}，则单条样本路径的时间自相关函数几乎必然等于统计自相关函数：
+\[
+\overline{X(t)X(t+\tau)} = \lim_{T\to\infty} \frac{1}{2T} \int_{-T}^{T} X(t)X(t+\tau) \, \dif t \stackrel{\text{a.s.}}{=} R_X(\tau)
+\]
+进而，对该时间自相关函数作傅里叶变换，所得结果几乎必然等于功率谱密度：
+\[
+\lim_{T\to\infty} \frac{1}{2T} \left| \int_{-T}^{T} X(t) e^{-i\omega t} \, \dif t \right|^2 \stackrel{\text{a.s.}}{=} S_X(\omega)
+\]
+
+这意味着，在遍历性成立的条件下，我们可以用一条足够长的样本记录来估计功率谱密度。
+
+\subsection{加性白高斯噪声（AWGN）}
+
+这或许是最经典的平稳过程了。如其名，它加性、白、高斯、噪声。加性是指两个AWGN相加仍然是AWGN，叠加在其他有用信号时和其他有用信号独立。白是指它的频谱包含所有频率，且为常数。高斯是指它是一个高斯过程。噪声是指它不包含任何信息。
+
+也就是说，它是一个功率谱密度满足
+\[
+S_N(\omega) = \frac{N_0}{2}, \quad \forall \omega \in \mathbb{R}
+\]
+的零均值平稳高斯过程。
+
+严格意义上，这样的白噪声并不作为一个一般的函数而存在，而是一个\textbf{广义随机过程}。它的自相关函数是
+\[
+R_N(\tau) = \frac{N_0}{2}\delta(\tau)
+\]
+这就不是一个普通的函数，而是一个广义函数。而且仔细看这个自相关函数，对于不同的\(t\)，\(N(t)\)到处都不相关，对高斯过程来说即独立。也就是说它的样本函数处处不连续。
+
+\subsubsection{带限白噪声}
+
+为了获得数学上良定义且物理上可实现的过程，通常考虑\textbf{带限白噪声}。设噪声在带宽 \([-B, B]\) 内具有平坦谱：
+\[
+S_N(\omega) = 
+\begin{cases}
+\frac{N_0}{2}, & |\omega| \le B \\
+0, & |\omega| > B
+\end{cases}
+\]
+则其自相关函数为
+\[
+R_N(\tau) = \frac{N_0}{2} \cdot \frac{\sin(B\tau)}{\pi \tau} = \frac{N_0 B}{\pi} \cdot \frac{\sin(B\tau)}{B\tau}
+\]
+此时功率有限：\(R_N(0) = N_0 B / \pi < \infty\)。当 \(B \to \infty\) 时，\(\sin(B\tau)/(\pi \tau) \to \delta(\tau)\)，恢复理想白噪声。
+
+带限白噪声是均方连续的，且具有遍历性。在实际通信系统中，接收机通常包含带限滤波器，因此处理的噪声往往是带限白噪声。
+
+% 多元平稳

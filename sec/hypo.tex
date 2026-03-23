@@ -131,12 +131,12 @@ $F \geq F_{\alpha}(n_1 - 1, n_2 - 1)$ \\
 
 这一结论的基础是在$X,Y$独立的情况下，
 \[
-D(\overline{D}) =D(\overline{X})+D(\overline{Y})= \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}
+\Dev[\overline{D}] =\Dev[\overline{X}]+\Dev[\overline{Y}]= \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}
 \]
 
 但在成对数据中，$X$和$Y$并没有预设的独立性。于是$X,Y$协方差仍然需要考虑。
 \[
-D(\overline{D})=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}-2Cov(\overline{X},\overline{Y})
+\Dev[\overline{D}]=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}-2\Cov(\overline{X},\overline{Y})
 \]
 
 样本容量比较小的时候，我们对$\overline{D}$的分布基本束手无策。但是当样本容量很大时，由中心极限定理就有$\overline{D} \approx N(\mu_D,\frac{\sigma_D^2}{n})$。于是这又回到了单正态总体的$t$检验问题了。
@@ -195,7 +195,7 @@ O_j=\#\{X_i\in A_j\},\quad j=1,2,\ldots,k
 
 回忆下多项分布的性质，有
 \[
-E(O_j)=np_j,\quad Cov(O_i,O_j)=\delta_{ij}p_i-p_ip_j
+\E[O_j]=np_j,\quad \Cov(O_i,O_j)=\delta_{ij}p_i-p_ip_j
 \]
 
 我们最后想要得到一个卡方分布，也就是一些独立标准正态分布的平方和。我们现在构造的这个统计量也是一个平方和。我们不妨设随机向量$\mathbf{Z}=(Z_1,\ldots,Z_n)^T$，其中$Z_j=\frac{O_j-np_j}{\sqrt{np_j}}$，就有
@@ -214,12 +214,14 @@ E(O_j)=np_j,\quad Cov(O_i,O_j)=\delta_{ij}p_i-p_ip_j
 \[
 \frac{O-n\mathbf{p}}{\sqrt{n}} \xrightarrow{d} N_k(\mathbf{0},\Sigma)
 \]
-其中$\Sigma=Cov(\mathbf{O})$，$\Sigma_{ij}=\delta_{ij}p_i-p_ip_j$。
+其中$\Sigma=\Cov(\mathbf{O})$，$\Sigma_{ij}=\delta_{ij}p_i-p_ip_j$。
 
-于是我们也就知道，$n\to \infty$时$\mathbf{Z}$也服从多元正态分布。这个分布显然就应该是$N_k(\mathbf{0}, \Psi)$，其中$\Psi=Cov(\mathbf{Z})$，$\Psi_{ij}=\delta_{ij}-\sqrt{p_ip_j}$。仔细观察下这个矩阵，这就是$I-\mathbf{v}\mathbf{v}^T$，这是个沿$\mathbf{v}$方向的正交投影！我们把这个分布先叫做$\mathbf{Z}_\infty$。
+于是我们也就知道，$n\to \infty$时$\mathbf{Z}$也服从多元正态分布。这个分布显然就应该是$N_k(\mathbf{0}, \Psi)$，其中$\Psi=\Cov(\mathbf{Z})$，$\Psi_{ij}=\delta_{ij}-\sqrt{p_ip_j}$。仔细观察下这个矩阵，这就是$I-\mathbf{v}\mathbf{v}^T$，这是个沿$\mathbf{v}$方向的正交投影！我们把这个分布先叫做$\mathbf{Z}_\infty$。
 
-（注意到这其实不是一个正定的协方差矩阵，和我们之前的讨论有些许出入。但我们仍然可以允许这么做，它是一个“退化”的正态分布，即这个正态变量其实\textbf{几乎必然}分布在一个子空间上，没有那么大的自由度。这种形式的正交投影会把$k$维的向量正交投影到一个$k-1$的子空间里。之前的讨论其实仍然适用（线性变换不变性，\textbf{部分}变量的独立性），因为谱定理也能处理特征值为$0$的情况。只不过唯一的问题就是我们写不出概率密度函数了，我们需要把它成一个更低维度的多元正态分布来处理。）
-
+\begin{attention}
+注意到这其实不是一个正定的协方差矩阵，和我们之前的讨论有些许出入。但我们仍然可以允许这么做，它是一个“退化”的正态分布，即这个正态变量其实\textbf{几乎必然}分布在一个子空间上，没有那么大的自由度。这种形式的正交投影会把$k$维的向量正交投影到一个$k-1$的子空间里。之前的讨论其实仍然适用（线性变换不变性，\textbf{部分}变量的独立性），因为谱定理也能处理特征值为$0$的情况。只不过唯一的问题就是我们写不出概率密度函数了，我们需要把它成一个更低维度的多元正态分布来处理。
+\end{attention}
+    
 我们梦寐以求的标准性仍然没有到来，但它离得不远了，我们可以通过线性变换做到这一点。由线性变换不变性，我们确实可以把$\mathbf{Z}_{\infty}$通过变换降维得到标准正态向量。我们取$\operatorname{Im}\Psi$的一组规范正交基，组成一个$k \times (k-1)$的矩阵$U$。这就是一个赤裸裸的降维，我们其实给$U$添上一列$\mathbf{v}$就得到$\Psi$了，令
 \[
 \mathbf{W}=U^T\mathbf{Z}_{\infty}

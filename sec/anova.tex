@@ -137,7 +137,7 @@ c_{ki} =
 这样就构造完成了，请自己检验下吧。
 
 于是我们就可以把$\mathbf{X}\sim N_n(\boldsymbol{\mu},\sigma^2I_n)$变换成
-$\mathbf{Z}\sim N_n(Q\boldsymbol{\mu},Q\sigma^2I_nQ^T) = N_n(Q\boldsymbol{\mu},\sigma^2I_n)$。它的各分量是独立的！
+$\mathbf{Z}\sim N_n(Q\boldsymbol{\mu},Q\sigma^2I_n Q^T) = N_n(Q\boldsymbol{\mu},\sigma^2I_n)$。它的各分量是独立的！
 
 $\overline{X}$就是$\mathbf{Z}$第一个分量，$S_A$就是$\mathbf{Z}$后面的$r-1$个分量的平方和，$S_E$就是剩下$n-r$各分量的平方和。三者相互独立就证明完成了。剩下就是证明两个卡方分布了。
 
@@ -188,15 +188,15 @@ F=\frac{S_A/(r-1)}{S_E/(n-r)}\geq F_\alpha(r-1,n-r)
 
 在对$\sigma^2$做估计的时候，我们应该求助于$S_E$，因为$S_A$与$\sigma^2$的关系会因原假设是否成立而改变。
 
-由前面的式子，知道$E(\frac{S_E}{n-r}) =\sigma^2$，它可以作为$\sigma^2$的无偏估计。我们对$\mu$和$\mu_i$也有无偏估计$\overline{X}$，$\overline{X}_i$。
+由前面的式子，知道$\E[\frac{S_E}{n-r}] =\sigma^2$，它可以作为$\sigma^2$的无偏估计。我们对$\mu$和$\mu_i$也有无偏估计$\overline{X}$，$\overline{X}_i$。
 
 当我们拒绝原假设时，问题会变得复杂。这时均值是不完全相同的，即效应$\delta_i$不全为$0$。因为$\delta_i = \mu_i -\mu$，所以其无偏估计为$\overline{X}_i-\overline{X}$。
 
 我们还想知道，拒绝原假设时$S_A$是怎样的。我们知道它会偏大，但是定量地说：
 \begin{align*}
-E(S_A) &= E\left( \sum_{i=1}^r n_i \overline{X}_i^2 -n\overline{X}^2 \right) \\
-& = \sum_{i=1}^r n_i E(\overline{X}_i^2) - nE(\overline{X}^2)\\
-& = \sum_{i=1}^r n_i [D(\overline{X}_i)+(E(\overline{X}_i))^2] - n[D(\overline{X})+(E(\overline{X}))^2]\\
+\E[S_A] &= E\left( \sum_{i=1}^r n_i \overline{X}_i^2 -n\overline{X}^2 \right) \\
+& = \sum_{i=1}^r n_i \E[\overline{X}_i^2] - n\E[\overline{X}^2]\\
+& = \sum_{i=1}^r n_i [\Dev[\overline{X}_i]+(\E[\overline{X}_i])^2] - n[\Dev[\overline{X}]+(\E[\overline{X}])^2]\\
 &= \sum_{i=1}^r n_i\left( \frac{\sigma^2}{n_i}+\mu_i^2\right) - n\left(\frac{\sigma^2}{n} +\mu^2 \right)\\
 &= r\sigma^2 +\sum_{i=1}^r n_i(\mu+\delta_i)^2 - \sigma^2 +n\mu^2\\
 &= (r-1)\sigma^2 + \sum_{i=1}^r n_i\mu^2 +2\mu\sum_{i=1}^r n_i\delta_i +\sum_{i=1}^rn_i\delta_i^2 - n\mu^2\\
@@ -209,7 +209,8 @@ E(S_A) &= E\left( \sum_{i=1}^r n_i \overline{X}_i^2 -n\overline{X}^2 \right) \\
 \[
 \frac{(\overline{X}_i-\overline{X_j})-(\mu_i-\mu_j)}{\sqrt{S_E\left(\frac{1}{n_i}+\frac{1}{n_j}\right)}} \sim t(n_i+n_j-2)
 \]
-注意$S_E$是一个平方和，是类似方差而不是标准差的量，虽然它记号上很像标准差。
+
+注意这里的$S_E$是一个平方和，是类似方差而不是标准差的量，虽然它记号上很像标准差。
 
 \subsection{等重复双因素试验的方差分析}
 
@@ -289,15 +290,15 @@ S_E &= S_T - S_A-S_B -S_{A\times B}
 \begin{itemize}
     \item $\overline{X}$,$S_A$,$S_B$,$S_{A\times B}$,$S_E$相互独立。
     \item $\frac{S_E}{\sigma^2}\sim \chi^2(rs(t-1))$。
-    \item $E(S_E)=rs(t-1)\sigma^2$。
+    \item $\E[S_E]=rs(t-1)\sigma^2$。
     \item $H_{01}$成立时，$\frac{S_A}{\sigma^2}\sim \chi^2(r-1)$。更进一步，$\frac{S_A/(r-1)}{S_E/[rs(t-1)]} \sim F(r-1,rs(t-1))$。
-    \item $E(S_A)=(r-1)\sigma^2+st\sum_{i=1}^r \alpha_i^2$。
+    \item $\E[S_A]=(r-1)\sigma^2+st\sum_{i=1}^r \alpha_i^2$。
     
     \item $H_{02}$成立时，$\frac{S_B}{\sigma^2}\sim \chi^2(s-1)$。更进一步，$\frac{S_B/(s-1)}{S_E/[rs(t-1)]} \sim F(s-1,rs(t-1))$。
-    \item $E(S_B)=(s-1)\sigma^2+rt\sum_{j=1}^s \beta_j^2$。
+    \item $\E[S_B]=(s-1)\sigma^2+rt\sum_{j=1}^s \beta_j^2$。
     
     \item $H_{03}$成立时，$\frac{S_{A\times B}}{\sigma^2}\sim \chi^2((r-1)(s-1))$。更进一步，$\frac{S_{A\times B}/[(r-1)(s-1)]}{S_E/[rs(t-1)]} \sim F((r-1)(s-1),rs(t-1))$。
-    \item $E(S_{A\times B})=(r-1)(s-1)\sigma^2+t\sum_{i=1}^r\sum_{j=1}^s\gamma_{ij}^2$。
+    \item $\E[S_{A\times B}]=(r-1)(s-1)\sigma^2+t\sum_{i=1}^r\sum_{j=1}^s\gamma_{ij}^2$。
 \end{itemize}
 
 于是像单因素试验一样，我们也可以对这三个假设用$F$检验了。我们一样可以列出方差分析表\ref{tab:two-way-anova}。

@@ -19,14 +19,14 @@
 \paragraph{无偏性}
 我这个估计量显然是以均值接近真实参数值为好吧。对于任意可能的参数值$\theta\in \Theta$
 \[
-E(\hat{\theta})=\theta
+\E[\hat{\theta}]=\theta
 \]
 则称估计量为无偏的。
 
 \paragraph{有效性}
 显然对于一个无偏估计量来说，估计量的分布更靠近均值更好吧。如果说对于任意可能的参数$\theta\in\Theta$，
 \[
-D(\hat{\theta}_1) \leq D(\hat{\theta}_2)
+\Dev[\hat{\theta}_1] \leq \Dev[\hat{\theta}_2]
 \]
 
 就可以说$\hat{\theta}_1$比$\hat{\theta}_2$有效。如果过来也成立，可以视为一样有效；如果反过来不成立，就可以说$\hat{\theta}_1$比$\hat{\theta}_2$严格有效。
@@ -56,7 +56,7 @@ f(X_n)\stackrel{P}{\longrightarrow}f(X)
 
 相合性就有了。无偏性则不能完全保证，除非$f$是线性函数（注意不是\textbf{多线性函数}）：
 \[
-E(\hat{\theta}) = E(f(A_1,\ldots,A_k)) = f(E(A_1),\ldots,E(A_k)) = \theta
+\E[\hat{\theta}] = \E[f(A_1,\ldots,A_k]) = f(\E[A_1],\ldots,\E[A_k]) = \theta
 \]
 
 我们把$\hat{\theta}$叫做$\theta$的\textbf{矩估计量}，其观察值叫\textbf{矩估计值}。
@@ -71,7 +71,7 @@ P(\mathbf{X}=\mathbf{x}) = \prod_{i=1}^np(x_i;\theta)
 
 给定一组观察值$\mathbf{x}=(x_1,\ldots,x_n)$，我们可以定义\textbf{似然函数}$L(\mathbf{x};\theta)=\prod_{i=1}^np(x_i;\theta)$。我们给出估计的方式就是，给出让$L(\mathbf{x};\theta)$最大的$\hat{\theta}$。这种估计就叫\textbf{极大似然估计}。
 
-对于连续的情况，也有类似的结论成立。$X_i$落在$[x,x+dx]$内的概率质量为$f(x;\theta)dx$，则$X_1\times\cdots\times X_n$落在$[x_1,x_1+dx_1]\times\cdots\times[x_n,x_n+dx_n]$内的概率质量就是$ \prod_{i=1}^nf(x_i;\theta)dx_i=\left[\prod_{i=1}^nf(x_i;\theta)\right]d\mathbf{x}$，即联合分布在$\mathbf{x}$处的概率密度为$\prod_{i=1}^nf(x_i;\theta)$。不过这都是废话，在测度视角下看二者没有本质区别。
+对于连续的情况，也有类似的结论成立。$X_i$落在$[x,x+\dif x]$内的概率质量为$f(x;\theta)\dif x$，则$X_1\times\cdots\times X_n$落在$[x_1,x_1+\dif x_1]\times\cdots\times[x_n,x_n+\dif x_n]$内的概率质量就是$ \prod_{i=1}^nf(x_i;\theta)\dif x_i=\left[\prod_{i=1}^nf(x_i;\theta)\right]\dif\mathbf{x}$，即联合分布在$\mathbf{x}$处的概率密度为$\prod_{i=1}^nf(x_i;\theta)$。不过这都是废话，在测度视角下看二者没有本质区别。
 
 要解释它，我们有两种方式，一种是频率的，一种是贝叶斯式的。它们的分歧主要在是否将$\theta$视为确定的上。我相信在这个问题上贝叶斯式的解释给出了更好更广泛的理解。不过，我这里并不是认可贝叶斯式的认识论，而只是认为贝叶斯式的计算解释方法有更好的泛用性或者一般性。
 首先我们需要审视一些词语的含义。似然（Likelihood）和概率（Probability）是一对含义相似，都表示某种可能性，但是含义微妙地对偶的词。贝叶斯公式就是这种对偶性淋漓尽致的体现。

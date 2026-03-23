@@ -3,7 +3,9 @@
 
 所谓多元随机变量，就是多个随机变量组合在一起，像$(X,Y)$。我们为了便利，可以把它们排列成向量的形式，也叫\textbf{随机向量}。
 
-同样，我们也可以计算$n$元随机变量$\mathbf{X}$的取值落在$\mathbb{R}^n$中一个可测子集$S$内的概率$P(\mathbf{X}\in S)$。
+以二元随机变量\((X,Y)\)为例，\(X\)与\(Y\)各自是\(\Omega\to \mathbb{R}\)和\(\Omega\to \mathbb{R}\)的函数。我们就可以粘合出一个二元随机变量，也就是\(X\times Y: \Omega \to \mathbb{R}^2\)。
+
+像一元随机变量那样，我们也可以计算$n$元随机变量$\mathbf{X}$的取值落在$\mathbb{R}^n$中一个可测子集$S$内的概率$P(\mathbf{X}\in S)$。
 
 它的分布可以用\textbf{联合累积分布函数}来描述。连续型随机变量可以用\textbf{联合概率密度}描述，离散型随机变量可以用\textbf{联合分布律}描述。
 
@@ -28,7 +30,7 @@ F_{\mathbf{X}}(\mathbf{x})=P(X_1\leq x_1,X_2 \leq x_2, \cdots ,X_n \leq x_n)
 
 如果给出多元随机变量的联合概率密度，我也就可以通过$n$重积分解答刚才的问题：
 \[
-P(\mathbf{X}\in S)=\int_{S}f_{\mathbf{X}}(\mathbf{x})d\mathbf{x}
+P(\mathbf{X}\in S)=\int_{S}f_{\mathbf{X}}(\mathbf{x})\dif\mathbf{x}
 \]
 
 用测度的语言描述，就是说：
@@ -56,7 +58,7 @@ P(X_1=x) = \sum_{\mathbf{x}\in\pi_1^{-1}(x)}P(\mathbf{X}=\mathbf{x})
 给出联合概率密度，可以求出单个随机变量的概率密度：
 
 \[
-f_{X_1}(x)=\int_{\pi_1(\mathbf{x})=x}f_{\mathbf{X}}(\mathbf{x})d\mathbf{x}
+f_{X_1}(x)=\int_{\pi_1(\mathbf{x})=x}f_{\mathbf{X}}(\mathbf{x})\dif\mathbf{x}
 \]
 
 以上这种单个变量的分布规律称为边缘分布规律，也就是\textbf{边缘累积分布函数}，\textbf{边缘分布律}，\textbf{边缘概率密度}。
@@ -134,11 +136,11 @@ F_{\mathbf{X}}(\textbf{x})=\prod_{i=1}^{n}F_{X_i}(x_i)
 
 \begin{align*}
 F_{X+Y}(z)&=P(X+Y\leq z)\\
-&= \iint_{x+y\leq z}f_{XY}(x,y)dxdy\\
-&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z-y}f_{XY}(x,y) dx\right]dy\\
-&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z}f_{XY}(u-y,y) du\right]dy&\text{u=z-y}\\
-&= \int_{-\infty}^{z}\left[\int_{-\infty}^{\infty}f_{XY}(u-y,y) dy\right]du &\text{Fubini定理}\\
-f_{X+Y}(z)&=\frac{dF_{X+Y}(z)}{dz} = \int_{-\infty}^{\infty}f_{XY}(z-t,t) dt &\text{微积分基本定理}
+&= \iint_{x+y\leq z}f_{XY}(x,y)\dif x\dif y\\
+&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z-y}f_{XY}(x,y) \dif x\right]\dif y\\
+&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z}f_{XY}(u-y,y) \dif u\right]\dif y&\text{u=z-y}\\
+&= \int_{-\infty}^{z}\left[\int_{-\infty}^{\infty}f_{XY}(u-y,y) \dif y\right]\dif u &\text{Fubini定理}\\
+f_{X+Y}(z)&=\frac{\dif F_{X+Y}(z)}{\dif z} = \int_{-\infty}^{\infty}f_{XY}(z-t,t) \dif t &\text{微积分基本定理}
 \end{align*}
 
 这就是卷积公式。如果$X$和$Y$独立，那性质敢情更好了。里面的$f_{XY}(z-t,t)$就可以拆成$f_X(z-t)f_Y(t)$。顺带一提，虽然这个公式乍一看不对称，实际上是对称的，和加法的交换性是一致的。
@@ -146,20 +148,20 @@ f_{X+Y}(z)&=\frac{dF_{X+Y}(z)}{dz} = \int_{-\infty}^{\infty}f_{XY}(z-t,t) dt &\t
 做乘除法也有类似的公式，令$Z=XY$：
 \begin{align*}
 F_{Z}(z) &= P(XY \leq z) \\
-&= \iint_{xy \leq z} f_{XY}(x,y) \,dx\,dy \\
-&= \int_{-\infty}^{0} \left[ \int_{z/x}^{\infty} f_{XY}(x,y) \,dy \right] dx 
-   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
-&= \int_{-\infty}^{0} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx 
-   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
-&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,dy \right] dx \\
-&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,du \right] dx & u = xy \\
-&= \int_{-\infty}^{z} \left[ \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,dx \right] du & \text{Fubini 定理} \\
-f_{Z}(z) &= \frac{dF_{XY}(z)}{dz} = \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{z}{x}\right) \frac{1}{|x|} \,dx & \text{微积分基本定理}
+&= \iint_{xy \leq z} f_{XY}(x,y) \,\dif x\,\dif y \\
+&= \int_{-\infty}^{0} \left[ \int_{z/x}^{\infty} f_{XY}(x,y) \,\dif y \right] \dif x 
+   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,\dif y \right] \dif x \\
+&= \int_{-\infty}^{0} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,\dif y \right] \dif x 
+   + \int_{0}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,\dif y \right] \dif x \\
+&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z/x} f_{XY}(x,y) \,\dif y \right] \dif x \\
+&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{z} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,\dif u \right] \dif x & u = xy \\
+&= \int_{-\infty}^{z} \left[ \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{u}{x}\right) \frac{1}{|x|} \,\dif x \right] \dif u & \text{Fubini 定理} \\
+f_{Z}(z) &= \frac{\dif F_{XY}(z)}{\dif z} = \int_{-\infty}^{\infty} f_{XY}\left(x, \frac{z}{x}\right) \frac{1}{|x|} \,\dif x & \text{微积分基本定理}
 \end{align*}
 
 除法是类似的，令$Z=Y/X$：
 \[
-f_Z(z)= \int_{-\infty}^{\infty} f_{XY}(x, zx) |x|dx
+f_Z(z)= \int_{-\infty}^{\infty} f_{XY}(x, zx) |x|\dif x
 \]
 
 不过这个公式就不对称了。
@@ -229,13 +231,13 @@ P\{ Y = y \} = F_Y(y) - F_Y(y^-) = \sum_{g(\mathbf{x}) = y} P\{ \mathbf{X} = \ma
 \begin{theorem}[n维余面积公式]
 设 $g: \mathbb{R}^n \to \mathbb{R}$ 是$C^1$函数（$n\geq 2$），且其梯度$\nabla g(\mathbf{x})$在$g^{-1}([a,b])$上处处非零；$f(\mathbf{x})$是$g^{-1}([a,b])$上的连续函数。则有：
 \[
-\int_{g^{-1}([a,b])} f(\mathbf{x})\,d\mathbf{x}
+\int_{g^{-1}([a,b])} f(\mathbf{x})\,\dif\mathbf{x}
 =
 \int_{t=a}^{b}
 \left[
   \int_{g^{-1}(t)} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\,d\sigma(\mathbf{x})
 \right]
-dt
+\dif t
 \]
 其中$d\sigma(\mathbf{x})$表示在纤维（超曲面）$g(\mathbf{x}) = t$上的$(n-1)$维面积微元。
 \end{theorem}
@@ -253,19 +255,19 @@ x = \Phi(y_1, \ldots, y_{n-1}, t), \qquad (y_1, \ldots, y_{n-1}) \in D \subset \
 
 换元公式下，整体$n$维体积微元可拆解为：
 \[
-dx = J_\Phi(y_1,\ldots,y_{n-1}, t)\, dy_1 \cdots dy_{n-1} dt
+\dif x = J_\Phi(y_1,\ldots,y_{n-1}, t)\, \dif y_1 \cdots \dif y_{n-1} \dif t
 \]
 按照隐函数定理，Jacobi因子正好为$|\nabla g(\mathbf{x})|$，即
 
 \[
-d\mathbf{x} = \frac{1}{|\nabla g(\mathbf{x})|} d\sigma(\mathbf{x}) dt
+\dif\mathbf{x} = \frac{1}{|\nabla g(\mathbf{x})|} d\sigma(\mathbf{x}) \dif t
 \]
 
 于是有
 \[
-\int_{\Omega} f(x)\,d\mathbf{x}
+\int_{\Omega} f(x)\,\dif\mathbf{x}
 = \int_{t = a}^{b}
-  \left[ \int_{M_t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] dt
+  \left[ \int_{M_t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] \dif t
 \]
 其中$d\sigma(\mathbf{x})$为$M_t$上的$(n-1)$维面积微元。即为所证。
 \end{proof}
@@ -277,16 +279,16 @@ d\mathbf{x} = \frac{1}{|\nabla g(\mathbf{x})|} d\sigma(\mathbf{x}) dt
 由n维余面积公式，
 
 \[
-    F_Y(y) = \int_{\Omega} f(x)\,d\mathbf{x}
+    F_Y(y) = \int_{\Omega} f(x)\,\dif\mathbf{x}
 = \int_{-\infty}^{y}
-  \left[ \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] dt
+  \left[ \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x}) \right] \dif t
 \]
 
 其中，$\Omega = g^{-1}((-\infty,y]) = \{\mathbf{x} \in \mathbb{R}^n :g(\mathbf{x}) \leq y\}$，$d\sigma(\mathbf{x})$为$g^{-1}(t)$上的$(n-1)$维面积微元。
 
 求导，应用微积分基本定理，得到：
 
-$f_Y(y) = \frac{dF_Y(y)}{dy} = \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x})$
+$f_Y(y) = \frac{\dif F_Y(y)}{\dif y} = \int_{g(\mathbf{x})=t} \frac{f(\mathbf{x})}{|\nabla g(\mathbf{x})|}\, d\sigma(\mathbf{x})$
 
 一个简单的公式至此形成。它甚至覆盖了一元的情况：
 
@@ -302,7 +304,7 @@ $n=1$的情况下，函数$g$的纤维基本都退化为了离散点。这种情
 其纤维$g^{-1}(t)=\{x\in \mathbb{R}: g(x)=t\}$是离散点集（假设$g$可微且$g\prime(x)\neq0$）。在此情况下，余面积公式也可以得到一维积分的推广：
 
 \[
-\int_{g^{-1}([a,b])} f(x)\, dx = \int_{t = a}^{b} \left( \sum_{x \in g^{-1}(t)} \frac{h(x)}{|g'(x)|} \right) dt
+\int_{g^{-1}([a,b])} f(x)\, \dif x = \int_{t = a}^{b} \left( \sum_{x \in g^{-1}(t)} \frac{h(x)}{|g'(x)|} \right) \dif t
 \]
 
 其中，$g^{-1}(t)$为所有满足$g(x)=t$的点集，$f(x)$为待积分函数。

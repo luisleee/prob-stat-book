@@ -24,7 +24,7 @@ F(x_1,\ldots,x_n) = \prod_{i=1}^nF(x_i)
 
 设$X_1,\ldots,X_n$是一组样本，$Y_1,\ldots,Y_n$是容量相同的另一组样本。其中$X_i$独立同分布，来自总体$X$；$Y_i$独立同分布，来自总体$Y$。对于$i\neq j$，$X_i,Y_j$独立。或者说，$(X_i,Y_i)$是来自总体$(X,Y)$的一组样本。
 
-在这里我们有一些经典统计量。并且由于它们本性上是随机变量，我也可以得到它们的数字特征。我们这里假设它们来自的总体$X,Y$各自都有均值和方差，$E(X)=\mu_x,E(Y)=\mu_y, D(X)=\sigma_x^2, D(Y)=\sigma_y^2,Cov(X,Y)=\rho\sigma_x\sigma_y$。
+在这里我们有一些经典统计量。并且由于它们本性上是随机变量，我也可以得到它们的数字特征。我们这里假设它们来自的总体$X,Y$各自都有均值和方差，$\E[X]=\mu_x,\E[Y]=\mu_y, \Dev[X]=\sigma_x^2, \Dev[Y]=\sigma_y^2,\Cov(X,Y)=\rho\sigma_x\sigma_y$。
 
 \paragraph{样本均值}
 样本均值定义为：
@@ -34,19 +34,19 @@ F(x_1,\ldots,x_n) = \prod_{i=1}^nF(x_i)
 
 样本均值的均值和原分布的均值正好一致
 \[
-E(\overline{X})=E\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1n\sum_{i=1}^nE(X_i)=\mu_x
+\E[\overline{X}]=E\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1n\sum_{i=1}^n\E[X_i]=\mu_x
 \]
 样本均值的方差则和样本量有一些有趣的关系：
 \[
-D(\overline{X})=D\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1{n^2}\sum_{i=1}^nD(X_i)=\frac{\sigma_x^2}{n}
+\Dev[\overline{X}]=D\left(\frac 1n\sum_{i=1}^nX_i\right) = \frac 1{n^2}\sum_{i=1}^n\Dev[X_i]=\frac{\sigma_x^2}{n}
 \]
 可以很直观地理解：我们抽样的样本容量越大，其平均偏差大概就会更小。
 
 对于两个样本均值，它们的协方差也是如此：
 \begin{align*}
-Cov(\overline{X},\overline{Y}) &= Cov\left(\frac 1n\sum_{i=1}^nX_i,\frac 1n\sum_{i=1}^nY_i\right)\\
-&=\frac 1{n^2}\sum_{i=1}^n\sum_{j=1}^nCov(X_i,Y_j)\\
-&=\frac 1{n^2}\sum_{i=1}^nCov(X_i,Y_i)\\
+\Cov(\overline{X},\overline{Y}) &= \Cov\left(\frac 1n\sum_{i=1}^nX_i,\frac 1n\sum_{i=1}^nY_i\right)\\
+&=\frac 1{n^2}\sum_{i=1}^n\sum_{j=1}^n\Cov(X_i,Y_j)\\
+&=\frac 1{n^2}\sum_{i=1}^n\Cov(X_i,Y_i)\\
 &=\frac{\rho\sigma_x\sigma_y}{n}
 \end{align*}
 \[
@@ -61,7 +61,7 @@ S^2_x=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2,\quad S_x=\sqrt{S_x^2}
 \]
 注意这里分母是$n-1$！（感叹号并不表示阶乘）这不是没有道理的。样本方差的均值是这样的：
 \begin{align*}
-E(S^2) &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})^2\right)\\
+\E[S^2] &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})^2\right)\\
 &= \frac{1}{n-1}E\left(\sum_{i=1}^n((X_i-\mu_x)-(\overline{X}-\mu_x))^2\right)\\
 &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)\sum_{i=1}^n(X_i-\mu_x)+\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
 &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)^2-2(\overline{X}-\mu_x)\sum_{i=1}^n(X_i-\mu_x)+2(\overline{X}-\mu_x)\sum_{i=1}^n(\overline{X}-\mu_x)-\sum_{i=1}^n(\overline{X}-\mu_x)^2\right)\\
@@ -76,9 +76,9 @@ E(S^2) &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})^2\right)\\
 
 样本方差的方差不是什么简单东西，这里只给出一个式子。如果总体分布的四阶原点矩$\mu_4$存在，
 \[
-D(S^2)=\frac{1}{n}\left(\mu_4-\frac{n-3}{n-1}\sigma^4 \right)
+\Dev[S^2]=\frac{1}{n}\left(\mu_4-\frac{n-3}{n-1}\sigma^4 \right)
 \]
-而对于正态总体而言，$\mu_4=3\sigma^4$，$D(S^2)=\frac{2\sigma^4}{n-1}$。我们会在卡方分布处想起它。
+而对于正态总体而言，$\mu_4=3\sigma^4$，$\Dev[S^2]=\frac{2\sigma^4}{n-1}$。我们会在卡方分布处想起它。
 
 如果单把右边的和式拿出来，我们称之为\textbf{离差平方和}：
 \[
@@ -90,9 +90,9 @@ S_{xx} = \sum_{i=1}^n(X_i-\overline{X})=(n-1)S^2_x
 \[
 S_{xy} = \frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})
 \]
-这里分母仍然是$n-1$，仍然是为了均值的无偏性，即$E(S_{xy})=\rho\sigma_x\sigma_y$，证明思路和刚才的求和一致：
+这里分母仍然是$n-1$，仍然是为了均值的无偏性，即$\E[S_{xy}]=\rho\sigma_x\sigma_y$，证明思路和刚才的求和一致：
 \begin{align*}
-E(S_{xy}) &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})\right)\\
+\E[S_{xy}] &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})\right)\\
 &= \frac{1}{n-1}E\left(\sum_{i=1}^n\left((X_i-\mu_x)-(\overline{X}-\mu_x)\right)\left((Y_i-\mu_y)-(\overline{Y}-\mu_y)\right)\right)\\
 &= \frac{1}{n-1}E\left(\sum_{i=1}^n(X_i-\mu_x)(Y_i-\mu_y)\right)\\
 &\quad-\frac{1}{n-1}E\left((\overline{X}-\mu_x)\sum_{i=1}^n(Y_i-\mu_y)
@@ -129,7 +129,7 @@ r_{xy} = \frac{S_{xy}}{S_xS_y}
 A_k=\frac{1}{n}\sum_{i=1}^nX_i^k
 \]
 
-由于$X_i^k$都是独立同分布的，应用样本均值的结论，就有$E(A_k)=\mu_k$。其中$\mu_k$为总体的$k$阶原点矩。
+由于$X_i^k$都是独立同分布的，应用样本均值的结论，就有$\E[A_k]=\mu_k$。其中$\mu_k$为总体的$k$阶原点矩。
 
 \paragraph{次序统计量}
 还有一些次序统计量，即把样本排序后得到的统计量。设样本$X_1,\ldots,X_n$排序后得到$X_{(1)}\leq \cdots \leq X_{(n)}$。
@@ -143,7 +143,7 @@ F_{X_{(k)}}(x) &= P(\text{至少有$k$个观察值$\leq x$})\\
 \[
 f_{X_{(k)}}(x) = \frac{n!}{(k-1)!(n-k)!}(F(x))^{k-1}(1-F(x))^{n-k}f(x)
 \]
-这个式子推导的大概是：恰有$1$个数在$(x,x+dx)$内概率为$f(x)dx$，恰有$k-1$个数在$<x$概率为$(F(x))^{k-1}$，恰有$n-k$个数$>x$概率为$(1-F(x))^{n-k}$。这里的$\frac{n!}{(k-1)!(n-k)!}$其实就是多项式系数$\binom{n}{k-1\;1\;n-k}$。
+这个式子推导的大概是：恰有$1$个数在$(x,x+\dif x)$内概率为$f(x)\dif x$，恰有$k-1$个数在$<x$概率为$(F(x))^{k-1}$，恰有$n-k$个数$>x$概率为$(1-F(x))^{n-k}$。这里的$\frac{n!}{(k-1)!(n-k)!}$其实就是多项式系数$\binom{n}{k-1\;1\;n-k}$。
 
 也有一个有趣的事实：如果次序统计量各不相同（连续情况下这是几乎必然的），则所有次序统计量的联合概率密度是$n!\prod_{i=1}^nf(x_i),\quad (x_1<x_2<\cdots< x_n)$，比无序情况多了个全排列。
 
@@ -246,10 +246,10 @@ f_Z(z) = \begin{cases}
 
 自由度为$n$的卡方分布的均值是什么？$n$个自由度为$1$的卡方分布均值加起来。自由度为$n$的卡方分布的方差是什么？$n$个自由度为$1$的卡方分布方差加起来。令$X\sim N(0,1),Z=X^2$，或者说$Z\sim \chi^2(1)$：
 \[
-E(Z)=E(X^2)=1,\quad D(Z)=D(X^2)=E(X^4)-(E(X^2))^2=3-1=2
+\E[Z]=\E[X^2]=1,\quad \Dev[Z]=\Dev[X^2]=\E[X^4]-(\E[X^2])^2=3-1=2
 \]
 
-于是对于$Y\sim \chi^2(n)$，$E(Y)=n,D(Y)=2n$。
+于是对于$Y\sim \chi^2(n)$，$\E[Y]=n,\Dev[Y]=2n$。
 
 \subsection{$t$分布}
 另一个重要的抽样分布是$t$分布。它又叫学生氏分布，有一段有趣的小故事。
@@ -268,20 +268,20 @@ T=\frac{X}{\sqrt{\frac{Y}{n}}}
 |\nabla\phi| = \sqrt{\frac{n}{y}+\frac{x^2n}{4y^3}} 
 \]
 
-等值线$\phi(x,y)=t$可以参数化为$x= t\sqrt{\frac{y}{n}}$，$\left(\frac{dx}{dy}\right)^2=\frac{t^2}{2ny}$。
+等值线$\phi(x,y)=t$可以参数化为$x= t\sqrt{\frac{y}{n}}$，$\left(\frac{\dif x}{\dif y}\right)^2=\frac{t^2}{2ny}$。
 
 \begin{align*}
 f_T(t) &= \int_{\phi(x,y)=t} \frac{f_X(x)f_Y(y)}{|\nabla\phi(x,y)|}d\sigma(x,y)\\
-&= \int_{0}^{+\infty} \frac{f_X(x)f_Y(y)}{\sqrt{\frac{n}{y}+\frac{x^2n}{4y^3}}}\sqrt{1+\frac{t^2}{2ny}}dy\\
-&= \int_{0}^{+\infty} f_X\left(t\sqrt{\frac{y}{n}}\right)f_Y(y)\sqrt{\frac{y}{n}}dy\\
+&= \int_{0}^{+\infty} \frac{f_X(x)f_Y(y)}{\sqrt{\frac{n}{y}+\frac{x^2n}{4y^3}}}\sqrt{1+\frac{t^2}{2ny}}\dif y\\
+&= \int_{0}^{+\infty} f_X\left(t\sqrt{\frac{y}{n}}\right)f_Y(y)\sqrt{\frac{y}{n}}\dif y\\
 &= \int_{0}^{+\infty}
      \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2 y}{2n}}
      \cdot \frac{1}{2^{n/2}\Gamma(n/2)} y^{n/2-1} e^{-y/2}
-     \cdot \sqrt{\frac{y}{n}}\, dy \\
+     \cdot \sqrt{\frac{y}{n}}\, \dif y \\
 &= \frac{1}{\sqrt{2\pi n}\, 2^{n/2}\Gamma(n/2)}
     \int_{0}^{+\infty} y^{\frac{n+1}{2}-1}
-    \exp\!\left[-\frac{y}{2}\left(1+\frac{t^2}{n}\right)\right] dy\\
-&= \frac{1}{\sqrt{\pi n}\Gamma(n/2)}\int_{0}^{+\infty} y^{\frac{n+1}{2}-1} e^{-a y}\, dy, \quad a=\frac{1}{2}\left(1+\frac{t^2}{n}\right)\\
+    \exp\!\left[-\frac{y}{2}\left(1+\frac{t^2}{n}\right)\right] \dif y\\
+&= \frac{1}{\sqrt{\pi n}\Gamma(n/2)}\int_{0}^{+\infty} y^{\frac{n+1}{2}-1} e^{-a y}\, \dif y, \quad a=\frac{1}{2}\left(1+\frac{t^2}{n}\right)\\
 &= \frac{1}{\sqrt{\pi n}\Gamma(n/2)}\frac{\Gamma\!\left(\frac{n+1}{2}\right)}{a^{(n+1)/2}}\\
 &= \frac{\Gamma\!\left(\frac{n+1}{2}\right)}{\sqrt{\pi n}\,\Gamma(n/2)}
           \cdot \left(1+\frac{t^2}{n}\right)^{-(n+1)/2}
@@ -347,7 +347,7 @@ f_T(t) &= \int_{\phi(x,y)=t} \frac{f_X(x)f_Y(y)}{|\nabla\phi(x,y)|}d\sigma(x,y)\
 
 它的累积分布函数也是没有解析式的，我们需要数值计算。
 
-$t$ 分布的 $k$ 阶矩存在当且仅当 $k < n$。特别地，均值$E(T)=0\quad(n>1)$，方差$D(T)=\frac{n}{n-1}\quad(n>2)$。$n \le 2$ 时方差不存在，这大致在说$t$ 分布比正态分布具有更厚的尾部。
+$t$ 分布的 $k$ 阶矩存在当且仅当 $k < n$。特别地，均值$\E[T]=0\quad(n>1)$，方差$\Dev[T]=\frac{n}{n-1}\quad(n>2)$。$n \le 2$ 时方差不存在，这大致在说$t$ 分布比正态分布具有更厚的尾部。
 
 \subsection{$F$分布}
 $F$ 分布由统计学家费希尔（R.A. Fisher）得名，主要用于比较两个正态总体的方差，也是方差分析和线性回归模型显著性检验的基础。设 $U \sim \chi^2(m)$，$V \sim \chi^2(n)$，且 $U$ 与 $V$ 相互独立。令
@@ -390,17 +390,17 @@ f_F(x) = \begin{cases}
 \]
 以 $y$ 为参数，$x = \frac{mf}{n} y$，则
 \[
-\frac{dx}{dy} = \frac{mf}{n}.
+\frac{\dif x}{\dif y} = \frac{mf}{n}.
 \]
 弧长微元为
 \[
-d\sigma = \sqrt{1 + \left( \frac{dx}{dy} \right)^2} \, dy
-         = \sqrt{1 + \left( \frac{mf}{n} \right)^2} \, dy.
+d\sigma = \sqrt{1 + \left( \frac{\dif x}{\dif y} \right)^2} \, \dif y
+         = \sqrt{1 + \left( \frac{mf}{n} \right)^2} \, \dif y.
 \]
 注意到
 \[
 \frac{d\sigma}{|\nabla \phi|} = 
-\frac{\sqrt{1 + (mf/n)^2}}{ \dfrac{n}{my^2} \sqrt{ y^2 + \left( \frac{mf}{n} y \right)^2 } } \, dy= \frac{m}{n} y \, dy
+\frac{\sqrt{1 + (mf/n)^2}}{ \dfrac{n}{my^2} \sqrt{ y^2 + \left( \frac{mf}{n} y \right)^2 } } \, \dif y= \frac{m}{n} y \, \dif y
 \]
 
 根据公式，
@@ -409,17 +409,17 @@ f_F(f) = \int_{\phi(x,y)=f} \frac{f_X(x) f_Y(y)}{|\nabla \phi(x,y)|} \, d\sigma(
 \]
 代入参数化得
 \begin{align*}
-f_F(f) &= \int_{0}^{+\infty} f_X\left(\frac{mf}{n} y\right) f_Y(y)\frac{m}{n} y\, dy\\
+f_F(f) &= \int_{0}^{+\infty} f_X\left(\frac{mf}{n} y\right) f_Y(y)\frac{m}{n} y\, \dif y\\
 &= \int_{0}^{\infty} \frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
     \left( \frac{mf}{n} \right)^{m/2 - 1} y^{m/2 - 1 + n/2 - 1}
     e^{ -\frac{y}{2}\left(1 + \frac{mf}{n}\right) }
-    \cdot \frac{m}{n} y \, dy\\
+    \cdot \frac{m}{n} y \, \dif y\\
 &= \frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
     \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n}
     \int_{0}^{\infty} y^{(m+n)/2 - 1}
-    e^{ -\frac{y}{2}\left(1 + \frac{mf}{n}\right) } \, dy\\
+    e^{ -\frac{y}{2}\left(1 + \frac{mf}{n}\right) } \, \dif y\\
 &=\frac{1}{2^{(m+n)/2} \Gamma(m/2) \Gamma(n/2)}
-    \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n} \int_{0}^{\infty} y^{(m+n)/2 - 1} e^{-a y} \, dy \quad a=\frac{1}{2}\left(1 + \frac{mf}{n}\right)\\
+    \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n} \int_{0}^{\infty} y^{(m+n)/2 - 1} e^{-a y} \, \dif y \quad a=\frac{1}{2}\left(1 + \frac{mf}{n}\right)\\
 &= \frac{ \Gamma\left(\frac{m+n}{2}\right) }{ \Gamma(m/2) \Gamma(n/2) }
     \left( \frac{mf}{n} \right)^{m/2 - 1} \frac{m}{n}
     \cdot \left(1 + \frac{mf}{n}\right) ^{-(m+n)/2}  \\

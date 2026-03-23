@@ -16,7 +16,7 @@ P(X=1)&=p\\
 P(X=k)&=0&k\notin \{0,1\}\\
 \end{align*}
 
-很简单地，$E(X)=p$，$D(X)=p(1-p)$。一个服从这个分布的随机试验叫做伯努利试验。
+很简单地，$\E[X]=p$，$\Dev[X]=p(1-p)$。一个服从这个分布的随机试验叫做伯努利试验。
 
 \subsubsection{离散均匀分布}
 这是一种各个取值等概率的离散概率分布。设$A=\{a_1,\ldots,a_n\}$是一个有限集合，定义$X$服从离散均匀分布为
@@ -28,7 +28,7 @@ P(X=a)=\begin{cases}
 \end{cases}
 \]
 
-可知$E(X)=\frac1n\sum_{i=1}^na_i=\overline{a}$，$D(X)=\frac1n\sum_{i=1}^n(a_i-\overline{a})^2$。
+可知$\E[X]=\frac1n\sum_{i=1}^na_i=\overline{a}$，$\Dev[X]=\frac1n\sum_{i=1}^n(a_i-\overline{a})^2$。
 
 \subsubsection{Bernoulli（二项）分布}
 若相互独立的随机变量$X_1,\ldots,X_n$均服从参数为定值$p$的两点分布，则称$X=\sum_{i=1}^nX_i$服从二项分布，记作$X\sim b(n,p)$。我们也把它理解为一个$n$重伯努利试验的成功次数。$n=1$的时候它也就退化成了两点分布。
@@ -44,7 +44,7 @@ P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}
 
 它的均值：
 \begin{align*}
-E(X)&=\sum_{k=0}^n k\binom{n}{k}p^k(1-p)^{n-k} \\
+\E[X]&=\sum_{k=0}^n k\binom{n}{k}p^k(1-p)^{n-k} \\
 &=\sum_{k=0}^n n\binom{n-1}{k-1}p^k(1-p)^{n-k} \\
 &=\sum_{k=1}^{n} n\binom{n-1}{k-1}p^k(1-p)^{n-k} \\
 &=\sum_{k=0}^{n-1} n\binom{n-1}{k}p^{k+1}(1-p)^{n-1-k} \\
@@ -54,7 +54,7 @@ E(X)&=\sum_{k=0}^n k\binom{n}{k}p^k(1-p)^{n-k} \\
 当然我们也可以用$n$个独立的两点分布之和来计算，结果就是立即的。
 方差：
 \begin{align*}
-D(X)&=E(X^2)-(E(X))^2\\
+\Dev[X]&=\E[X^2]-(\E[X])^2\\
 &= \sum_{k=0}^n k^2\binom{n}{k}p^k(1-p)^{n-k} -n^2p^2\\
 &= n\sum_{k=0}^n k\binom{n-1}{k-1}p^k(1-p)^{n-k} -n^2p^2\\
 &= np\sum_{k=0}^{n-1} (k+1)\binom{n-1}{k}p^k(1-p)^{n-1-k} -n^2p^2\\
@@ -78,7 +78,7 @@ P(\mathbf{X}=(x_1,\ldots,x_k))=\binom{n}{x_1\cdots x_k}\prod_{i=1}^k p_i^{x_i}
 
 随便拿出来两个分量$X_i$，$X_j$，有
 \[
-Cov(X_i,X_j)=\delta_{ij}p_i - p_ip_j
+\Cov(X_i,X_j)=\delta_{ij}p_i - p_ip_j
 \]
 证明就是组合恒等式，容我在此略过。
 
@@ -110,14 +110,14 @@ P(X=k) = \frac{\lambda^ke^{-\lambda}}{k!},\quad k\in \mathbb{N}
 
 泊松分布的均值：
 \begin{align*}
-E(X)&=\sum_{k=0}^{\infty}k\frac{\lambda^k e^{-\lambda}}{k!}\\
+\E[X]&=\sum_{k=0}^{\infty}k\frac{\lambda^k e^{-\lambda}}{k!}\\
 &=\lambda\sum_{k=1}^{\infty}\frac{\lambda^{k-1} e^{-\lambda}}{(k-1)!}\\
 &=\lambda\sum_{k=0}^{\infty}\frac{\lambda^{k} e^{-\lambda}}{k!}\\
 &=\lambda
 \end{align*}
 方差：
 \begin{align*}
-D(X)&=E(X^2)-(E(X))^2 \\
+\Dev[X]&=\E[X^2]-(\E[X])^2 \\
 &= \sum_{k=0}^{\infty}k^2\frac{\lambda^k e^{-\lambda}}{k!}-\lambda^2\\
 &= \lambda\sum_{k=1}^{\infty}k\frac{\lambda^{k-1} e^{-\lambda}}{(k-1)!}-\lambda^2\\
 &= \lambda\sum_{k=0}^{\infty}(k+1)\frac{\lambda^{k} e^{-\lambda}}{k!}-\lambda^2\\
@@ -160,13 +160,13 @@ P(X=k)=p(1-p)^{k-1},\quad k=1,2,\cdots
 
 几何分布因几何级数而得名。几何分布的均值：
 \begin{align*}
-E(X)&=\sum_{k=1}^{\infty}kp(1-p)^{k-1}\\
+\E[X]&=\sum_{k=1}^{\infty}kp(1-p)^{k-1}\\
 &=p\sum_{k=0}^{\infty}(k+1)(1-p)^{k}\\
 &=p\frac{1}{(1-(1-p))^2}=\frac1p\\
 \end{align*}
 方差：
 \begin{align*}
-D(X)&=E(X^2)-(E(X))^2\\
+\Dev[X]&=\E[X^2]-(\E[X])^2\\
 &= \sum_{k=1}^{\infty}k^2p(1-p)^{k-1} - \frac1{p^2}\\
 &= \sum_{k=0}^{\infty}(k+1)^2p(1-p)^{k} - \frac1{p^2}\\
 &= \sum_{k=0}^{\infty}k^2p(1-p)^{k} + 2\sum_{k=0}^{\infty}kp(1-p)^{k} +\sum_{k=0}^{\infty}p(1-p)^{k} - \frac1{p^2}\\
@@ -221,7 +221,7 @@ P(X=k)=\binom{k-1}{r-1}p^{r}(1-p)^{k-r},\quad k=r,r+1,\cdots
 
 另一种看法是，由于几何分布的无记忆性，我们可以把它视为$r$个独立的服从$G(p)$的随机变量之和。它很清晰地就具有可加性了：若$X_1\sim nb(r_1,p), X_2\sim nb(r_2,p)$且相互独立，则$X_1+X_2 \sim nb(r_1+r_2,p)$。
 
-于是就不难得到$E(X)=\frac rp$，$D(X)=\frac{r(1-p)}{p^2}$。
+于是就不难得到$\E[X]=\frac rp$，$\Dev[X]=\frac{r(1-p)}{p^2}$。
 
 \subsubsection{超几何分布}
 超几何分布描述的是不放回抽样中抽到特定类别物品数量的概率分布。
@@ -255,7 +255,7 @@ P(X=k)=\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}
 
 它的均值与有放回的情况惊人地一致：
 \begin{align*}
-E(X)&=\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}\\
+\E[X]&=\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}\\
 &=M\sum_{k}\frac{\binom{M-1}{k-1}\binom{N-M}{n-k}}{\binom{N}{n}}\\
 &=M\frac{\binom{N-1}{n-1}}{\binom{N}{n}}\\
 &=n\frac{M}{N}
@@ -263,7 +263,7 @@ E(X)&=\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}\\
 
 而方差则相差一个因子：
 \begin{align*}
-D(X)&=E(X^2)-(E(X))^2\\
+\Dev[X]&=\E[X^2]-(\E[X])^2\\
 &=\sum_{k}k^2\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}-\frac {n^2M^2}{N^2}\\
 &=\sum_{k}k(k-1)\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}+\sum_{k}k\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}-\frac {n^2M^2}{N^2}\\
 &=M(M-1)\sum_{k}\frac{\binom{M-2}{k-2}\binom{N-M}{n-k}}{\binom{N}{n}} + \frac{nM}{N} -\frac {n^2M^2}{N^2}\\
@@ -282,15 +282,15 @@ D(X)&=E(X^2)-(E(X))^2\\
 
 \textbf{定义}：
 \[
-\Gamma(s) = \int_0^{+\infty}t^{s-1}e^{-t}dt
+\Gamma(s) = \int_0^{+\infty}t^{s-1}e^{-t}\dif t
 \]
 
 \textbf{递推性质}：
 \begin{align*}
-\Gamma(s+1) &= \int_0^{+\infty}t^{s}e^{-t}dt\\
+\Gamma(s+1) &= \int_0^{+\infty}t^{s}e^{-t}\dif t\\
 &= -\int_0^{+\infty}t^{s}d(e^{-t})\\
 &= -\left[t^se^{-t}\right]_{0}^{+\infty} +\int_0^{+\infty}e^{-t}d(t^{s})\\
-&= s\int_0^{+\infty}t^{s-1}e^{-t}dt = s\Gamma(s)\\
+&= s\int_0^{+\infty}t^{s-1}e^{-t}\dif t = s\Gamma(s)\\
 \end{align*}
 
 \textbf{余割恒等式}
@@ -310,7 +310,7 @@ D(X)&=E(X^2)-(E(X))^2\\
 
 作为补充，Beta函数也有大用。Beta函数定义为
 \[
-B(a,b)=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)} = \int_0^1 t^{a-1}(1-t)^{b-1}dt
+B(a,b)=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)} = \int_0^1 t^{a-1}(1-t)^{b-1}\dif t
 \]
 这里并不打算给出这两个定义等价的证明。
 
@@ -357,7 +357,10 @@ F_X(x) = \begin{cases}
     0 & x < 0
 \end{cases}
 \]
-注意，有另一种等价的定义是$\lambda e^{-\lambda x}$的形式，它和我们的定义只相差一个倒数关系，不过我们不在这里使用这种定义。
+
+\begin{attention}
+指数分布有另一种等价的定义是$\lambda e^{-\lambda x}$的形式，它和我们的定义只相差一个倒数关系，不过我们在这里不使用这种定义。
+\end{attention}
 
 同样，它也是唯一具有无记忆性的连续分布。对于$t_1,t_2 \geq 0$，
 \[
@@ -366,23 +369,23 @@ P(X>t_1+t_2| X>t_1)=P(X>t_2)
 
 当然这也是因为
 \[
-P(X>t) = \int_t^{+\infty}\frac 1\theta e^{-\frac x\theta}dx=e^{-\frac t\theta},\quad t\geq0
+P(X>t) = \int_t^{+\infty}\frac 1\theta e^{-\frac x\theta}\dif x=e^{-\frac t\theta},\quad t\geq0
 \]
 
 它的均值
 \begin{align*}
-E(X)&= \int_{-\infty}^{+\infty}xf_X(x)dx\\
-&= \int_{0}^{+\infty}\frac x\theta e^{-\frac x\theta}dx\\
-&= \theta\int_{0}^{+\infty}u e^{-u}du& u=\frac{x}{\theta}\\
+\E[X]&= \int_{-\infty}^{+\infty}xf_X(x)\dif x\\
+&= \int_{0}^{+\infty}\frac x\theta e^{-\frac x\theta}\dif x\\
+&= \theta\int_{0}^{+\infty}u e^{-u}\dif u& u=\frac{x}{\theta}\\
 &= \theta\Gamma(2)=\theta\\
 \end{align*}
 
 方差
 \begin{align*}
-D(X) &= E(X^2) -(E(X))^2 \\
-&= \int_{-\infty}^{+\infty}x^2f_X(x)dx - \theta^2\\
-&= \int_{0}^{+\infty}\frac {x^2}{\theta} e^{-\frac x\theta}dx - \theta^2\\
-&= \theta^2\int_{0}^{+\infty}u^2 e^{-u}du  - \theta^2 & u=\frac{x}{\theta}\\
+\Dev[X] &= \E[X^2] -(\E[X])^2 \\
+&= \int_{-\infty}^{+\infty}x^2f_X(x)\dif x - \theta^2\\
+&= \int_{0}^{+\infty}\frac {x^2}{\theta} e^{-\frac x\theta}\dif x - \theta^2\\
+&= \theta^2\int_{0}^{+\infty}u^2 e^{-u}\dif u  - \theta^2 & u=\frac{x}{\theta}\\
 &= \theta^2\Gamma(3) - \theta^2=\theta^2\\
 \end{align*}
 
@@ -405,16 +408,16 @@ f_X(x) = \begin{cases}
 由定义可以看出它的可加性，这里姑且验证一下，顺带把上面的式子验证了。令$X\sim Erlang(n_1, \theta)$，$Y\sim Erlang(n_2,\theta)$，$X,Y$独立，$Z=X+Y$。那么有：
 
 \begin{align*}
-f_Z(z)&=\int_{-\infty}^{+\infty}f_X(t)f_Y(z-t)dt \\
-&=\int_{0}^{z}\frac{t^{n_1-1}e^{-\frac{t}{\theta}}}{\theta^{n_1}(n_1-1)!} \frac{(z-t)^{n_2-1}e^{-\frac{z-t}{\theta}}}{\theta^{n_2}(n_2-1)!}dt \\
-&= \frac{e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{z}t^{n_1-1}(z-t)^{n_2-1}dt\\
-&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{1}u^{n_1-1}(1-u)^{n_2-1}du& t=zu\\
+f_Z(z)&=\int_{-\infty}^{+\infty}f_X(t)f_Y(z-t)\dif t \\
+&=\int_{0}^{z}\frac{t^{n_1-1}e^{-\frac{t}{\theta}}}{\theta^{n_1}(n_1-1)!} \frac{(z-t)^{n_2-1}e^{-\frac{z-t}{\theta}}}{\theta^{n_2}(n_2-1)!}\dif t \\
+&= \frac{e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{z}t^{n_1-1}(z-t)^{n_2-1}\dif t\\
+&= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\int_{0}^{1}u^{n_1-1}(1-u)^{n_2-1}\dif u& t=zu\\
 &= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}B(n_1,n_2)\\
 &= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1-1)!(n_2-1)!}\frac{(n_1-1)!(n_2-1)!}{(n_1+n_2-1)!}\\
 &= \frac{z^{n_1+n_2-1}e^{-\frac{z}{\theta}}}{\theta^{n_1 + n_2}(n_1+n_2-1)!}\\
 \end{align*}
 
-由定义，我们可以知道其均值$E(X)=n\theta$，方差$D(X)=n\theta^2$。
+由定义，我们可以知道其均值$\E[X]=n\theta$，方差$\Dev[X]=n\theta^2$。
 
 它就是独立指数分布的叠加，在强度为 $\frac1\theta$ 的泊松过程中，第 $n$ 个事件发生的等待时间服从$Erlang(n,\theta)$。
 
@@ -458,32 +461,32 @@ f_U(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}
 
 正态分布的累积分布函数没有初等的解析式形式，不过姑且有一些不错的性质。我们记标准正态分布的累计分布函数为$\Phi(x)$，那么有：
 \begin{align*}
-\Phi(x)&= \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt\\
-&= \int_{-x}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du&u=-t\\
-&= \int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du -\int_{-\infty}^{-x}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}du\\
+\Phi(x)&= \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t\\
+&= \int_{-x}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}\dif u&u=-t\\
+&= \int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}\dif u -\int_{-\infty}^{-x}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}\dif u\\
 &=1-\Phi(-x)
 \end{align*}
 代入$x=0$，就有$\Phi(0)=\frac 12$。
 
 虽然没有初等形式，但是我们有一个级数表达式：
 \begin{align*}
-\Phi(x)&=\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt \\
-&=\int_{-\infty}^{0}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt + \int_{0}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt\\
-&= \frac 12 + \frac{1}{\sqrt{2\pi}}\int_{0}^{x}e^{-\frac{t^2}{2}}dt\\
-&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}du & u=\frac{t^2}{2}\\
+\Phi(x)&=\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t \\
+&=\int_{-\infty}^{0}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t + \int_{0}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t\\
+&= \frac 12 + \frac{1}{\sqrt{2\pi}}\int_{0}^{x}e^{-\frac{t^2}{2}}\dif t\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}\dif u & u=\frac{t^2}{2}\\
 \end{align*}
 右边很像$\Gamma$函数，但是被不幸截断了！不过对$e^{-u}$做级数展开就好了：
 \begin{align*}
-&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}du\\
-&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}\sum_{n=0}^{+\infty}\frac{(-1)^nu^n}{n!}du\\
-&= \frac 12 + \frac{1}{2\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^n}{n!}\int_{0}^{\frac{x^2}2}u^{n-\frac 12}du\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}e^{-u}\dif u\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\int_{0}^{\frac{x^2}2}u^{-\frac12}\sum_{n=0}^{+\infty}\frac{(-1)^nu^n}{n!}\dif u\\
+&= \frac 12 + \frac{1}{2\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^n}{n!}\int_{0}^{\frac{x^2}2}u^{n-\frac 12}\dif u\\
 &= \frac 12 + \frac{1}{2\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^n}{n!\left(n+\frac{1}{2}\right)}\left(\frac{x^2}{2}\right)^{n+\frac 12}\\
 &= \frac 12 + \frac{1}{\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^nx^{2n+1}}{n!(2n+1)(\sqrt{2})^{2n+1}}\\
 \end{align*}
 
 我们把后面这部分拿出来，定义为\textbf{误差函数}
 \[
-Erf(x)=\frac{2}{\sqrt{\pi}}\int_{0}^{x}e^{-t^2}dt
+Erf(x)=\frac{2}{\sqrt{\pi}}\int_{0}^{x}e^{-t^2}\dif t
 \]
 注意，它和我们正态分布在指数上差一个$2$！不过古人就是这么定义的，重新定义一个只会造成混乱。其级数展开于是就是
 
@@ -498,8 +501,8 @@ Erf(x) = \frac{2}{\sqrt{\pi}}\sum_{n=0}^{+\infty}\frac{(-1)^nx^{2n+1}}{n!(2n+1)}
 
 我们可以快乐地计算标准正态分布的均值，然后一般的正态分布就呼之欲出了：
 \begin{align*}
-E(X)&=\int_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
-&=\int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx- \int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
+\E[X]&=\int_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
+&=\int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x- \int_{0}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
 &=\frac{\Gamma(1)}{\sqrt{2\pi}}-\frac{\Gamma(1)}{\sqrt{2\pi}}\\
 &=0
 \end{align*}
@@ -507,22 +510,22 @@ E(X)&=\int_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
 
 标准正态分布的方差：
 \begin{align*}
-D(X)&=E(X^2)-(E(X))^2\\
-&= \int_{-\infty}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
-&= 2\int_{0}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
-&= \frac{2}{\sqrt{\pi}}\int_{0}^{+\infty}u^{\frac 12}e^{-u}du & u=\frac{x^2}{2}\\
+\Dev[X]&=\E[X^2]-(\E[X])^2\\
+&= \int_{-\infty}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
+&= 2\int_{0}^{+\infty}x^2\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
+&= \frac{2}{\sqrt{\pi}}\int_{0}^{+\infty}u^{\frac 12}e^{-u}\dif u & u=\frac{x^2}{2}\\
 &= \frac{2}{\sqrt{\pi}}\Gamma\left(\frac 32\right)=1\\
 \end{align*}
 
-于是对于一般的正态分布，如果$Y\sim N(\mu,\sigma^2)$，也就是$\frac{Y-\mu}{\sigma}\sim N(0,1)$，那么$E(Y)=\mu$,$D(Y)\sim \sigma^2$。它们被称为位置参数和尺度参数的平方也就很合理了。
+于是对于一般的正态分布，如果$Y\sim N(\mu,\sigma^2)$，也就是$\frac{Y-\mu}{\sigma}\sim N(0,1)$，那么$\E[Y]=\mu$,$\Dev[Y]\sim \sigma^2$。它们被称为位置参数和尺度参数的平方也就很合理了。
 
 我们可以把结论推广到标准正态分布任意阶原点矩。首先，它的任意阶矩都是存在的。
 
 它的奇数阶矩都可以用刚才处理均值的方法得到$0$。它的偶数阶矩就需要稍加计算了，让我们算下$2m$阶原点矩：
 \begin{align*}
-\mu_{2m} &= \int_{-\infty}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
-&= 2\int_{0}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx\\
-&= \frac{2^m}{\sqrt{\pi}}\int_{0}^{+\infty}u^{m-\frac 12}e^{-u}du& u=\frac{x^2}{2}\\
+\mu_{2m} &= \int_{-\infty}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
+&= 2\int_{0}^{+\infty}x^{2m}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\dif x\\
+&= \frac{2^m}{\sqrt{\pi}}\int_{0}^{+\infty}u^{m-\frac 12}e^{-u}\dif u& u=\frac{x^2}{2}\\
 &= \frac{2^m}{\sqrt{\pi}}\Gamma\left( m + \frac 12 \right)\\
 &= \frac{2^m}{\sqrt{\pi}}\frac{(2m)!}{4^m m!}\sqrt{\pi}\\
 &= \frac{(2m)!}{2^m m!}
@@ -532,9 +535,9 @@ D(X)&=E(X^2)-(E(X))^2\\
 
 正态分布是一种稳定的分布，或者说独立的正态分布具有可加性。令$X_1\sim N(\mu_1,\sigma_1^2), X_2 \sim N(\mu_2,\sigma_2^2)$，如果他们独立，则$Y=X_1+X_2 \sim N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$。注意是平方的和，不是和的平方。证明如下：
 \begin{align*}
-f_Y(y)&=\int_{-\infty}^{+\infty}f_{X_1}(t)f_{X_2}(y-t)dt\\
-&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}\sigma_1}e^{-\frac{(t-\mu_1)^2}{2\sigma_1^2}} \frac{1}{\sqrt{2\pi}\sigma_2}e^{-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}}dt\\
-&=\frac{1}{2\pi\sigma_1\sigma_2}\int_{-\infty}^{+\infty}Exp\left(-\frac{(t-\mu_1)^2}{2\sigma_1^2}-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}\right)dt\\
+f_Y(y)&=\int_{-\infty}^{+\infty}f_{X_1}(t)f_{X_2}(y-t)\dif t\\
+&=\int_{-\infty}^{+\infty}\frac{1}{\sqrt{2\pi}\sigma_1}e^{-\frac{(t-\mu_1)^2}{2\sigma_1^2}} \frac{1}{\sqrt{2\pi}\sigma_2}e^{-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}}\dif t\\
+&=\frac{1}{2\pi\sigma_1\sigma_2}\int_{-\infty}^{+\infty}Exp\left(-\frac{(t-\mu_1)^2}{2\sigma_1^2}-\frac{(y-t-\mu_2)^2}{2\sigma_2^2}\right)\dif t\\
 \end{align*}
 
 看上去不是很简单，但是事实上这里没有什么困难，主要是配平方。为了方便，设$A=\frac{1}{2\sigma_1^2}$，$B=\frac{1}{2\sigma_2^2}$，则有
@@ -547,7 +550,7 @@ f_Y(y)&=\int_{-\infty}^{+\infty}f_{X_1}(t)f_{X_2}(y-t)dt\\
 我们先把$\frac{\sigma_1^2+\sigma_2^2}{2\sigma_1^2\sigma_2^2}$称为$k$，$\left[t-\frac{\sigma_2^2\mu_1+\sigma_1^2(y-\mu_2)}{\sigma_1^2+\sigma_2^2} \right]^2$称为$d$。
 代回到原式，我们得到：
 \begin{align*}
-f_Y(y)&=\frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\int_{-\infty}^{+\infty}e^{-k(t-d)^2}dt\\
+f_Y(y)&=\frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\int_{-\infty}^{+\infty}e^{-k(t-d)^2}\dif t\\
 &= \frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\sqrt{\frac{\pi}{k}}\\
 &= \frac{1}{2\pi\sigma_1\sigma_2}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\sqrt{\frac{\pi\sigma_1^2\sigma_2^2}{2(\sigma_1^2+\sigma_2^2)}}\\
 &= \frac{1}{\sqrt{2\pi}\sqrt{\sigma_1^2+\sigma_2^2}}e^{- \frac{(y-(\mu_1+\mu_2))^2}{2(\sigma_1^2+\sigma_2^2)}}\\
@@ -574,7 +577,7 @@ f_{\mathbf{X}}(\mathbf{x})=\frac{1}{(2\pi)^{\frac n2}\sqrt{\det \Sigma}}e^{-\fra
 \boldsymbol{\mu} = \begin{pmatrix} \mu_1 \\ \boldsymbol{\mu}_{(2)} \end{pmatrix},\quad
 \Sigma = \begin{pmatrix} \sigma_{11} & \mathbf{r}^T \\[2pt] \mathbf{r} & \Sigma_{22} \end{pmatrix},
 \]
-其中 $\mathbf{r} = \operatorname{Cov}(X_1, \mathbf{X}_{(2)})$ 为 $ (n-1)\times 1 $ 向量。
+其中 $\mathbf{r} = \operatorname{\Cov}(X_1, \mathbf{X}_{(2)})$ 为 $ (n-1)\times 1 $ 向量。
 
 根据分块矩阵求逆公式，有
 \[
@@ -588,11 +591,11 @@ f_{\mathbf{X}}(\mathbf{x})=\frac{1}{(2\pi)^{\frac n2}\sqrt{\det \Sigma}}e^{-\fra
 
 $X_1$ 的边缘概率密度为
 \begin{align*}
-f_{X_1}(x_1) &= \int_{\mathbb{R}^{n-1}} f_{\mathbf{X}}(x_1, \mathbf{x}_{(2)}) \, d\mathbf{x}_{(2)} \\
+f_{X_1}(x_1) &= \int_{\mathbb{R}^{n-1}} f_{\mathbf{X}}(x_1, \mathbf{x}_{(2)}) \, \dif\mathbf{x}_{(2)} \\
 &= \frac{1}{(2\pi)^{n/2} \sqrt{\det \Sigma}}
 \exp\!\Bigl[ -\frac{(x_1 - \mu_1)^2}{2\sigma_{11}} \Bigr]
 \int_{\mathbb{R}^{n-1}}
-\exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] d\mathbf{x}_{(2)},
+\exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] \dif\mathbf{x}_{(2)},
 \end{align*}
 其中
 \[
@@ -605,7 +608,7 @@ Q(\mathbf{x}_{(2)}; x_1) =
 
 对 $\mathbf{x}_{(2)}$ 的积分是多元正态 $N\bigl(\boldsymbol{\mu}_{(2)} + \tfrac{x_1 - \mu_1}{\sigma_{11}}\mathbf{r},\; \Sigma_{22\mid 1}\bigr)$ 的归一化积分：
 \[
-\int_{\mathbb{R}^{n-1}} \exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] d\mathbf{x}_{(2)}
+\int_{\mathbb{R}^{n-1}} \exp\!\Bigl[ -\frac{1}{2} Q(\mathbf{x}_{(2)}; x_1) \Bigr] \dif\mathbf{x}_{(2)}
 = (2\pi)^{(n-1)/2} \sqrt{\det \Sigma_{22\mid 1}}.
 \]
 
@@ -629,14 +632,14 @@ f_{X_1}(x_1)
 \paragraph{协方差}
 插上一嘴，$\mathbf{U}\sim N_n(\mathbf{0},I_n)$这个分布的诸分量是相互独立的，证明也是直接的，因为$\mathbf{x}^TI_n^{-1}\mathbf{x}$就是$\sum_{i=1}^nx_i^2$，很容易被拆开。类似而更一般地，如果$\Sigma$是个对角矩阵，诸分量也是独立的。我们也就可以把$N_n(\mathbf{0},I_n)$叫做独立标准正态分布。
 
-甚至更进一步地，这告诉我们$\Sigma$恰好就是$Cov(\mathbf{X})$。
+甚至更进一步地，这告诉我们$\Sigma$恰好就是$\Cov(\mathbf{X})$。
 按刚才的推导，$\mathbf{X} = \boldsymbol{\mu} + \sqrt{\Sigma} \mathbf{U}$，其中 $\mathbf{U} \sim N_n(\mathbf{0},I_n)$，于是乎
 
 \begin{align*}
-Cov(\mathbf{X})
-&= E((\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^T) \\
-&= E((\sqrt{\Sigma} \mathbf{U})(\sqrt{\Sigma} \mathbf{U})^T) \\
-&= \sqrt{\Sigma} E(\mathbf{U} \mathbf{U}^T) \sqrt{\Sigma}^T\\
+\Cov(\mathbf{X})
+&= \E[(\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^T] \\
+&= \E[(\sqrt{\Sigma} \mathbf{U})(\sqrt{\Sigma} \mathbf{U})^T] \\
+&= \sqrt{\Sigma} \E[\mathbf{U} \mathbf{U}^T] \sqrt{\Sigma}^T\\
 &= \sqrt{\Sigma} I_n \sqrt{\Sigma}^T\\
 &= \Sigma
 \end{align*}
@@ -707,13 +710,13 @@ A\mathbf{X} + \mathbf{b} \sim N_m(A\boldsymbol{\mu} + \mathbf{b}, A\Sigma A^T).
 \begin{proof}
 由Riesz表示定理，任意线性泛函$\phi$都可以表示成和某个向量$\mathbf{v}$的内积，即$\phi(\mathbf{X}) = \mathbf{c}^T\mathbf{X}$。
 
-按前面的结论，我们可以猜想它其实就服从$N_n(\boldsymbol{\mu},\Sigma)$，其中$\boldsymbol{\mu} = E(\mathbf{X}), \Sigma=Cov(\mathbf{X})$，但是要证明它还是需要一点技巧的。
+按前面的结论，我们可以猜想它其实就服从$N_n(\boldsymbol{\mu},\Sigma)$，其中$\boldsymbol{\mu} = \E[\mathbf{X}], \Sigma=\Cov(\mathbf{X})$，但是要证明它还是需要一点技巧的。
 
 我们可以先尝试构造相互独立的正态变量，然后再达到它。因为我们知道：独立的正态分布的联合分布确实是多元独立正态分布（只需要做个简单的乘法）。
 
 它的线性代数表达就是对$\Sigma$做谱分解得到$Q\Lambda Q^T$，这里$Q$是正交的，$\Lambda$是对角的特征值矩阵。我们简单地令$\mathbf{Z}=Q^T(\mathbf{X}-\boldsymbol{\mu})$，那么它均值为$\mathbf{0}$，其协方差
 \[
-Cov(\mathbf{Z}) = Cov(Q^T(\mathbf{X}-\boldsymbol{\mu})) = Q^TCov(\mathbf{X})Q = Q^TQ\Lambda Q^TQ = \Lambda
+\Cov(\mathbf{Z}) = \Cov(Q^T(\mathbf{X}-\boldsymbol{\mu})) = Q^T\Cov(\mathbf{X})Q = Q^TQ\Lambda Q^TQ = \Lambda
 \]
 
 太好了，$\mathbf{Z}$各分量是彼此不相关的！我们只需要证明各分量是正态的，就知道各分量是相互独立的！而我做的变换也确实能保证$\mathbf{Z}$诸分量是正态的：
@@ -755,21 +758,112 @@ F_X(x) = \begin{cases}
 
 它的均值
 \begin{align*}
-E(X) &= \int_{0}^{+\infty} \dfrac{x^2}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} dx\\
-&= \sqrt{2}\sigma\int_{0}^{+\infty} u^{\frac 12} e^{-u} du & u=\frac{x^2}{2\sigma^2}\\
+\E[X] &= \int_{0}^{+\infty} \dfrac{x^2}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} \dif x\\
+&= \sqrt{2}\sigma\int_{0}^{+\infty} u^{\frac 12} e^{-u} \dif u & u=\frac{x^2}{2\sigma^2}\\
 &= \sqrt{2}\sigma \Gamma(\frac{3}{2}) = \sigma \sqrt{\frac{\pi}2}
 \end{align*}
 
 方差
 \begin{align*}
-D(X) &= E(X^2)- (E(X))^2 \\
-&= \int_{0}^{+\infty} \dfrac{x^3}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} dx-\sigma^2 \frac{\pi}2\\
-&= 2\sigma^2\int_{0}^{+\infty} ue^{-u} du - \sigma^2 \frac{\pi}2\\
+\Dev[X] &= \E[X^2]- (\E[X])^2 \\
+&= \int_{0}^{+\infty} \dfrac{x^3}{\sigma^2} e^{-\frac{x^2}{2\sigma^2}} \dif x-\sigma^2 \frac{\pi}2\\
+&= 2\sigma^2\int_{0}^{+\infty} ue^{-u} \dif u - \sigma^2 \frac{\pi}2\\
 &= 2\sigma^2\Gamma(2)-\sigma^2 \frac{\pi}2\\
 &=\frac{4-\pi}{2}\sigma^2
 \end{align*}
 
 通信中平坦衰落信道的包络，雷达信号中杂波幅值，风速、海洋波高等物理量都可以用瑞利分布拟合。
+
+\subsubsection{Rice分布}
+
+Rice分布（也称为莱斯分布）常用于描述存在强主信号分量时的二维向量的模长分布。它是瑞利分布的一种推广，当主信号分量幅度趋近于零时退化为瑞利分布。
+
+若随机变量 $X$ 的概率密度函数为
+
+\[
+f_X(x) = \begin{cases}
+    \dfrac{x}{\sigma^2} e^{-\frac{x^2 + A^2}{2\sigma^2}} I_0\!\left(\dfrac{Ax}{\sigma^2}\right), & x \geq 0,\\
+    0, & x < 0,
+\end{cases}
+\]
+
+其中 $A \geq 0$ 为主信号幅度，$\sigma > 0$ 为尺度参数，$I_0(\cdot)$ 为第一类零阶修正贝塞尔函数，则称 $X$ 服从参数为 $A$ 和 $\sigma$ 的Rice分布，记作 $X \sim \mathrm{Rice}(A, \sigma)$。当 $A = 0$ 时，Rice分布退化为Rayleigh分布。
+
+其累积分布函数为
+
+\[
+F_X(x) = \begin{cases}
+    1 - Q_1\!\left(\dfrac{A}{\sigma}, \dfrac{x}{\sigma}\right), & x \geq 0,\\
+    0, & x < 0,
+\end{cases}
+\]
+
+其中 $Q_1(\cdot, \cdot)$ 为一阶Marcum $Q$ 函数。
+
+如果随机变量 $Y_1 \sim N(A, \sigma^2)$，$Y_2 \sim N(0, \sigma^2)$ 且相互独立，则 $R = \sqrt{Y_1^2 + Y_2^2} \sim \mathrm{Rice}(A, \sigma)$。更一般地，若 $Y_1, Y_2$ 相互独立且 $Y_1 \sim N(A\cos\theta, \sigma^2)$，$Y_2 \sim N(A\sin\theta, \sigma^2)$，则 $\sqrt{Y_1^2 + Y_2^2}$ 的分布与 $\theta$ 无关，同样服从Rice分布。我们从这个角度推导它的概率密度函数：
+考虑两个相互独立的正态随机变量：
+\[
+Y_1 \sim N(A\cos\theta_0, \sigma^2),\quad Y_2 \sim N(A\sin\theta_0, \sigma^2),
+\]
+其中 $A \geq 0$ 为主信号幅度，$\theta_0$ 为信号方向角。定义 $R = \sqrt{Y_1^2 + Y_2^2}$，即二维向量的模长。
+
+$Y_1, Y_2$ 的联合概率密度函数为
+\[
+f_{Y_1,Y_2}(y_1, y_2) = \frac{1}{2\pi\sigma^2} \exp\left(-\frac{(y_1 - A\cos\theta_0)^2 + (y_2 - A\sin\theta_0)^2}{2\sigma^2}\right).
+\]
+
+变换至极坐标：令 $y_1 = r\cos\theta$，$y_2 = r\sin\theta$，其中 $r \geq 0$，$\theta \in [0, 2\pi)$。雅可比行列式为 $r$，则
+\[
+f_{R,\Theta}(r,\theta) = \frac{r}{2\pi\sigma^2} \exp\left(-\frac{r^2 + A^2 - 2Ar\cos(\theta - \theta_0)}{2\sigma^2}\right).
+\]
+
+为得到 $R$ 的边缘分布，对 $\theta$ 积分：
+\[
+f_R(r) = \frac{r}{2\pi\sigma^2} e^{-\frac{r^2 + A^2}{2\sigma^2}} \int_0^{2\pi} \exp\left(\frac{Ar\cos(\theta - \theta_0)}{\sigma^2}\right) \dif\theta.
+\]
+
+由于被积函数是周期函数且积分区间长度为 $2\pi$，积分结果与 $\theta_0$ 无关。令 $\phi = \theta - \theta_0$，则
+\[
+\int_0^{2\pi} e^{k\cos\phi} \dif\phi, \quad k = \frac{Ar}{\sigma^2}.
+\]
+
+第一类零阶修正贝塞尔函数 $I_0(x)$ 的定义为
+\[
+I_0(x) = \frac{1}{2\pi} \int_0^{2\pi} e^{x\cos\phi} \dif\phi.
+\]
+
+因此，
+\[
+\int_0^{2\pi} e^{\frac{Ar}{\sigma^2}\cos\phi} \dif\phi = 2\pi I_0\!\left(\frac{Ar}{\sigma^2}\right).
+\]
+
+代入得
+\[
+f_R(r) = \frac{r}{\sigma^2} e^{-\frac{r^2 + A^2}{2\sigma^2}} I_0\!\left(\frac{Ar}{\sigma^2}\right), \quad r \geq 0.
+\]
+
+此即Rice分布的概率密度函数。
+
+它的均值
+
+\begin{align*}
+\E[X] &= \int_{0}^{+\infty} \dfrac{x^2}{\sigma^2} e^{-\frac{x^2 + A^2}{2\sigma^2}} I_0\!\left(\dfrac{Ax}{\sigma^2}\right) \dif x \\
+&= \sigma \sqrt{\frac{\pi}{2}} \, L_{1/2}\!\left(-\frac{A^2}{2\sigma^2}\right) \\
+&= \sigma \sqrt{\frac{\pi}{2}} \, e^{-\frac{A^2}{4\sigma^2}} \left[ \left(1 + \frac{A^2}{2\sigma^2}\right) I_0\!\left(\frac{A^2}{4\sigma^2}\right) + \frac{A^2}{2\sigma^2} I_1\!\left(\frac{A^2}{4\sigma^2}\right) \right]
+\end{align*}
+
+其中 $L_{1/2}(\cdot)$ 为拉盖尔多项式，$I_1(\cdot)$ 为第一类一阶修正贝塞尔函数。
+
+方差
+
+\begin{align*}
+\Dev[X] &= \E[X^2] - (\E[X])^2 \\
+&= (2\sigma^2 + A^2) - \sigma^2 \frac{\pi}{2} \left[ L_{1/2}\!\left(-\frac{A^2}{2\sigma^2}\right) \right]^2
+\end{align*}
+
+其中 $\E[X^2] = 2\sigma^2 + A^2$ 可由矩母函数简便求得。
+
+通信中存在视距路径的平坦衰落信道包络（如卫星通信、微蜂窝移动通信）、雷达信号中含主目标的回波幅值、超声成像中组织散射回波等物理量均可用Rice分布拟合。当信噪比 $\dfrac{A^2}{2\sigma^2}$ 较大时，Rice分布近似于均值为 $A$、方差为 $\sigma^2$ 的高斯分布；当信噪比较小时，则趋近于瑞利分布。
 
 \subsubsection{Weibull分布}
 
@@ -798,16 +892,16 @@ F_X(x) = \begin{cases}
 
 其均值：
 \begin{align*}
-E(X) &= \int_0^{+\infty} k \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}dx \\
-&= \lambda\int_0^{+\infty} u^{\frac{1}{k}} e^{-u}du & u=\left(\frac{x}{\lambda}\right)^k \\
+\E[X] &= \int_0^{+\infty} k \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}\dif x \\
+&= \lambda\int_0^{+\infty} u^{\frac{1}{k}} e^{-u}\dif u & u=\left(\frac{x}{\lambda}\right)^k \\
 &= \lambda\Gamma\left(1+\frac{1}{k}\right)
 \end{align*}
 
 其方差：
 \begin{align*}
-D(X) &= E(X^2)-(E(X))^2 \\
-&= \int_0^{+\infty} kx \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}dx - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right)\\
-&= \lambda^2\int_0^{+\infty} u^{\frac{2}{k}} e^{-u}du - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right) & u=\left(\frac{x}{\lambda}\right)^k\\
+\Dev[X] &= \E[X^2]-(\E[X])^2 \\
+&= \int_0^{+\infty} kx \left( \dfrac{x}{\lambda} \right)^{k} e^{-(x/\lambda)^k}\dif x - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right)\\
+&= \lambda^2\int_0^{+\infty} u^{\frac{2}{k}} e^{-u}\dif u - \lambda^2\Gamma^2\left(1+\frac{1}{k}\right) & u=\left(\frac{x}{\lambda}\right)^k\\
 &= \lambda^2\left(\Gamma\left(1+\frac{2}{k}\right)- \Gamma^2\left(1+\frac{1}{k}\right)\right)
 \end{align*}
 
@@ -828,7 +922,7 @@ f_X(x) = \begin{cases}
 
 Gamma分布具有可加性，若 $X \sim \Gamma(s_1, \theta)$，$Y \sim \Gamma(s_2, \theta)$ 且独立，则 $X + Y \sim \Gamma(s_1 + s_2, \theta)$。这一证明和前面Erlang分布的可加性如出一辙，只不过把阶乘换成$\Gamma$函数就是了。
 
-也很容易推广出其均值$E(X)=s\theta$，方差$D(X)=s\theta^2$。
+也很容易推广出其均值$\E[X]=s\theta$，方差$\Dev[X]=s\theta^2$。
 
 \subsubsection{Beta分布}
 Beta分布是定义在区间 $(0,1)$ 上的连续分布，由Beta函数标准化而来。
@@ -845,14 +939,14 @@ f_X(x) = \begin{cases}
 
 其均值
 \begin{align*}
-E(X)&=\int_{0}^{1} \dfrac{x^{\alpha}(1-x)^{\beta-1}}{B(\alpha,\beta)}dx\\
+\E[X]&=\int_{0}^{1} \dfrac{x^{\alpha}(1-x)^{\beta-1}}{B(\alpha,\beta)}\dif x\\
 &= \frac{B(\alpha+1,\beta)}{B(\alpha,\beta)} = \dfrac{\alpha}{\alpha + \beta}
 \end{align*}
 
 方差
 \begin{align*}
-D(X) &= E(X^2)-(E(X))^2 \\
-&= \int_{0}^{1} \dfrac{x^{\alpha+1}(1-x)^{\beta-1}}{B(\alpha,\beta)}dx-\dfrac{\alpha^2}{(\alpha + \beta)^2}\\
+\Dev[X] &= \E[X^2]-(\E[X])^2 \\
+&= \int_{0}^{1} \dfrac{x^{\alpha+1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\dif x-\dfrac{\alpha^2}{(\alpha + \beta)^2}\\
 &= \frac{B(\alpha+2,\beta)}{B(\alpha,\beta)} - \dfrac{\alpha^2}{(\alpha + \beta)^2}\\
 &= \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
 \end{align*}
@@ -878,7 +972,7 @@ f_X(x) = \frac{1}{b\pi} \frac{1}{1+(\frac{x-a}{b})^2}
 
 它最显著的性质就是：没有均值！不妨对标准柯西分布尝试一下：
 \[
-\int_{-\infty}^{\infty} x \frac{1}{\pi} \frac{1}{1+x^2} dx
+\int_{-\infty}^{\infty} x \frac{1}{\pi} \frac{1}{1+x^2} \dif x
 \]
 
 看上去是个奇函数，可以直接对称区间积分得零。\textbf{但这是广义积分}。任意一边拿出来积分都不收敛：
