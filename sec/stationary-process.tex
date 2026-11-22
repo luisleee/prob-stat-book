@@ -11,7 +11,7 @@
 
 对于平稳过程来说，我们还可以更多地，用时间平均定义一种相关函数。随机过程\(X(t)\)的时间自相关函数定义为：
 \[
-\overline{X(t)X(t+\tau)} = \lim_{T\to \inf}\frac{1}{T}\int^{T/2}_{-T/2}X(t)X(t+\tau)\dif t
+\overline{X(t)X(t+\tau)} = \lim_{T\to\infty}\frac{1}{2T}\int^{T}_{-T}X(t)X(t+\tau)\dif t
 \]
 
 这时就有一个问题：什么时候时间均值/自相关函数和统计均值/自相关函数相同？这种性质就叫做遍历性。如果时间平均\textbf{几乎必然}等于统计平均，那么称随机过程\textbf{关于均值遍历}；如果时间自相关函数\textbf{几乎必然}等于统计自相关函数，那么称随机过程\textbf{关于自相关函数遍历}。
@@ -31,7 +31,7 @@
 若均方连续的平稳过程\(X(t)\)对于任意给定的\(\tau\)有\(X(t)X(t+\tau)\)也是均方连续的平稳过程，则\(X(t)\)关于自相关函数具有遍历性当且仅当
 
 \[
-\lim_{T\to \infty}\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau_1}{2T}\right)(B_{X}(\tau, \tau_1) -R_X^2(\tau))\dif \tau = 0
+\lim_{T\to \infty}\frac{1}{T}\int_{0}^{2T}\left(1-\frac{\tau_1}{2T}\right)(B_{X}(\tau, \tau_1) -R_X^2(\tau))\dif \tau_1 = 0
 \]
 
 其中\(B_X(\tau, \tau_1) = \E[X(t)X(t+\tau)X(t+\tau_1)X(t+\tau+\tau_1)]\)
@@ -40,7 +40,7 @@
 我们这里只给出第一个部分的证明：
 \begin{proof}
 \begin{align*}
-&\E\left[\left(\frac{1}{T}\int_{-T/2}^{T/2}X(t)\dif t -m_X \right)^2\right]\\
+&\E\left[\left(\frac{1}{2T}\int_{-T}^{T}X(t)\dif t -m_X \right)^2\right]\\
 =&\E\left[\frac{1}{4T^2}\int_{-T}^{T}X(s)\dif s\int_{-T}^{T}X(t)\dif t- \frac{m_X}{T}\int_{-T}^{T}X(t)\dif t+m_X^2 \right]\\
 =&\frac{1}{4T^2}\int_{-T}^{T}\int_{-T}^{T}R_X(t-s)\dif t\dif s-\frac{m_X}{T}\int_{-T}^{T}m_X\dif t +m_X^2\\
 =&\frac{1}{4T^2}\int_{-2T}^{2T}(2T-|\tau|)R_X(\tau)\dif \tau -m_X^2 & \tau=s-t\\
@@ -129,10 +129,6 @@ R_X(\tau) = \frac{1}{2\pi} \int_{-\infty}^{\infty} S_X(\omega) e^{i\omega\tau} \
 \overline{X(t)X(t+\tau)} = \lim_{T\to\infty} \frac{1}{2T} \int_{-T}^{T} X(t)X(t+\tau) \, \dif t \stackrel{\text{a.s.}}{=} R_X(\tau)
 \]
 进而，对该时间自相关函数作傅里叶变换，所得结果几乎必然等于功率谱密度：
-\[
-\lim_{T\to\infty} \frac{1}{2T} \left| \int_{-T}^{T} X(t) e^{-i\omega t} \, \dif t \right|^2 \stackrel{\text{a.s.}}{=} S_X(\omega)
-\]
-
-这意味着，在遍历性成立的条件下，我们可以用一条足够长的样本记录来估计功率谱密度。
+因此，可以先用单条样本路径估计自相关函数，再对该估计作傅里叶变换来估计功率谱密度。需要注意，未经平滑的周期图一般不会在每个频率上一致收敛到$S_X(\omega)$。
 
 % 多元平稳

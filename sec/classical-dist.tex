@@ -459,7 +459,7 @@ f_U(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}
 \end{tikzpicture}
 
 
-正态分布的累积分布函数没有初等的解析式形式，不过姑且有一些不错的性质。我们记标准正态分布的累计分布函数为$\Phi(x)$，那么有：
+正态分布的累积分布函数没有初等的解析式形式，不过姑且有一些不错的性质。我们记标准正态分布的累积分布函数为$\Phi(x)$，那么有：
 \begin{align*}
 \Phi(x)&= \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t\\
 &= \int_{-x}^{+\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}\dif u&u=-t\\
@@ -968,7 +968,7 @@ Beta分布可以用来描述顺序统计量的分布：
 f_X(x) = \frac{1}{b\pi} \frac{1}{1+(\frac{x-a}{b})^2}
 \]
 
-令$a=0, \;b=1$就得到标准柯西分布$\frac{1}{\pi}\frac{1}{1+x^2}$。显然任意柯西分布$X\sim Cauchy(a,b)$可以通过变量代换得出$a+bX\sim Cauchy(0,1)$。
+令$a=0, \;b=1$就得到标准柯西分布$\frac{1}{\pi}\frac{1}{1+x^2}$。若$X\sim Cauchy(a,b)$，则标准化后有$\frac{X-a}{b}\sim Cauchy(0,1)$。
 
 它最显著的性质就是：没有均值！不妨对标准柯西分布尝试一下：
 \[

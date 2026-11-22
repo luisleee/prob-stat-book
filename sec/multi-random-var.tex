@@ -138,7 +138,7 @@ F_{\mathbf{X}}(\textbf{x})=\prod_{i=1}^{n}F_{X_i}(x_i)
 F_{X+Y}(z)&=P(X+Y\leq z)\\
 &= \iint_{x+y\leq z}f_{XY}(x,y)\dif x\dif y\\
 &= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z-y}f_{XY}(x,y) \dif x\right]\dif y\\
-&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z}f_{XY}(u-y,y) \dif u\right]\dif y&\text{u=z-y}\\
+&= \int_{-\infty}^{\infty}\left[\int_{-\infty}^{z}f_{XY}(u-y,y) \dif u\right]\dif y&\text{u=x+y}\\
 &= \int_{-\infty}^{z}\left[\int_{-\infty}^{\infty}f_{XY}(u-y,y) \dif y\right]\dif u &\text{Fubini定理}\\
 f_{X+Y}(z)&=\frac{\dif F_{X+Y}(z)}{\dif z} = \int_{-\infty}^{\infty}f_{XY}(z-t,t) \dif t &\text{微积分基本定理}
 \end{align*}

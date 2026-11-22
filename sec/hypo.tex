@@ -182,12 +182,12 @@ O_j=\#\{X_i\in A_j\},\quad j=1,2,\ldots,k
 
 令
 \[
-\chi^2_n=\sum_{j=1}^k \frac{(O_j-np_j)^2}{np_j}
+X_n^2=\sum_{j=1}^k \frac{(O_j-np_j)^2}{np_j}
 \]
 
 则有
 \[
-\chi^2_n \xrightarrow{d} \chi^2(k-1)
+X_n^2 \xrightarrow{d} \chi^2(k-1)
 \]
 \end{theorem}
 \begin{proof}
@@ -195,16 +195,16 @@ O_j=\#\{X_i\in A_j\},\quad j=1,2,\ldots,k
 
 回忆下多项分布的性质，有
 \[
-\E[O_j]=np_j,\quad \Cov(O_i,O_j)=\delta_{ij}p_i-p_ip_j
+\E[O_j]=np_j,\quad \Cov(O_i,O_j)=n(\delta_{ij}p_i-p_ip_j)
 \]
 
-我们最后想要得到一个卡方分布，也就是一些独立标准正态分布的平方和。我们现在构造的这个统计量也是一个平方和。我们不妨设随机向量$\mathbf{Z}=(Z_1,\ldots,Z_n)^T$，其中$Z_j=\frac{O_j-np_j}{\sqrt{np_j}}$，就有
+我们最后想要得到一个卡方分布，也就是一些独立标准正态分布的平方和。我们现在构造的这个统计量也是一个平方和。我们不妨设随机向量$\mathbf{Z}=(Z_1,\ldots,Z_k)^T$，其中$Z_j=\frac{O_j-np_j}{\sqrt{np_j}}$，就有
 \[
-\chi^2_n = \sum_{j=1}^k Z_j^2
+X_n^2 = \sum_{j=1}^k Z_j^2
 \]
 我们要做的就是通过某种变换把它变成一些独立正态变量。
 
-但是问题是：正态压根就没从我们前面的式子里出现过。让它出现就必须要中心极限定理。这里我们用到的是一种多元中心极限定理，可以认为是Laplace-De Moivre中心极限定理的推广。多项分布在这里就起到了一个类似二项分布的作用。不过多元的结论和一元的区别最大之处在于：它需要考虑诸变量之间的相关性。在这里相关性肯定是存在的：$\sum_{j=1}^kp_k=1,\quad \sum_{j=1}^k O_j=n$。这个关系明确地对$\mathbf{Z}$写出来就是
+但是问题是：正态压根就没从我们前面的式子里出现过。让它出现就必须要中心极限定理。这里我们用到的是一种多元中心极限定理，可以认为是Laplace-De Moivre中心极限定理的推广。多项分布在这里就起到了一个类似二项分布的作用。不过多元的结论和一元的区别最大之处在于：它需要考虑诸变量之间的相关性。在这里相关性肯定是存在的：$\sum_{j=1}^kp_j=1,\quad \sum_{j=1}^k O_j=n$。这个关系明确地对$\mathbf{Z}$写出来就是
 \[
 \sum_{j=1}^k\sqrt{p_j}Z_j=\frac{1}{\sqrt{n}}\sum_{j=1}^k(O_j-np_j) =  \frac{1}{\sqrt{n}}(\sum_{j=1}^kO_j-n\sum_{j=1}^kp_j) = 0
 \]
@@ -237,12 +237,12 @@ O_j=\#\{X_i\in A_j\},\quad j=1,2,\ldots,k
 注意，从这里到最终的结论还差一步，并不显然。我们需要连续映射定理告诉我们$\mathbf{Z}\xrightarrow{d} \mathbf{Z}_\infty$时，
 
 \[
-\chi^2_n=\mathbf{Z}^T\mathbf{Z} \xrightarrow{d} \mathbf{Z}_{\infty}^T\mathbf{Z}_{\infty}
+X_n^2=\mathbf{Z}^T\mathbf{Z} \xrightarrow{d} \mathbf{Z}_{\infty}^T\mathbf{Z}_{\infty}
 \]
 
 这样才算结束了：
 \[
-\chi^2_n \xrightarrow{d} \chi^2(k-1)
+X_n^2 \xrightarrow{d} \chi^2(k-1)
 \]
 
 \end{proof}

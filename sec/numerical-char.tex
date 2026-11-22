@@ -72,7 +72,7 @@ E\left[\sum_{i=1}^n a_i X_i + b\right]
 可见当$X$与$Y$独立时，上下两个式子相等。
 
 \begin{attention}
-上面的结论反过来是不一定成立的。$\E[X]\E[Y]=\E[XY]$只能得出$f_{X}(x)f_{Y}(y)=f_{XY}(x,y)$\textbf{几乎处处}相等。
+上面的结论反过来不成立。$\E[XY]=\E[X]\E[Y]$只能说明$X,Y$不相关，不能推出$f_{XY}(x,y)=f_X(x)f_Y(y)$几乎处处成立，因而不能推出独立性。
 \end{attention}
 
 \subsection{方差}
@@ -143,10 +143,10 @@ E\left[\sum_{i=1}^n a_i X_i + b\right]
 
 等号成立当且仅当一个是另一个的标量倍。注意这里我们是在零均值意义下讨论的，所以它们还可能相差一个常数。不过总归是$Y=a+bX$这种线性关系就是了。
 
-这里很自然地，这里就有一个类似余弦的量：
+很自然地，这里就有一个类似余弦的量：
 
 \[
-\rho_{XY} = \frac{\Cov(X,Y)}{\sqrt{\Dev[X]\Dev[Y]}} \leq 1
+|\rho_{XY}| = \left|\frac{\Cov(X,Y)}{\sqrt{\Dev[X]\Dev[Y]}}\right| \leq 1
 \]
 
 这就称为\textbf{相关系数}。反过来协方差也可以表示成$\rho_{XY}\sqrt{\Dev[X]\Dev[Y]}$。
@@ -164,7 +164,7 @@ E\left[\sum_{i=1}^n a_i X_i + b\right]
 
 矩的一个好处是，随机变量的任意多项式函数的均值都可以表示成矩的线性函数。
 
-$k$阶中心矩$\mu_k$定义为$\E[ (X - \E(X])^k )$。方差就是$2$阶中心矩。
+$k$阶中心矩$\mu_k$定义为$\E[(X-\E[X])^k]$。方差就是$2$阶中心矩。
 
 $k$阶标准化矩$\tilde{\mu}_k$定义为$E\left( \left( \frac{X - \mu}{\sigma} \right)^k \right)$。$3$阶标准化矩叫做偏度，$4$阶标准化矩叫做峰度。
 

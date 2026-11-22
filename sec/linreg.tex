@@ -280,12 +280,12 @@ S_{YY} &= \sum (Y_i-\overline{Y})^2\\
 \left(\frac{x_1-\overline{x}}{\sqrt{S_{xx}}},\ldots,\frac{x_n-\overline{x}}{\sqrt{S_{xx}}}\right)
 \]
 
-剩下的随便Gram-Schimdt规范正交化出来。
+剩下的向量用Gram--Schmidt过程规范正交化即可。
 
 这样我们就把$Q\mathbf{Y}$的前两个分量变成$\sqrt{n}\overline{Y}$和$\hat{b}\sqrt{S_{xx}}$，剩下的$n-2$个分量变成独立同方差的正态了。
 \end{proof}
 
-这个结论还可以用到预测值上面。如果预测值和之前的观察值相互独立，那么预测值与上面三个量相互独立。证明只需要在上面多加一个分量，在此略过。
+这个结论还可以用到给定$x_0$时的平均响应估计和新观测值预测上。
 
 对$\sigma^2$的估计这就有了，$\hat{\sigma^2}=\frac{SSE}{n-2}=\frac{1}{n-2}(S_{YY}-\hat{b}S_{xY})$是个无偏估计。
 
@@ -299,18 +299,18 @@ S_{YY} &= \sum (Y_i-\overline{Y})^2\\
 \end{align*}
 所以说
 \[
-\frac{\hat{b}-b}{\sqrt{\frac{SEE}{n-1}}}\sqrt{S_{xx}}\sim t(n-2)
+\frac{\hat{b}-b}{\sqrt{\frac{SSE}{n-2}}}\sqrt{S_{xx}}\sim t(n-2)
 \]
 那么其估计和检验方法就很清楚了。
 
-对于我们的点预测$\hat{Y}_0$，我们有
+记$m(x_0)=a+bx_0$。对于平均响应的估计$\hat{Y}_0=\hat a+\hat b x_0$，我们有
 \[
 \hat{Y}_0 \sim N\left(a+bx_0,\left(\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}\right)\sigma^2\right)
 \]
 
 将其标准化得到：
 \[
-\frac{\hat{Y}_0-Y_0}{\sigma\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim N(0,1)
+\frac{\hat{Y}_0-m(x_0)}{\sigma\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim N(0,1)
 \]
 
 配合上
@@ -320,7 +320,9 @@ S_{YY} &= \sum (Y_i-\overline{Y})^2\\
 
 就有
 \[
-\frac{\hat{Y}_0-Y_0}{\sqrt{\frac{SSE}{n-2}}\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim t(n-2)
+\frac{\hat{Y}_0-m(x_0)}{\sqrt{\frac{SSE}{n-2}}\sqrt{\frac{1}{n}+\frac{(x_0-\overline{x})^2}{S_{xx}}}} \sim t(n-2)
 \]
+
+若要预测一个与原样本独立的新观测值$Y_0$，则误差方差还要加上新观测自身的$\sigma^2$，因而上式根号中的因子应改为$1+\frac1n+\frac{(x_0-\overline{x})^2}{S_{xx}}$。
 
 于是我们就可以给出区间预测了。
